@@ -1,0 +1,131 @@
+@font-face {
+	font-family: 'JBFont';
+	src: url('../font/uni05_54.ttf');
+	src: url('../font/uni05_54.ttf?#iefix') format('embedded-opentype'),
+	     url('../font/uni05_54.ttf') format('ttf'),
+	     url('../font/uni05_54.ttf')  format('truetype')
+}
+
+@font-face {
+	font-family: 'JBFontBold';
+	src: url('../font/uni05_63.ttf');
+	src: url('../font/uni05_63.ttf?#iefix') format('embedded-opentype'),
+	     url('../font/uni05_63.ttf') format('ttf'),
+	     url('../font/uni05_63.ttf')  format('truetype')
+}
+
+html, body {
+	background: url("/img/bg.png");
+	font-family: 'JBFont';
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-size: 4em;
+	color: #666;
+	text-shadow: 0px 0px 10px #000;
+	letter-spacing: 5px;
+}
+
+h2 {
+	color: #666;
+	text-shadow: 0px 0px 10px #000;
+}
+
+table {
+	vertical-align: middle;
+	text-align: center;
+	width: 100%;
+	height: 98%;
+}
+
+img {
+	margin: 1%;
+}
+
+#footer {
+	width: 1px;
+	height: 1px;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.bottom {
+	bottom: 0;
+}
+
+.left {
+	left: 0;
+}
+
+.right {
+	right: 0;
+}
+
+.top {
+	top: 0;
+}
+
+.social-link {
+	position: relative;
+    display: inline-block;
+    margin: 1%;
+}
+
+.social-icon {
+
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+	border-radius: 50%;
+
+	filter: grayscale(100%); 
+	-webkit-filter: grayscale(100%); 
+	-moz-filter: grayscale(100%); 
+	-ms-filter: grayscale(100%); 
+	-o-filter: grayscale(100%);
+}
+
+.social-icon:hover {
+
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+	border-radius: 50%;
+
+	filter: grayscale(0%); 
+	-webkit-filter: grayscale(0%); 
+	-moz-filter: grayscale(0%); 
+	-ms-filter: grayscale(0%); 
+	-o-filter: grayscale(0%);
+}
+
+.social-notification {
+	display: none;
+	position: absolute;
+	letter-spacing: -4px;
+    right: 0px;
+    background: #c00;
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: #fff;
+    text-decoration: none;
+    top: 0px;
+}
+
+
+.email img{
+	width: 20%;
+	height: auto;
+	min-width: 175px;
+}
+
+.footer-text {
+	color: white;
+}
