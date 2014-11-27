@@ -120,10 +120,17 @@ img {
 }
 
 
-.email img{
+.jimmy-boy img{
 	width: 20%;
 	height: auto;
 	min-width: 175px;
+}
+
+
+.email img{
+	width: 5%;
+	height: auto;
+	min-width: 100px;
 }
 
 .footer-text {
