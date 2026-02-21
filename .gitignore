@@ -18,6 +18,9 @@
 public/sitemap.xml
 .vercel
 
+# development
+.sisyphus/
+
 # production
 /build
 *.xml

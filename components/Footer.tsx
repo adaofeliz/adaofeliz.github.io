@@ -3,9 +3,15 @@ import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
 
 export default function Footer() {
+  const disclaimerText =
+    'The views and opinions expressed on this blog are my own and do not represent those of my employer, Powerdot.'
+
   return (
     <footer>
       <div className="mt-16 flex flex-col items-center">
+        <div className="mb-4 text-center text-sm text-gray-500 dark:text-gray-400">
+          {disclaimerText}
+        </div>
         <div className="mb-3 flex space-x-4">
           <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size={6} />
           <SocialIcon kind="github" href={siteMetadata.github} size={6} />
