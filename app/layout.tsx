@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     description: siteMetadata.description,
     url: './',
     siteName: siteMetadata.title,
-    images: [siteMetadata.socialBanner],
+    images: [siteMetadata.siteLogo],
     locale: 'en_US',
     type: 'website',
   },
@@ -47,11 +47,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  twitter: {
-    title: siteMetadata.title,
-    card: 'summary_large_image',
-    images: [siteMetadata.socialBanner],
   },
 }
 
