@@ -8,7 +8,16 @@ import headerNavLinks from '@/data/headerNavLinks'
 
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
+  const [mounted, setMounted] = useState(false)
   const navRef = useRef(null)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    return clearAllBodyScrollLocks
+  }, [])
 
   const onToggleNav = () => {
     setNavShow((status) => {
@@ -22,9 +31,25 @@ const MobileNav = () => {
     })
   }
 
-  useEffect(() => {
-    return clearAllBodyScrollLocks
-  })
+  // Don't render Dialog on server to avoid hydration mismatch with Headless UI
+  if (!mounted) {
+    return (
+      <button aria-label="Toggle Menu" className="sm:hidden">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          className="h-8 w-8 text-gray-900 dark:text-gray-100"
+        >
+          <path
+            fillRule="evenodd"
+            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clipRule="evenodd"
+          />
+        </svg>
+      </button>
+    )
+  }
 
   return (
     <>
