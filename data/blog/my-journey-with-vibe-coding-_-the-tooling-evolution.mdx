@@ -1,0 +1,59 @@
+---
+title: 'My Journey with Vibe Coding: The Tooling Evolution'
+date: '2026-02-23'
+tags: [learning]
+draft: false
+summary: 'Watching machines do what used to require multiple separate humans and full attention.'
+---
+
+I spent almost ten years writing backend code in IntelliJ. It was home. Then I started experimenting with AI-assisted development, and within a few months, my entire tooling setup changed. Not because I planned it. Because each tool taught me something the previous one could not. This post picks up where my first one left off. That post was about the moment I realized machines could handle tasks that once required multiple people and full attention. This one is about the tools that made that realization practical.
+
+## Cursor changed how I think about LLM context
+My first real shift came with Cursor. Before Cursor, I had ChatGPT open in one window and IntelliJ in the other. I would copy code, paste it into the chat, describe what I needed, get a response, copy it back. It worked, but it was clumsy. The AI never had the full picture of my codebase.
+
+Cursor fixed that. Every question I asked the LLM had my code as context. I could describe what I wanted in precise technical terms, and the output matched. No more pasting fragments and hoping the model understood the rest.
+
+But the real lesson from Cursor was not the convenience. It was learning how context windows work. I started to understand that some context is static, some is dynamic based on the task, and some needs to be provided fresh on every iteration. System prompts, cursor rules, skills, MCP tools that integrate with Jira, Figma, Confluence. Each one plays a role in shaping what the model knows and when it knows it.
+
+That understanding changed everything.
+
+## Cursor + Taskmaster (MCP) and the power of Planning
+One MCP tool in particular shifted my approach: Taskmaster. This tool helped me define implementation plans in Markdown files. Instead of throwing a full product description at the model and hoping for working code, I could break the work into steps. Each step became an iteration. Each iteration built on the last. Before Taskmaster, I would go from a single input to a code output that often missed context. The model did not challenge or audit what I asked for. It just produced something. And that something was frequently wrong. With planning, I learned to fragment what I wanted. Small steps. Incremental progress. The output quality jumped.
+
+Then Cursor did something interesting. They shipped two new interaction modes: plan and ask. Ask works like a normal ChatGPT conversation. Plan baked in exactly what Taskmaster had been doing as an external tool. Cursor absorbed one of the best features of a third-party tool into its core product. For a moment, I thought Cursor might be the final destination.
+
+## Why I've tried and moved to OpenCode
+Cursor's agent implementation never felt right. Their agents run on Cursor's cloud and need access to your code. That setup felt unnatural to me. I wanted agents running locally, on my codebase, under my control. OpenCode gave me that. Everything runs locally. Same codebase I use for any other development. No cloud dependency.
+
+The real power of OpenCode is multi-agent orchestration. I _prompt'ed_ several agents, each with a clear responsibility:
+- A planning agent that creates implementation plans
+- A project manager agent that validates if the plan is being followed
+- A development agent that writes code
+- A quality assurance agent
+- A deep research agent
+- An audit agent that challenges everything, looking for ambiguities, information gaps, and missing context
+
+Each agent uses a different model based on its role. Claude Opus handles planning and research. GPT runs project management and auditing. MiniMax (currently) takes on development. I plugged my OpenRouter key into OpenCode, and that single key unlocked access to every frontier model available. It feels like running a virtual team through a single tool.
+
+## Tmux made it all parallel
+I knew about tmux for years. Every Linux user who has done SSH work knows it exists. I never found a strong reason to use it beyond keeping sessions alive. Now I run multiple OpenCode sessions inside tmux. Each session holds a different virtual team working on a different task or project. They run in the background on my server. If my SSH connection drops, nothing stops. The agents keep working.
+
+I jump from session to session, room to room. Sometimes I give input where an agent is blocked. Sometimes I just check where they are in the plan, review the to-do list, and move on. It feels like walking through an office, checking in on different teams, and letting them do their work.
+
+## Two wins that proved the approach
+**Google Calendar CLI**. Google Calendar has an API feature that sends a webhook every time an event changes. You cannot access it through the UI. I needed a CLI tool to manage these webhooks: create them, refresh them, list them, delete them. I described the requirements and passed the API contracts to the agents. I did not write a single line of code. The output worked exactly as expected. Near real-time event sync instead of polling every minute.
+
+**Life in Weeks**. There is a well-known concept about visualizing your life as a grid of weeks, from birth to age ninety. I built a small web app that generates this grid based on my birthday. I deployed it to Vercel, created an iOS shortcut that updates my phone wallpaper daily with the current grid. I am not a frontend developer. CSS has always been a challenge. But through vibe coding, I described what I wanted and got something I find beautiful. Every morning, my phone reminds me that time is moving.
+
+The honest part: Most of my apps are broken
+I want to be clear. The majority of my vibe-coded experiments do not work. They are broken apps that produce results different from what I expected. I will abandon most of them. But they were not wasted. Each broken app taught me something about how to use OpenCode, how to structure agent tasks, how to provide better context. The pattern is always the same: I get excited, describe an entire application in one go, and the output falls apart. The fix is always the same too. Go back to basics. Smaller steps. Incremental features. One thing at a time.
+
+We are not yet in the era where a single prompt produces a full working application. Development is still a creative process where decisions emerge as you build. Some choices only become clear mid-implementation. That has not changed with AI. It just happens faster now.
+
+## The cost problem is real
+The biggest limitation I face right now is cost. Frontier models are expensive. Continuous agentic loops that run multiple agents across multiple sessions burn through credits fast. I have never spent this much on tooling in my career. Local LLMs cannot fill this gap. No locally-run model competes with the frontier models from the top AI labs. That is a fact worth accepting rather than working around. The quality difference is too large. I believe costs will come down. But right now, this is the hardest constraint in agentic development, and anyone exploring this space should plan for it.
+
+## What I know now
+Agentic development is not magic yet. It is messy, expensive, and still needs me watching every step. But every broken app, every small win, every session running in the background on my server is proof that something fundamental is shifting. We are not just writing code anymore. We are assembling teams that think and colaborate. 
+
+The real change is not in the code itself. It is in watching a new way of building software take shape, one small iteration at a time.
