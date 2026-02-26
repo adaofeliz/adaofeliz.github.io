@@ -7,9 +7,9 @@
  * https://github.com/PrismJS/prism-themes
  */
 
-/* Code title styles */
+/* Code title styles - terminal window bar */
 .remark-code-title {
-  @apply rounded-xs bg-gray-700 px-5 py-3 font-mono text-sm font-bold text-gray-200 dark:bg-gray-800;
+  @apply rounded-xs border-b border-gray-600 bg-[#2d2d2d] px-5 py-3 font-mono text-sm font-bold text-gray-300 dark:border-gray-600 dark:bg-[#1a1a1a];
 }
 
 .remark-code-title + div > pre {
@@ -34,7 +34,7 @@
 }
 
 .highlight-line {
-  @apply border-primary-500 -mx-4 border-l-4 bg-gray-700/50;
+  @apply -mx-4 border-l-4 border-primary-500 bg-primary-500/10;
 }
 
 .line-number::before {
@@ -42,69 +42,62 @@
   content: attr(line);
 }
 
-/* Token styles */
-/**
- * MIT License
- * Copyright (c) 2018 Sarah Drasner
- * Sarah Drasner's[@sdras] Night Owl
- * Ported by Sara vieria [@SaraVieira]
- * Added by Souvik Mandal [@SimpleIndian]
- */
+/* Token styles - OSX Terminal inspired (green accent, amber keywords) */
 .token.comment,
 .token.prolog,
 .token.cdata {
-  color: rgb(99, 119, 119);
+  color: rgb(106, 153, 85);
   font-style: italic;
 }
 
 .token.punctuation {
-  color: rgb(199, 146, 234);
+  color: rgb(180, 180, 180);
 }
 
 .namespace {
-  color: rgb(178, 204, 214);
+  color: rgb(180, 180, 180);
 }
 
 .token.deleted {
-  color: rgba(239, 83, 80, 0.56);
+  color: rgb(204, 102, 102);
   font-style: italic;
 }
 
 .token.symbol,
 .token.property {
-  color: rgb(128, 203, 196);
+  color: rgb(234, 183, 101);
 }
 
 .token.tag,
 .token.operator,
 .token.keyword {
-  color: rgb(127, 219, 202);
+  color: rgb(234, 183, 101);
 }
 
 .token.boolean {
-  color: rgb(255, 88, 116);
+  color: rgb(204, 102, 102);
 }
 
 .token.number {
-  color: rgb(247, 140, 108);
+  color: rgb(181, 206, 168);
 }
 
 .token.constant,
 .token.function,
 .token.builtin,
 .token.char {
-  color: rgb(130, 170, 255);
+  color: rgb(86, 156, 214);
 }
 
 .token.selector,
 .token.doctype {
-  color: rgb(199, 146, 234);
+  color: rgb(234, 183, 101);
   font-style: italic;
 }
 
 .token.attr-name,
 .token.inserted {
-  color: rgb(173, 219, 103);
+  color: rgb(126, 198, 153);
   font-style: italic;
 }
 
@@ -113,19 +106,19 @@
 .token.entity,
 .language-css .token.string,
 .style .token.string {
-  color: rgb(173, 219, 103);
+  color: rgb(126, 198, 153);
 }
 
 .token.class-name,
 .token.atrule,
 .token.attr-value {
-  color: rgb(255, 203, 139);
+  color: rgb(234, 183, 101);
 }
 
 .token.regex,
 .token.important,
 .token.variable {
-  color: rgb(214, 222, 235);
+  color: rgb(220, 220, 220);
 }
 
 .token.important,

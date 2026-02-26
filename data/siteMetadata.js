@@ -1,8 +1,8 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'AdBlog',
+  title: "Adão's Morning Thoughts",
   author: 'Adão',
-  headerTitle: 'AdBlog',
+  headerTitle: "Adão's Morning Thoughts",
   description: 'Personal blog about technology, fitness, and life.',
   language: 'en-us',
   theme: 'system', // system, dark or light

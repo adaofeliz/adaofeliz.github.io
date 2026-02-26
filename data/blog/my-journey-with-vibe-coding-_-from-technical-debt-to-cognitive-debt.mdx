@@ -3,71 +3,56 @@ title: 'My Journey with Vibe Coding: From Technical Debt to Cognitive Debt'
 date: '2026-02-26'
 tags: [learning]
 draft: false
-summary: 'Something changed in the kind of debt I carry as a developer.'
+summary: 'Something changed in the kind of debt I carry after fifteen years in technology.'
 ---
 
-Something changed in the kind of debt I carry as a developer. For fifteen years, the debt lived in the code. Missing tests. Skipped validations. Authentication bolted on at the last minute. I knew exactly where it was, and I knew exactly what it would cost to fix.
+Something changed in the kind of debt I carry after fifteen years in technology. For most of that time, the debt lived in the code. Shortcuts taken to ship faster. Features that worked but were held together with tape. I knew exactly where every shortcut was, and I knew what it would cost to fix.
 
 That debt is not the one keeping me up anymore.
 
 ## The debt we all knew
 
-Every software engineer has lived with technical debt. It shows up in the same places every time.
-
-You are building an MVP or a proof of concept. The goal is to get the product in front of users as fast as possible. What matters is the business logic, the thing that makes your feature or product different from everything else. So you cut corners on the generic layers. Authentication gets a basic implementation. Data persistence is good enough. Validation covers the happy path. Database mapping is functional but not clean. Unit tests are sparse or missing entirely.
-
-This was not limited to MVPs. Business critical features with hard deadlines produced the same result. Ship it, patch it later. That was my life with technical debt. I always knew where it was. I could point to the exact parts of the codebase that needed work. The debt was visible, measurable, and familiar.
+In technology, we call it technical debt. You are building a new product or testing an idea. The goal is to get it in front of users as fast as possible. What matters is the core logic, the thing that makes your product different. So you cut corners on the generic parts. Security gets a basic setup. Data storage is good enough. Quality checks are minimal. This was not limited to prototypes. Business critical features with hard deadlines produced the same result. Ship it, patch it later. That was life with technical debt. I could always point to the exact parts that needed work. The debt was visible, measurable, and familiar.
 
 ## AI solved the old problem
 
 Vibe coding and agentic development changed this in a way I did not expect.
 
-The generic layers, the ones we used to skip, are exactly what AI handles best. Authentication frameworks. Authorization. Database access patterns. Model mapping from database objects to data transfer objects for the frontend. Even test scaffolding. Prompt for any of these and you get solid, functional output.
-
-The common parts of applications are no longer where the debt accumulates. AI eliminated the shortcuts we used to take because it does that work well and fast. I expected this to feel like a pure win. It did not.
+The generic layers, the ones we used to skip, are exactly what AI handles best. Security frameworks. Data access patterns. Structural code that connects the frontend to the backend. Prompt for any of these and you get solid, functional output. AI eliminated the shortcuts we used to take because it does that foundational work well and fast. I expected this to feel like a pure win. It did not.
 
 ## The debt moved
 
-Before AI, we skipped the plumbing to focus on what mattered: the business logic. The middleware layer where the real creativity lives. The algorithms, the rules, the edge cases that give a product its competitive edge.
+Before AI, we skipped the foundation to focus on what mattered: the core product logic. The layer where the real creativity lives. The algorithms, the rules, the edge cases that give a product its competitive edge. Now the foundation is handled. The debt shifted to the place that used to be our strength. The product logic itself. I am calling this cognitive debt. It is new, and I think it is more dangerous than the technical debt it replaced.
 
-Now the plumbing is handled. The debt shifted to the place that used to be our strength. The business logic itself. I am calling this cognitive debt. It is new, and I think it is more dangerous than the technical debt it replaced.
+<details>
+  <summary>Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task</summary>
+
+    Recent research supports this concern. A study from MIT Media Lab measured brain activity using EEG while participants completed complex tasks with and without AI assistance. The results showed that brain connectivity systematically scaled down with the amount of external AI support. Participants who worked without tools exhibited the strongest and widest ranging neural networks, while those using an LLM showed the weakest overall coupling. The neural pathways responsible for top-down control, working memory, and creative ideation were significantly less engaged when AI handled part of the cognitive work. Most striking: when participants who had relied on AI were later asked to work without it, their brain connectivity did not return to the levels of those who had practiced independently. The researchers described this as an accumulation of cognitive debt, where repeated reliance on AI replaces the effortful cognitive processes required for independent thinking, leading to diminished critical inquiry and decreased creativity over time.
+
+    The study focused on writing, not code. But the parallel is direct. Writing an essay and writing business logic both demand the same core cognitive operations: organizing ideas, making structural decisions, holding multiple constraints in working memory, and generating original solutions. When AI takes over those operations, the brain engages less. And what does not get exercised does not strengthen.
+
+</details>
 
 ## Where I felt it
 
-I have been using vibe coding and agentic development through OpenCode to build a personal calendar manager. The idea is simple. I have tasks with different properties: category, noise level, focus requirements, due dates, priorities. I want a system that maps those tasks into gaps in my calendar so I do not get overbooked with meetings and I actually find time to do the work that requires focus.
-
-The agents generated the code fast. Authentication, database layer, API structure, all of it came together without me writing a line. Then I started using the feature. I got creative. I wanted to adjust the scheduling algorithm, add edge cases, tweak the logic to fit what I was learning through actual use.
+I have been building a personal calendar manager using agentic development through OpenCode. The idea is simple. I have tasks with different properties: category, noise level, focus requirements, due dates, priorities. I want a system that fits those tasks into gaps in my calendar so I do not get overbooked with meetings and actually find time to do focused work. The agents generated the code fast. Security, data layer, API structure, all of it came together without me writing a line. Then I started using it. I got creative. I wanted to adjust the scheduling logic, add edge cases, tweak the rules to fit what I was learning through actual use.
 
 And I could not do it.
 
-For the first time in fifteen years of developing software, I did not know where to change the business logic of my own product. I did not understand the architecture the AI had chosen. The code duplicated logic across service layer classes instead of promoting shared variables. It ignored the optimization patterns I have used my entire career. The structure was alien to me.
-
-With technical debt, I always knew what was missing. With cognitive debt, I did not even understand what was built.
+For the first time in fifteen years, I did not know where to change the core logic of my own product. I did not understand the architecture the AI had chosen. The code was organized in ways that contradicted every pattern I have built intuition around. The structure was alien to me. With technical debt, I always knew what was missing. With cognitive debt, I did not even understand what was built.
 
 ## Why this debt is harder to pay
 
-Technical debt has a clear cost. You know the gap. You estimate the effort. You schedule the work. You fix it.
+Technical debt has a clear cost. You know the gap. You estimate the effort. You fix it.
 
-Cognitive debt works differently. Before you can change anything, you have to learn the code. Study the architecture. Comprehend the decisions the AI made. Internalize the structure well enough to take ownership of the next iteration. This is not a matter of spotting what is missing. It is a matter of understanding what exists. And that understanding takes real time and real effort, especially when the code does not follow the patterns you spent years building intuition around.
+Cognitive debt works differently. Before you can change anything, you have to learn the code first. Understand the decisions the AI made. Internalize the structure well enough to take ownership of the next change. This is not about spotting what is missing. It is about understanding what exists. The more you let AI generate the product logic without staying close to it, the less you can adjust, iterate, and create. You lose access to the creative part of building software. And I believe that creative process is what separates good products from everything else.
 
-The cost is not just in the code. It is in your head. The more you let AI generate the business logic without staying close to it, the less you can adjust, iterate, and create. You lose access to the creative part of development. And I believe that creative process, the one where decisions emerge as you build, is what separates good software from everything else.
+The MIT study found the same pattern in a different domain. The researchers recommend a balanced approach: leverage AI for routine assistance, but still challenge yourself to perform core cognitive operations independently. In their words, this is how we can harness the benefits of AI support without impairing the natural development of the brain's task-related networks.
 
 ## What I am starting to think about
 
-I have not solved this yet. I am reflecting on it.
+I have not solved this yet. I am reflecting on it. As I wrote in my last post, the discipline that worked for fifteen years still applies: go incremental, check your work, stay close to what is being built [1]. It just applies to a different layer now. What I believe is that the answer lives in guidelines. Not guidelines for the code itself, but guidelines that describe how I want things built. Architecture principles. Patterns I expect agents to follow. Requirements that define structure, not just behavior. Described in plain English, clearly enough that an agent can produce work I can read, understand, and own from the first iteration.
 
-What I believe is that the answer is in guidelines. Not guidelines for the code itself, but guidelines that describe how I want the code to be built. Architecture principles. Patterns I expect agents to follow. Non-functional requirements that define the structure, not just the behavior. In plain English, described clearly enough that an agent can pick them up and produce code that matches my mental model. Code I can read, understand, and own from the first iteration.
+As a CTO, I think about this beyond my own experiments. My teams will face the same shift. The people who thrive will be the ones who learn to describe their philosophy in a way that AI tools can follow. AI can make a great team ten times more capable. But only if that team stays close enough to the product logic to own it. The moment you step too far back, cognitive debt accumulates. And unlike technical debt, you might not notice until you try to make a change and realize you cannot.
 
-This is the new skill. Not writing code. Writing the rules that shape how agents write code.
-
-## The bigger picture
-
-As a CTO, I think about this beyond my own projects. My teams will face the same shift. The engineers who thrive will be the ones who learn to describe their development philosophy in a way that agents can follow. Software development is a creative process. The best engineers I have worked with do not just execute requirements. They discover the right solution as they build. They adjust, experiment, and make decisions that only become clear mid-implementation. That has not changed with AI. The process still needs a human mind driving the creative decisions.
-
-The opportunity is real. AI can make a great engineer ten times more capable. But only if that engineer stays close enough to the business logic to own it. The moment you step too far back, cognitive debt starts accumulating. And unlike technical debt, you might not notice until you try to make a change and realize you cannot. What I need to transmit to my teams is this: define your development philosophy before you prompt. Describe the architecture. Set the guardrails. Write the non-functional requirements. Give agents enough structure to produce code you can take ownership of from day one.
-
-The goal is not to write less. It is to think more clearly about what you want, and express it in a way that keeps you in the creative loop.
-
-## Still figuring it out
-
-I do not have a finished framework for this. My calendar scheduler is still running on code I struggle to modify. But the pattern is becoming clear. The discipline that worked for fifteen years, go incremental, check your work, stay close to what is being built, applies here too. It just applies to a different layer now. If you are using AI agents for development and feeling this same disconnect with the code they produce, I would like to hear how you are dealing with it. Are you writing guidelines for your agents? Describing architecture upfront? Or just refactoring after the fact?
+The goal is not to build less. It is to think more clearly about what you want, and express it in a way that keeps you in the creative loop. If you are experimenting with AI in development and feeling this same disconnect, I would like to hear how you are dealing with it.
