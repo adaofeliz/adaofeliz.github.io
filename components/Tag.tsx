@@ -1,16 +1,19 @@
 import Link from 'next/link'
-import { slug } from 'github-slugger'
+import { CATEGORY_LABELS, type Category } from '@/lib/categories'
+
 interface Props {
-  text: string
+  text: Category
+  className?: string
 }
 
-const Tag = ({ text }: Props) => {
+const Tag = ({ text, className = '' }: Props) => {
+  const label = CATEGORY_LABELS[text]
+  const defaultStyles =
+    'text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300'
+
   return (
-    <Link
-      href={`/tags/${slug(text)}`}
-      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 mr-3 text-sm font-medium uppercase"
-    >
-      {text.split(' ').join('-')}
+    <Link href={`/blog?tag=${text}`} className={`${defaultStyles} ${className}`.trim()}>
+      {label}
     </Link>
   )
 }

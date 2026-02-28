@@ -1,6 +1,8 @@
 import Link from '@/components/Link'
+import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
+import { getPostCategory } from '@/lib/categories'
 
 const MAX_DISPLAY = 5
 
@@ -19,7 +21,8 @@ export default function Home({ posts }) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
-            const { slug, date, title, summary } = post
+            const { slug, date, title, summary, tags } = post
+            const category = getPostCategory(tags)
             return (
               <li key={slug} className="py-12">
                 <article>
@@ -32,7 +35,8 @@ export default function Home({ posts }) {
                     </dl>
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">
-                        <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Tag text={category} />
                           <h2 className="text-2xl leading-8 font-bold tracking-tight">
                             <Link
                               href={`/blog/${slug}`}
