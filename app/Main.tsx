@@ -1,26 +1,96 @@
+'use client'
+
+import { useState, useMemo, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { CoreContent } from 'pliny/utils/contentlayer'
+import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
-import { getPostCategory } from '@/lib/categories'
+import { ALLOWED_CATEGORIES, type Category, getPostCategory } from '@/lib/categories'
 
-const MAX_DISPLAY = 5
+const POSTS_PER_PAGE = 5
+const ALL_CATEGORIES: Category[] = [...ALLOWED_CATEGORIES]
 
-export default function Home({ posts }) {
+interface HomeProps {
+  posts: CoreContent<Blog>[]
+}
+
+function HomeContent({ posts }: HomeProps) {
+  const searchParams = useSearchParams()
+  const [postsPerPage] = useState(POSTS_PER_PAGE)
+
+  const rawTag = searchParams?.get('tag')
+  const activeTag =
+    rawTag && ALL_CATEGORIES.includes(rawTag as Category) ? (rawTag as Category) : null
+
+  const rawPage = searchParams?.get('page')
+  const parsedPage = rawPage ? Number.parseInt(rawPage, 10) : 1
+
+  const filteredPosts = useMemo(() => {
+    if (!activeTag) return posts
+    return posts.filter((post) => getPostCategory(post.tags) === activeTag)
+  }, [posts, activeTag])
+
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / postsPerPage))
+  const currentPage =
+    Number.isFinite(parsedPage) && parsedPage > 0 ? Math.min(parsedPage, totalPages) : 1
+  const prevPage = currentPage - 1 > 0
+  const nextPage = currentPage + 1 <= totalPages
+
+  const displayPosts = useMemo(() => {
+    const startIndex = (currentPage - 1) * postsPerPage
+    return filteredPosts.slice(startIndex, startIndex + postsPerPage)
+  }, [filteredPosts, currentPage, postsPerPage])
+
+  const getHref = (tag: Category | null, page = 1) => {
+    const params = new URLSearchParams()
+    if (tag) params.set('tag', tag)
+    if (page > 1) params.set('page', String(page))
+    const query = params.toString()
+    return query ? `/?${query}` : '/'
+  }
+
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
-            Latest thoughts
-          </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {siteMetadata.description}
+            Personal blog about{' '}
+            <Link
+              href={activeTag === 'technology' ? '/' : '/?tag=technology'}
+              className={activeTag === 'technology' ? 'underline underline-offset-4' : ''}
+            >
+              technology
+            </Link>
+            ,{' '}
+            <Link
+              href={activeTag === 'fitness' ? '/' : '/?tag=fitness'}
+              className={activeTag === 'fitness' ? 'underline underline-offset-4' : ''}
+            >
+              fitness
+            </Link>
+            ,{' '}
+            <Link
+              href={activeTag === 'life' ? '/' : '/?tag=life'}
+              className={activeTag === 'life' ? 'underline underline-offset-4' : ''}
+            >
+              life
+            </Link>
+            , and{' '}
+            <Link
+              href={activeTag === 'others' ? '/' : '/?tag=others'}
+              className={activeTag === 'others' ? 'underline underline-offset-4' : ''}
+            >
+              other
+            </Link>{' '}
+            stuff.
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!posts.length && 'No posts found.'}
-          {posts.slice(0, MAX_DISPLAY).map((post) => {
+          {!filteredPosts.length && 'No posts found.'}
+          {displayPosts.map((post) => {
             const { slug, date, title, summary, tags } = post
             const category = getPostCategory(tags)
             return (
@@ -68,17 +138,43 @@ export default function Home({ posts }) {
           })}
         </ul>
       </div>
-      {posts.length > MAX_DISPLAY && (
-        <div className="flex justify-end text-base leading-6 font-medium">
-          <Link
-            href="/blog"
-            className="text-primary-600 hover:text-primary-700 dark:hover:text-primary-400 dark:hover:text-primary-300"
-            aria-label="All posts"
-          >
-            All Posts &rarr;
-          </Link>
+      {filteredPosts.length > postsPerPage && (
+        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+          <nav className="flex justify-between">
+            {!prevPage && (
+              <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
+                Previous
+              </button>
+            )}
+            {prevPage && (
+              <Link href={getHref(activeTag, currentPage - 1)} rel="prev">
+                Previous
+              </Link>
+            )}
+            <span>
+              {currentPage} of {totalPages}
+            </span>
+            {!nextPage && (
+              <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
+                Next
+              </button>
+            )}
+            {nextPage && (
+              <Link href={getHref(activeTag, currentPage + 1)} rel="next">
+                Next
+              </Link>
+            )}
+          </nav>
         </div>
       )}
     </>
+  )
+}
+
+export default function Home(props: HomeProps) {
+  return (
+    <Suspense fallback={<div className="animate-pulse">Loading...</div>}>
+      <HomeContent {...props} />
+    </Suspense>
   )
 }
