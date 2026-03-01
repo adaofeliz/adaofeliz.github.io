@@ -35,8 +35,7 @@ export default function Home({ posts }) {
                     </dl>
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <Tag text={category} />
+                        <div>
                           <h2 className="text-2xl leading-8 font-bold tracking-tight">
                             <Link
                               href={`/blog/${slug}`}
@@ -50,7 +49,9 @@ export default function Home({ posts }) {
                           {summary}
                         </div>
                       </div>
-                      <div className="text-base leading-6 font-medium">
+                      <div className="flex items-center gap-2 text-base leading-6 font-medium">
+                        <Tag text={category} />
+                        <span className="text-gray-400 dark:text-gray-500">|</span>
                         <Link
                           href={`/blog/${slug}`}
                           className="text-primary-600 hover:text-primary-700 dark:hover:text-primary-400 dark:hover:text-primary-300"

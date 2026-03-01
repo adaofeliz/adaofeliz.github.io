@@ -188,8 +188,7 @@ function ListLayoutContent({
                     </dd>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Tag text={category} />
+                    <div>
                       <h3 className="text-2xl leading-8 font-bold tracking-tight">
                         <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                           {title}
@@ -198,6 +197,17 @@ function ListLayoutContent({
                     </div>
                     <div className="prose max-w-none text-gray-500 dark:text-gray-400">
                       {summary}
+                    </div>
+                    <div className="flex items-center gap-2 text-base leading-6 font-medium">
+                      <Tag text={category} />
+                      <span className="text-gray-400 dark:text-gray-500">|</span>
+                      <Link
+                        href={`/${path}`}
+                        className="text-primary-600 hover:text-primary-700 dark:hover:text-primary-400 dark:hover:text-primary-300"
+                        aria-label={`Read more: "${title}"`}
+                      >
+                        Read more &rarr;
+                      </Link>
                     </div>
                   </div>
                 </article>
