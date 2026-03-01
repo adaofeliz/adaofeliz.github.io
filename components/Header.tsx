@@ -1,6 +1,5 @@
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
-import Image from '@/components/Image'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
@@ -15,9 +14,6 @@ const Header = () => {
     <header className={headerClass}>
       <Link href="/" aria-label={siteMetadata.headerTitle}>
         <div className="flex items-center justify-between">
-          <div className="mr-3 flex h-10 w-10 shrink-0">
-            <Image src="/static/images/logo.svg" alt="" width={40} height={40} />
-          </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
             <>
               <div className="h-6 text-2xl font-semibold sm:hidden">AMT</div>
