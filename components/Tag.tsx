@@ -12,7 +12,7 @@ const Tag = ({ text, className = '' }: Props) => {
     'text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300'
 
   return (
-    <Link href={`/blog?tag=${text}`} className={`${defaultStyles} ${className}`.trim()}>
+    <Link href={`/?tag=${text}`} className={`${defaultStyles} ${className}`.trim()}>
       {label}
     </Link>
   )

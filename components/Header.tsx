@@ -19,9 +19,12 @@ const Header = () => {
             <Image src="/static/images/logo.svg" alt="" width={40} height={40} />
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-2xl font-semibold sm:block">
-              {siteMetadata.headerTitle}
-            </div>
+            <>
+              <div className="h-6 text-2xl font-semibold sm:hidden">AMT</div>
+              <div className="hidden h-6 text-2xl font-semibold sm:block">
+                {siteMetadata.headerTitle}
+              </div>
+            </>
           ) : (
             siteMetadata.headerTitle
           )}

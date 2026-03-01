@@ -3,7 +3,7 @@ const siteMetadata = {
   title: "Adão's Morning Thoughts",
   author: 'Adão',
   headerTitle: "Adão's Morning Thoughts",
-  description: 'Personal blog about technology, fitness, and life.',
+  description: 'Personal blog about technology, fitness, life, and other stuff.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://www.adaofeliz.com',
