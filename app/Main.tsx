@@ -95,7 +95,7 @@ function HomeContent({ posts }: HomeProps) {
 
   return (
     <>
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="divide-y-0">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             Personal blog about{' '}
