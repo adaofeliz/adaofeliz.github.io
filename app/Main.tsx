@@ -17,6 +17,47 @@ interface HomeProps {
   posts: CoreContent<Blog>[]
 }
 
+function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
+  const WEEKS = 51
+
+  const weeks = useMemo(() => {
+    const result: { hasPost: boolean; weekStart: Date }[] = []
+    const today = new Date()
+    today.setHours(23, 59, 59, 999)
+
+    for (let i = WEEKS - 1; i >= 0; i--) {
+      const weekEnd = new Date(today.getTime() - i * 7 * 24 * 60 * 60 * 1000)
+      const weekStart = new Date(weekEnd.getTime() - 7 * 24 * 60 * 60 * 1000 + 1)
+
+      const hasPost = posts.some((post) => {
+        const postDate = new Date(post.date)
+        return postDate >= weekStart && postDate <= weekEnd
+      })
+
+      result.push({ hasPost, weekStart })
+    }
+    return result
+  }, [posts])
+
+  return (
+    <div
+      className="mt-6 flex w-full justify-between gap-[2px] sm:gap-1"
+      aria-label="Blog post activity tracker"
+    >
+      {weeks.map((week, idx) => {
+        const dateStr = week.weekStart.toISOString().split('T')[0]
+        return (
+          <div
+            key={idx}
+            className={`aspect-square flex-1 rounded-[2px] ${week.hasPost ? 'bg-green-500 dark:bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`}
+            title={week.hasPost ? `Posted week of ${dateStr}` : `No posts week of ${dateStr}`}
+          />
+        )
+      })}
+    </div>
+  )
+}
+
 function HomeContent({ posts }: HomeProps) {
   const searchParams = useSearchParams()
   const [postsPerPage] = useState(POSTS_PER_PAGE)
@@ -87,6 +128,7 @@ function HomeContent({ posts }: HomeProps) {
             </Link>{' '}
             stuff.
           </p>
+          <ActivityTracker posts={posts} />
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!filteredPosts.length && 'No posts found.'}
