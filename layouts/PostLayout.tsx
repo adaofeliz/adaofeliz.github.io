@@ -26,7 +26,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, tags, audio } = content
   const basePath = path.split('/')[0]
   const category = getPostCategory(tags)
 
@@ -78,6 +78,16 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+              {audio && (
+                <div className="pt-10 pb-2">
+                  <h2 className="mb-4 text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                    Listen to article
+                  </h2>
+                  <audio controls src={audio} className="w-full rounded-full">
+                    <track kind="captions" />
+                  </audio>
+                </div>
+              )}
               <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
             </div>
             <footer>
