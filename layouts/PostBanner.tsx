@@ -40,16 +40,18 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
             </div>
           </div>
           {audio && (
-            <div className="pt-10 pb-2">
-              <h2 className="mb-4 text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
+            <div className="pt-10 pb-4">
+              <h2 className="mb-2 text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                 Listen to article
               </h2>
-              <audio controls src={audio} className="w-full rounded-full">
+              <audio controls src={audio} className="h-10 w-full rounded-full">
                 <track kind="captions" />
               </audio>
             </div>
           )}
-          <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
+          <div className={`prose dark:prose-invert max-w-none pb-4 ${audio ? 'pt-2' : 'pt-4'}`}>
+            {children}
+          </div>
           {siteMetadata.comments && (
             <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
               <Comments slug={slug} />
