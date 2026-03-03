@@ -150,8 +150,7 @@ function HomeContent({ posts }: HomeProps) {
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">
                         <div>
-                          <h2 className="flex items-center text-2xl leading-8 font-bold tracking-tight">
-                            {audio && <InlineAudio src={audio} />}
+                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
                             <Link
                               href={`/blog/${slug}`}
                               className="text-[#1e1e1e] dark:text-gray-100"
@@ -160,6 +159,7 @@ function HomeContent({ posts }: HomeProps) {
                             </Link>
                           </h2>
                         </div>
+                        {audio && <InlineAudio src={audio} />}
                         <div className="prose max-w-none text-gray-500 dark:text-gray-400">
                           {summary}
                         </div>

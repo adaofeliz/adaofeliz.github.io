@@ -5,6 +5,8 @@ import { useRef, useState, useEffect } from 'react'
 export default function InlineAudio({ src }: { src: string }) {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [duration, setDuration] = useState<number | null>(null)
+  const [currentTime, setCurrentTime] = useState<number>(0)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -13,15 +15,25 @@ export default function InlineAudio({ src }: { src: string }) {
     const handlePlay = () => setIsPlaying(true)
     const handlePause = () => setIsPlaying(false)
     const handleEnded = () => setIsPlaying(false)
+    const handleLoadedMetadata = () => setDuration(audio.duration)
+    const handleTimeUpdate = () => setCurrentTime(audio.currentTime)
 
     audio.addEventListener('play', handlePlay)
     audio.addEventListener('pause', handlePause)
     audio.addEventListener('ended', handleEnded)
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata)
+    audio.addEventListener('timeupdate', handleTimeUpdate)
+
+    if (audio.readyState >= 1) {
+      setDuration(audio.duration)
+    }
 
     return () => {
       audio.removeEventListener('play', handlePlay)
       audio.removeEventListener('pause', handlePause)
       audio.removeEventListener('ended', handleEnded)
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
+      audio.removeEventListener('timeupdate', handleTimeUpdate)
     }
   }, [])
 
@@ -38,22 +50,58 @@ export default function InlineAudio({ src }: { src: string }) {
     }
   }
 
+  const formatTime = (time: number | null) => {
+    if (time === null || isNaN(time)) return '--:--'
+    const minutes = Math.floor(time / 60)
+    const seconds = Math.floor(time % 60)
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`
+  }
+
+  // Calculate circular progress
+  const radius = 18
+  const circumference = 2 * Math.PI * radius
+  const progressPercent = duration ? currentTime / duration : 0
+  const strokeDashoffset = circumference - progressPercent * circumference
+
   return (
-    <div
-      className="relative mr-2 inline-flex items-center justify-center"
-      title="Listen to article"
-    >
+    <div className="mb-2 inline-flex items-center gap-2" title="Listen to article">
       <button
         onClick={togglePlay}
-        className="bg-primary-100 text-primary-600 hover:bg-primary-200 dark:bg-primary-900/40 dark:text-primary-400 dark:hover:bg-primary-900/60 focus:ring-primary-500 flex h-8 w-8 items-center justify-center rounded-full transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
+        className="text-primary-600 focus:ring-primary-500 dark:text-primary-400 group relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
         aria-label={isPlaying ? 'Pause audio' : 'Listen to article'}
       >
+        <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 40 40">
+          {/* Background circle */}
+          <circle
+            cx="20"
+            cy="20"
+            r={radius}
+            fill="transparent"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="group-hover:text-primary-100 dark:group-hover:text-primary-900/40 text-gray-200 transition-colors dark:text-gray-700"
+          />
+          {/* Progress circle */}
+          <circle
+            cx="20"
+            cy="20"
+            r={radius}
+            fill="transparent"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            className="transition-all duration-100 ease-linear"
+          />
+        </svg>
+
         {isPlaying ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="h-4 w-4"
+            className="relative z-10 h-4 w-4"
           >
             <path
               fillRule="evenodd"
@@ -66,7 +114,7 @@ export default function InlineAudio({ src }: { src: string }) {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="currentColor"
-            className="ml-0.5 h-4 w-4"
+            className="relative z-10 ml-0.5 h-4 w-4"
           >
             <path
               fillRule="evenodd"
@@ -76,7 +124,14 @@ export default function InlineAudio({ src }: { src: string }) {
           </svg>
         )}
       </button>
-      <audio ref={audioRef} src={src} preload="none" className="hidden">
+
+      <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+        {isPlaying || currentTime > 0
+          ? `${formatTime(currentTime)} / ${formatTime(duration)}`
+          : formatTime(duration)}
+      </span>
+
+      <audio ref={audioRef} src={src} preload="metadata" className="hidden">
         <track kind="captions" />
       </audio>
     </div>
