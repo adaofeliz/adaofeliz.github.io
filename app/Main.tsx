@@ -1,5 +1,7 @@
 'use client'
 
+import InlineAudio from '@/components/InlineAudio'
+
 import { useState, useMemo, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { CoreContent } from 'pliny/utils/contentlayer'
@@ -133,7 +135,7 @@ function HomeContent({ posts }: HomeProps) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!filteredPosts.length && 'No posts found.'}
           {displayPosts.map((post) => {
-            const { slug, date, title, summary, tags } = post
+            const { slug, date, title, summary, tags, audio } = post
             const category = getPostCategory(tags)
             return (
               <li key={slug} className="py-12">
@@ -148,7 +150,8 @@ function HomeContent({ posts }: HomeProps) {
                     <div className="space-y-5 xl:col-span-3">
                       <div className="space-y-6">
                         <div>
-                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
+                          <h2 className="flex items-center text-2xl leading-8 font-bold tracking-tight">
+                            {audio && <InlineAudio src={audio} />}
                             <Link
                               href={`/blog/${slug}`}
                               className="text-[#1e1e1e] dark:text-gray-100"
