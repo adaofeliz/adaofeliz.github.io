@@ -64,7 +64,7 @@ export default function InlineAudio({ src }: { src: string }) {
   const strokeDashoffset = circumference - progressPercent * circumference
 
   return (
-    <div className="mb-2 inline-flex items-center gap-2" title="Listen to article">
+    <div className="inline-flex items-center gap-2" title="Listen to article">
       <button
         onClick={togglePlay}
         className="text-primary-600 focus:ring-primary-500 dark:text-primary-400 group relative flex h-10 w-10 items-center justify-center rounded-full transition-colors focus:ring-2 focus:ring-offset-2 focus:outline-none"
