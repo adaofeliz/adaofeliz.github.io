@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import InlineAudio from '@/components/InlineAudio'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Link from '@/components/Link'
@@ -81,12 +82,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div>
                 {audio && (
                   <div className="pt-10 pb-4">
-                    <h2 className="mb-2 text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
-                      Listen to article
-                    </h2>
-                    <audio controls src={audio} className="h-10 w-full rounded-full">
-                      <track kind="captions" />
-                    </audio>
+                    <InlineAudio src={audio} />
                   </div>
                 )}
                 <div
