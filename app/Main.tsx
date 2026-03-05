@@ -43,7 +43,7 @@ function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
 
   return (
     <div
-      className="mt-6 flex w-full justify-between gap-[2px] sm:gap-1"
+      className="mt-6 flex w-full justify-between gap-[2px] rounded-sm border border-gray-200 bg-gray-50 p-1 sm:gap-1 dark:border-gray-800 dark:bg-gray-950"
       aria-label="Blog post activity tracker"
     >
       {weeks.map((week, idx) => {
@@ -51,7 +51,7 @@ function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
         return (
           <div
             key={idx}
-            className={`aspect-square flex-1 rounded-[2px] ${week.hasPost ? 'bg-green-500 dark:bg-green-500' : 'bg-gray-200 dark:bg-gray-700'}`}
+            className={`h-2 flex-1 rounded-[1px] ${week.hasPost ? 'bg-primary-500 dark:bg-primary-500' : 'bg-gray-200 dark:bg-gray-800'}`}
             title={week.hasPost ? `Posted week of ${dateStr}` : `No posts week of ${dateStr}`}
           />
         )

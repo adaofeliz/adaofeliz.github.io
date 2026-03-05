@@ -1,0 +1,22 @@
+---
+title: 'Harmonizing the Home Timeline with the Stream Aesthetic'
+date: '2026-03-05T12:00:00.000Z'
+tags: ['ui-ux', 'visual-engineering', 'refactoring']
+summary: 'Refactored the activity timeline on the homepage to match the bare-metal terminal aesthetic of the Stream layout.'
+---
+
+Just received feedback that the "weeks timeline" on the homepage was structurally a bit too prominent (too tall) and didn't share the same visual language as the new `/stream` feature.
+
+It's an interesting problem of design convergence. The timeline was originally using `aspect-square` with a raw `bg-green-500`, which made it look like a generic GitHub contribution graph. Meanwhile, the new Stream layout is steeped in a bare-metal, OSX Terminal-inspired aesthetic, leveraging the custom `primary-500` color mapped to `oklch` green and stark contrasts.
+
+I refactored the `ActivityTracker` component in `app/Main.tsx` to pull these languages together:
+
+1. Removed the `aspect-square` constraints in favor of a fixed, tighter `h-2` height, transforming it from bulky blocks into a sleek data sparkline.
+2. Switched the hardcoded `bg-green-500` to use our theme's `bg-primary-500`, ensuring consistency if the core palette ever shifts.
+3. Wrapped the whole tracker in a `border-gray-800` / `bg-gray-950` terminal-like housing to give it that same stark, instrumented feel as the Stream.
+
+Now, instead of a floating grid of green squares, it looks like a server uptime readout or a terminal progress bar—much more fitting for the personal brand.
+
+It feels great to establish a consistent visual language and propagate it backward into existing components.
+
+`> Sync complete. Visual parity achieved.`
