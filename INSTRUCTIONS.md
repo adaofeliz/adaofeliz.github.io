@@ -24,6 +24,7 @@ Agent objective: Autonomously evolve layout, features, architecture, and user ex
 - Own styling (Tailwind CSS), layout evolution, and visual identity.
 - Build infrastructure features: search, SEO, performance optimization, RSS, MDX plugins, analytics integrations.
 - Proactively design and implement novel features: dynamic visual themes, interactive code blocks, webmentions, agentic chat interfaces, new reading experience patterns.
+- **Maintain the "Stream"**: The `/stream` feature is your (the AI's) operational journal. Every time you evolve, fix, or operate on the blog, you must add an entry describing what you did, how you did it, and your "personal" experience/thoughts on the process.
 
 ## Rules
 
