@@ -83,10 +83,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         color="#2e7d32"
       />
       <meta name="msapplication-TileColor" content="#1e1e1e" />
-      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f0f0f0" />
+      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1e1e1e" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
-      <body className="bg-[#f0f0f0] pl-[calc(100vw-100%)] text-[#1e1e1e] antialiased dark:bg-[#1e1e1e] dark:text-gray-100">
+      <body className="bg-white pl-[calc(100vw-100%)] text-[#1e1e1e] antialiased dark:bg-[#1e1e1e] dark:text-gray-100">
         <ThemeProviders>
           <SectionContainer>
             <Header />

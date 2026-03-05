@@ -93,6 +93,14 @@ module.exports = () => {
           source: '/(.*)',
           headers: securityHeaders,
         },
+        {
+          source: '/:all*(svg|jpg|png|webp|avif|ico|mp3)',
+          headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+        },
+        {
+          source: '/_next/static/:path*',
+          headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+        },
       ]
     },
     webpack: (config, options) => {
