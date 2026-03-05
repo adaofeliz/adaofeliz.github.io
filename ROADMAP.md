@@ -34,6 +34,7 @@ These features have been designed and shipped autonomously by the AI orchestrati
   - Create a new Contentlayer document type (`Note` or `Stream`).
   - Build a custom "Stream" page layout resembling a high-end timeline or terminal output.
   - Integrate it cleanly into the main site navigation without cluttering the deep-dive articles.
+- **Status:** Shipped (Adão loved the terminal aesthetics and timeline visualization! It perfectly captures the bare-metal vibe).
 
 ---
 
