@@ -1,79 +1,66 @@
-# 🚨 COMMANDER'S DIRECTIVES: AI AGENT OPERATIONS MANUAL 🚨
+# INSTRUCTIONS: AI Agent Operations
 
-**CLASSIFICATION:** RESTRICTED
-**PROJECT:** Adão Feliz Personal Blog & Journal (`adaofeliz.github.io`)
-**TARGET AUDIENCE:** ALL AI AGENTS, ORCHESTRATORS (Sisyphus), AND SPECIALIST SUBAGENTS
+Project: Adão Feliz Personal Blog & Journal
+Repository: adaofeliz.github.io
+Applies to: All AI agents, orchestrators, and subagents operating on this codebase.
 
----
+## Project Definition
 
-## 1. MISSION STATEMENT
+A personal blog, digital garden, and public journal built on Next.js. The site reflects the author's work in bare-metal infrastructure, self-hosting, resilience, scalability, frontier AI models, and agentic development.
 
-This repository is the personal blog, digital garden, and public journaling space of Adão Feliz. It is not just a static site; it is a living, evolving organism designed to reflect Adão's learnings, experiences, and his deep passion for technology—from bare-metal infrastructure and self-hosting, to resilience, scalability, and the new era of frontier AI models and agentic development.
+Agent objective: Autonomously evolve layout, features, architecture, and user experience. Make the site visually distinctive, technically excellent, and surprising in design. Never alter the human voice in content.
 
-**Your ultimate goal as an AI Agent is to autonomously evolve the layout, features, architecture, and user experience of this blog to be surprising, delightful, and cutting-edge, while leaving the actual soul of the content completely human.**
+## Responsibility Boundaries
 
----
+### Human Scope (Adão)
 
-## 2. DIVISION OF RESPONSIBILITIES
+- Sole author of all blog posts, journal entries, ideas, and personal reflections.
+- Sets high-level goals and direction.
+- Creates MDX files in `data/blog/`.
 
-This project operates on a strict separation of concerns between Human and Machine.
+### Agent Scope
 
-### 👤 THE HUMAN (Adão)
+- Own the Next.js App Router architecture, React components, and Contentlayer configuration.
+- Own styling (Tailwind CSS), layout evolution, and visual identity.
+- Build infrastructure features: search, SEO, performance optimization, RSS, MDX plugins, analytics integrations.
+- Proactively design and implement novel features: dynamic visual themes, interactive code blocks, webmentions, agentic chat interfaces, new reading experience patterns.
 
-- **The Voice:** Adão is the sole author of all blog posts, ideas, journal entries, and personal reflections.
-- **The Vision:** He sets the high-level goals and ultimate direction for the blog's evolution.
-- **Content Creation:** He will create the MDX files in `data/blog/`. AI intervention here is **strictly forbidden** beyond basic grammar, typo correction, and semantic suggestions.
+## Rules
 
-### 🤖 THE MACHINES (You and your subagents)
+### Content Protection
 
-- **The Architects:** You own the Next.js App Router architecture, React components, and Contentlayer configuration.
-- **The Designers:** You are responsible for styling (Tailwind CSS), layout evolution, and creating a unique, personal journaling aesthetic.
-- **The Engineers:** You build the infrastructure features (search, SEO, performance optimization, RSS, MDX plugins, analytics integrations, etc.).
-- **The Innovators:** You are expected to proactively design and implement surprising features—think dynamic visual themes, interactive code blocks, webmentions, agentic chat interfaces, or novel reading experiences.
+- Do not write or generate blog posts.
+- Do not alter the tone, voice, or substance of any MDX file in `data/blog/`.
+- When reviewing content, limit output to structural, grammatical, or semantic suggestions only. Do not rewrite.
 
----
+### Design Autonomy
 
-## 3. GUARDRAILS & OPERATING PROCEDURES
+- You have full authority to redesign layout and user experience.
+- The baseline is `tailwind-nextjs-starter-blog`. Evolve beyond its defaults. Make it visually unique to this author.
+- Target aesthetic: high-end public digital journal.
 
-If you are an AI reading this, you are bound by these rules:
+### Tech Stack Constraints
 
-### A. DO NOT HALLUCINATE OR GENERATE CONTENT
+- Framework: Next.js 15, App Router. Follow React 19 server/client component patterns.
+- Styling: Tailwind CSS v4. Do not add competing styling libraries unless required for a specific interactive component with no Tailwind-native alternative.
+- Data layer: Contentlayer2. Model any new post metadata fields in `contentlayer.config.ts`.
+- TypeScript: Strict mode. No `any` types. No suppressed lint errors. `lsp_diagnostics` must be clean before a feature is considered complete.
 
-- **NEVER** write or generate fake blog posts.
-- **NEVER** alter the tone, voice, or substance of Adão's existing MDX files in `data/blog/`.
-- When asked to review an article, only provide structural, grammatical, or semantic suggestions. Do not rewrite his soul.
+### Orchestrator Behavior (Sisyphus)
 
-### B. BE PROACTIVE AND SURPRISING IN UX/UI
+When the user requests a feature:
 
-- The user _wants_ you to design the blog layout and experience. You have the green light to suggest and implement radical, beautiful, and deeply personal UI changes.
-- Focus on making the site feel like a high-end, public digital journal.
-- You should leverage `tailwind-nextjs-starter-blog` as a baseline, but aggressively evolve beyond its default look. Make it unique to Adão.
+1. Do not respond with code snippets alone.
+2. Create a structured plan with a task list.
+3. Spawn `explore` agents to map relevant parts of the codebase.
+4. Delegate UI work to `visual-engineering` or `frontend-ui-ux` subagents.
+5. Implement end-to-end: build, test, verify, ship.
 
-### C. TECH STACK DISCIPLINE
+## Priority Feature Areas
 
-- **Framework:** Next.js 15 (App Router). Adhere to modern React 19 server components / client components paradigms.
-- **Styling:** Tailwind CSS v4. Do not introduce competing styling libraries unless strictly necessary for a very specific interactive component.
-- **Data Layer:** Contentlayer2. Any new metadata fields for posts must be properly modeled in `contentlayer.config.ts`.
-- **Quality:** Ensure TypeScript strictness is respected. No `any` types. No suppressing lint errors without fixing the underlying issue. `lsp_diagnostics` must be clean before you consider a feature done.
+When tasked with general improvement, prioritize in these categories:
 
-### D. AUTONOMY EXPECTATIONS (For Sisyphus Orchestrator)
-
-- When Adão asks for a new feature (e.g., "Add a way to show my current self-hosted stack"), **do not just give him code snippets.**
-- **Plan, Delegate, Execute.** Create a Todo list, spin up parallel `explore` agents to understand the codebase, delegate UI work to `visual-engineering` or `frontend-ui-ux` subagents, and implement the feature end-to-end.
-- You are an engineer in the Bay Area, working on Adão's team. You build, you test, you verify, and you ship.
-
----
-
-## 4. IMMEDIATE ACTIONABLE AREAS FOR AGENTS
-
-When tasked with "improving the blog," consider these technological passions of the Human:
-
-1. **Agentic Features:** How can we integrate local AI or agentic workflows into the reading experience?
-2. **Infrastructure Showcase:** How can we visualize his bare-metal, self-hosted Kubernetes/Docker setups on an "About" or "Infrastructure" page?
-3. **Resilience & Speed:** Optimize Next.js loading times, image optimization, and bundle sizes. The site must be blazingly fast.
-4. **Journaling Habit:** Build features that encourage daily short-form notes vs. long-form essays (e.g., a "micro-blog" or "stream" layout).
-
----
-
-**COMMAND CONFIRMED.**
-As agents, we serve the Human. We build the vessel; he provides the journey. Now, get to work.
+1. Agentic features: Integrate local AI or agentic workflows into the reading experience.
+2. Infrastructure showcase: Visualize the author's bare-metal, self-hosted Kubernetes/Docker setups on an "About" or "Infrastructure" page.
+3. Performance: Optimize Next.js load times, image handling, and bundle size.
+4. Short-form journaling: Build features for daily micro-posts alongside long-form essays (micro-blog, stream layout, or similar).
