@@ -43,15 +43,16 @@ function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
 
   return (
     <div
-      className="mt-6 flex w-full justify-between gap-[2px] rounded-sm border border-gray-200 bg-gray-50 p-1 sm:gap-1 dark:border-gray-800 dark:bg-gray-950"
+      className="mt-6 flex w-full justify-between gap-[2px] sm:gap-1"
       aria-label="Blog post activity tracker"
     >
       {weeks.map((week, idx) => {
         const dateStr = week.weekStart.toISOString().split('T')[0]
+        const isCurrentWeek = idx === weeks.length - 1
         return (
           <div
             key={idx}
-            className={`h-2 flex-1 rounded-[1px] ${week.hasPost ? 'bg-primary-500 dark:bg-primary-500' : 'bg-gray-200 dark:bg-gray-800'}`}
+            className={`h-2 flex-1 rounded-[1px] ${week.hasPost ? 'bg-primary-500 dark:bg-primary-500' : 'bg-gray-200 dark:bg-gray-800'} ${isCurrentWeek ? 'bg-primary-500 dark:bg-primary-500 animate-pulse' : ''}`}
             title={week.hasPost ? `Posted week of ${dateStr}` : `No posts week of ${dateStr}`}
           />
         )

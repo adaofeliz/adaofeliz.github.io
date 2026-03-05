@@ -32,16 +32,16 @@ export default function StreamPage() {
                   <span className="group-hover:bg-primary-500 h-2 w-2 rounded-full bg-gray-400 transition-colors dark:bg-gray-600"></span>
                 </span>
 
-                <div className="mb-2 flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                  <h3 className="flex items-center gap-2 text-xl font-bold text-gray-900 dark:text-gray-100">
-                    <span className="text-primary-500 text-sm font-normal">
-                      [{idx.toString().padStart(3, '0')}]
-                    </span>
-                    {stream.title}
-                  </h3>
-                  <time className="mt-1 text-sm text-gray-500 sm:mt-0 dark:text-gray-400">
+                <div className="mb-2 flex flex-col">
+                  <time className="mb-1 text-sm text-gray-500 dark:text-gray-400">
                     {formatDate(stream.date, siteMetadata.locale)}
                   </time>
+                  <h3 className="flex items-baseline gap-2 text-xl font-bold text-gray-900 dark:text-gray-100">
+                    <span className="text-primary-500 text-sm font-normal">
+                      [{String(sortedStreams.length - 1 - idx).padStart(3, '0')}]
+                    </span>
+                    <span className="leading-tight">{stream.title}</span>
+                  </h3>
                 </div>
 
                 {stream.tags && stream.tags.length > 0 && (
