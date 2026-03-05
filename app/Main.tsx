@@ -2,7 +2,7 @@
 
 import InlineAudio from '@/components/InlineAudio'
 
-import { useState, useMemo, Suspense } from 'react'
+import { useEffect, useState, useMemo, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
@@ -21,9 +21,24 @@ interface HomeProps {
 
 function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
   const WEEKS = 51
+  const [mounted, setMounted] = useState(false)
+
+  // Use useEffect to ensure we only render accurate dates on the client
+  // During SSR, render blank skeleton to avoid Date.now() hydration mismatches
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const weeks = useMemo(() => {
-    const result: { hasPost: boolean; weekStart: Date }[] = []
+    const result: { hasPost: boolean; weekStart: Date | null }[] = []
+
+    if (!mounted) {
+      for (let i = 0; i < WEEKS; i++) {
+        result.push({ hasPost: false, weekStart: null })
+      }
+      return result
+    }
+
     const today = new Date()
     today.setHours(23, 59, 59, 999)
 
@@ -39,7 +54,7 @@ function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
       result.push({ hasPost, weekStart })
     }
     return result
-  }, [posts])
+  }, [posts, mounted])
 
   return (
     <div
@@ -47,13 +62,21 @@ function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
       aria-label="Blog post activity tracker"
     >
       {weeks.map((week, idx) => {
-        const dateStr = week.weekStart.toISOString().split('T')[0]
-        const isCurrentWeek = idx === weeks.length - 1
+        const dateStr = week.weekStart ? week.weekStart.toISOString().split('T')[0] : ''
+        const isCurrentWeek = mounted && idx === weeks.length - 1
         return (
           <div
             key={idx}
-            className={`h-2 flex-1 rounded-[1px] ${week.hasPost ? 'bg-primary-500 dark:bg-primary-500' : 'bg-gray-200 dark:bg-gray-800'} ${isCurrentWeek ? 'bg-primary-500 dark:bg-primary-500 animate-pulse' : ''}`}
-            title={week.hasPost ? `Posted week of ${dateStr}` : `No posts week of ${dateStr}`}
+            className={`h-2 flex-1 rounded-[1px] ${
+              week.hasPost ? 'bg-primary-500 dark:bg-primary-500' : 'bg-gray-200 dark:bg-gray-800'
+            } ${isCurrentWeek ? 'bg-primary-500 dark:bg-primary-500 animate-pulse' : ''}`}
+            title={
+              week.weekStart
+                ? week.hasPost
+                  ? `Posted week of ${dateStr}`
+                  : `No posts week of ${dateStr}`
+                : 'Loading...'
+            }
           />
         )
       })}

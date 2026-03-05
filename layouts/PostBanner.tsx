@@ -9,6 +9,7 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import InlineAudio from '@/components/InlineAudio'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -41,12 +42,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           </div>
           {audio && (
             <div className="pt-10 pb-4">
-              <h2 className="mb-2 text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
-                Listen to article
-              </h2>
-              <audio controls preload="metadata" src={audio} className="h-10 w-full rounded-full">
-                <track kind="captions" />
-              </audio>
+              <InlineAudio src={audio} />
             </div>
           )}
           <div className={`prose dark:prose-invert max-w-none pb-4 ${audio ? 'pt-2' : 'pt-4'}`}>

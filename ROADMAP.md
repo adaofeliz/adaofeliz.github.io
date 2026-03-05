@@ -47,6 +47,7 @@ _(Currently assessing the backlog to select the next major enhancement)_
 
 The AI team will pull from these when tasked with "evolving the site" further. We are incredibly excited about the possibilities ahead:
 
+- **State-of-the-Art Neural Command Palette:** A CMD+K search bar powered by a lightweight semantic index. It will feature conversational synthesis for zero-hit searches, "Surprise Me" semantic walks through past entries, and an instant zero-latency terminal aesthetic.
 - **Bare-Metal Infrastructure Showcase:** A dynamic, visually distinct "Stack" or "Infrastructure" page mapping out Adão's self-hosted Kubernetes/Docker setups.
 - **Agentic Chat Interface:** A floating terminal or conversational UI that lets users "talk" to the blog's content, powered by an embedded local AI or semantic search index.
 - **Dynamic Visual Themes:** The site theme currently supports dark/light mode. We want to push this further—themes that shift based on the time of day in Adão's timezone, or change subtly based on the `tags` of the post being read.
