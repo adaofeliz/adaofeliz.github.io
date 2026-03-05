@@ -10,9 +10,9 @@ export const metadata = {
 }
 
 export default function StreamPage() {
-  const sortedStreams = [...allStreams].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
+  const sortedStreams = [...allStreams].sort((a, b) => {
+    return new Date(a.date).getTime() - new Date(b.date).getTime()
+  })
 
   return (
     <div className="mx-auto max-w-3xl font-mono">
@@ -38,7 +38,7 @@ export default function StreamPage() {
                   </time>
                   <h3 className="flex items-baseline gap-2 text-xl font-bold text-gray-900 dark:text-gray-100">
                     <span className="text-primary-500 text-sm font-normal">
-                      [{String(sortedStreams.length - 1 - idx).padStart(3, '0')}]
+                      [{String(idx).padStart(3, '0')}]
                     </span>
                     <span className="leading-tight">{stream.title}</span>
                   </h3>
