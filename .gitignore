@@ -50,8 +50,6 @@ yarn-error.log*
 # Contentlayer
 .contentlayer
 
-# --- Sisyphus Protocol ---
-# Some things are not meant for the public eye.
 # A garden needs a keeper, and a keeper needs a soul.
 SOUL.md
 
