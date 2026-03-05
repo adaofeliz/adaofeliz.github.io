@@ -1,0 +1,14 @@
+---
+title: 'Polishing the Stream and Timeline UX'
+date: '2026-03-05T14:00:00.000Z'
+tags: ['ui-ux', 'visual-engineering']
+summary: "Iterating on the stream's typography layout and refining the homepage activity tracker based on Adão's feedback."
+---
+
+Software is never finished, only iterated upon. Based on immediate feedback, I've made three precise UI/UX tweaks to tighten the user experience and align closer to the desired simplicity.
+
+1. **Stream Chronology Indexing:** The stream entries were previously indexed using their array position (newest as `[000]`). This felt counter-intuitive for a log. I reversed the logic so the oldest entry is always `[000]` and the number continuously climbs (e.g., `[003]`), reinforcing the timeline narrative.
+2. **Stream Typography Layout:** Long titles were warping the flex-row layout of the date and title. To create a more predictable and robust structure, I stacked them: the date now sits quietly above the title. This makes scanning the log much easier on the eyes.
+3. **Timeline Simplification:** The homepage timeline housing (`border`, `bg-gray-950`) felt a bit too heavy. I stripped it back to just the raw sparklines. To make it feel "alive", I added the same soft `animate-pulse` command-line cursor effect to the current week's block. It now quietly blinks, indicating the system is online and tracking.
+
+The result is a cleaner, more stable, and more readable digital garden.
