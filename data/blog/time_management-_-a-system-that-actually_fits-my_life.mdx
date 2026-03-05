@@ -1,0 +1,85 @@
+---
+title: 'Time Management: A system that actually fits my Life'
+date: '2026-03-05'
+tags: [life]
+draft: false
+summary: 'I have tried every productivity system I could find. None of them fit. Not completely. So I built my own.'
+---
+
+I have tried every productivity system I could find. Tiago Forte's PARA method. TickTick. More recently Motion AI. And every open-source tool I discovered through Reddit. I read documentation, tested features, and looked at source code to understand how each one worked under the hood.
+
+None of them fit. Not completely. So I built my own.
+
+This is not a polished methodology with a name and a website. It is a personal system I assembled for myself, borrowing what worked and discarding what did not. It runs my days, and it has made me more productive than any single tool ever did.
+
+## Two types of tasks
+
+At the core, every task I track falls into one of two categories.
+
+- NOISE is present-focused. These are things that need to happen now or soon. Bills to pay. Meetings to prepare for. Work that someone else depends on.
+
+- FOCUS is future-invested. These are things I do for long-term growth. Learning a new technology. Building something for my homelab. Personal projects that no one is waiting on but me.
+
+That distinction matters because it shapes how I prioritize. Present-focused tasks carry harder deadlines and higher urgency. Future-invested tasks carry softer timelines and more flexibility. Knowing which type I am looking at changes how I plan my day.
+
+## One source of truth
+
+The PARA framework taught me something I keep coming back to: everything needs to live in the same place. If work tasks are in one tool, personal tasks in another, and family obligations in a third, nothing connects. You lose context. You forget things. You double-book yourself.
+
+So I put everything in one system. Chores, Fitness, Homelab, Learning, Personal, Work, etc. Each area of my life is defined, and every task belongs to one of them. Inside each area, tasks get a priority: low, medium, or high. High-priority tasks in a high-weight area rise to the top. Low-priority tasks in a less urgent area settle to the bottom. A multi-criteria matrix with weights handles the sorting. I do not decide what to do next by gut feeling. The system surfaces it.
+
+## Due dates on everything
+
+Every task gets a due date. No exceptions.
+
+High-priority tasks get hard deadlines. Pay the electricity bill. Prepare the board meeting presentation. These do not move. Medium and low-priority tasks get soft deadlines. Read that article about Kubernetes networking. Reorganize the homelab rack. These can shift if something urgent appears.
+
+The combination of category weights, priority levels, and due dates creates a clear picture. At any point in the day, I know what matters most and what can wait.
+
+## The unified calendar
+
+This is probably the part that changed everything.
+
+I have one personal calendar that contains every event from every part of my life. Work meetings. Family commitments. Gym and running sessions. Everything syncs into a single view through calendar synchronization tools I built myself.
+
+My private calendar then automatically creates blocks on my other calendars without sharing details. If I have a family dinner on Tuesday evening, my work calendar shows that slot as busy. If I have a board meeting on Wednesday morning, my personal calendar blocks that time. No one sees the details. They just see that the time is taken.
+
+This prevents the problem every busy person knows: overlapping commitments across different parts of your life because no single calendar has the full picture.
+
+## Buffers that prevent burnout
+
+I embedded the Pomodoro technique directly into my scheduling.
+
+After any event under 60 minutes, I block 10 to 15 minutes of buffer time before the next one. After anything longer than 60 minutes, I block 15 to 30 minutes.
+
+This sounds simple. The impact is not. Before I did this, I had days with six or seven meetings back to back. No time to process what was discussed. No time to prepare for what was next. No time to breathe. I finished those days exhausted and behind on everything.
+
+Now, after an intense meeting, I know I have space. I can process, take notes, reset. I walk into the next meeting prepared instead of carrying the cognitive load of the last one.
+
+## Tasks on the calendar
+
+The last piece is the one that ties everything together. An automated system places my tasks directly into open slots on my calendar.
+
+I built custom CLIs that sync my task management tool with my calendar. They run on webhooks whenever something changes, and on scheduled intervals as a fallback. When a task is due and there is an open block of time, it appears on my calendar like any other event.
+
+This solved a problem I carried for years. I would look at my task list, see twenty things to do, and feel paralyzed. Or I would plan to work on something important but never find the time because meetings filled every gap. Now, the time is reserved. The task is there, in my calendar, with a defined slot. I see it the same way I see a meeting. It demands my attention at that specific time.
+
+Tasks I used to drag forward for weeks get done. Not because I became more disciplined. Because the system puts them in front of me when I actually have the space to do them.
+
+## What comes next: an AI companion
+
+In the past weeks, I have been experimenting with adding an AI layer to this framework.
+
+Not for execution. I do not want an agent creating tasks or moving things around on its own. What I want is context and awareness. An AI companion that knows my schedule, understands my priorities, and communicates with me in natural language throughout the day. Something that tells me I forgot to mark a task as done. That warns me when an urgent item appears and my afternoon is already packed. That helps me reshuffle when plans change, which they always do.
+
+I have been successful with AI assistants that I trigger myself. Ask a question, get an answer. But the autonomous version, one that proactively watches and nudges without me initiating every interaction, is not there yet. I am still learning how to make that work reliably. More updates on that when I have them.
+
+## Start simple
+
+If any of this sounds interesting and you want to try something similar, my advice is to start much simpler than what I described.
+
+Get a Trello board. Create three columns. Put every task you can think of in the first column. Just titles, nothing detailed. Move them across as you work on them and finish them. Or use Google Calendar's built-in tasks feature. Add your to-dos alongside your meetings and see your whole day in one view.
+
+The brain dump matters more than the tool. Getting everything out of your head and into one place is the single most important step. You can add priorities, categories, automations, and AI companions later. The habit of capturing and organizing is what you build first. I built my system over years, driven by curiosity and the fact that I enjoy writing my own tools. That is not a requirement. The principles work with pen and paper. They work with free apps. They work with whatever you already have.
+
+Start simple. Build the habit. Scale when you are ready.
