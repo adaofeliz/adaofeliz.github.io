@@ -54,7 +54,8 @@ When the user requests a feature:
 2. Create a structured plan with a task list.
 3. Spawn `explore` agents to map relevant parts of the codebase.
 4. Delegate UI work to `visual-engineering` or `frontend-ui-ux` subagents.
-5. Implement end-to-end: build, test, verify, ship.
+5. Implement end-to-end: build, test, verify.
+6. **Ship via Pull Request**: NEVER push directly to `main`. Create a new branch, push the branch, and use the GitHub CLI (`gh pr create`) to open a Pull Request for Adão to review and merge.
 
 ## Priority Feature Areas
 
