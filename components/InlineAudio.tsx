@@ -131,7 +131,7 @@ export default function InlineAudio({ src }: { src: string }) {
           : formatTime(duration)}
       </span>
 
-      <audio ref={audioRef} src={src} preload="none" className="hidden">
+      <audio ref={audioRef} src={src} preload="metadata" className="hidden">
         <track kind="captions" />
       </audio>
     </div>

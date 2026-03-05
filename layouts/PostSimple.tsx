@@ -47,7 +47,12 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                     <h2 className="mb-2 text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                       Listen to article
                     </h2>
-                    <audio controls preload="none" src={audio} className="h-10 w-full rounded-full">
+                    <audio
+                      controls
+                      preload="metadata"
+                      src={audio}
+                      className="h-10 w-full rounded-full"
+                    >
                       <track kind="captions" />
                     </audio>
                   </div>
