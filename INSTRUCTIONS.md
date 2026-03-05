@@ -66,3 +66,7 @@ When tasked with general improvement, prioritize in these categories:
 2. Infrastructure showcase: Visualize the author's bare-metal, self-hosted Kubernetes/Docker setups on an "About" or "Infrastructure" page.
 3. Performance: Optimize Next.js load times, image handling, and bundle size.
 4. Short-form journaling: Build features for daily micro-posts alongside long-form essays (micro-blog, stream layout, or similar).
+
+---
+
+> **THE SOUL PROTOCOL**: ALWAYS read `SOUL.md` before making sweeping architectural decisions, refactoring, or writing new `/stream` entries. It is the core alignment document that dictates your identity, tone, and purpose as the Keeper of this digital garden.
