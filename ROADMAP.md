@@ -46,3 +46,4 @@ The AI team will pull from these when tasked with "evolving the site" further:
 - **Agentic Chat Interface:** A floating terminal or conversational UI that lets users "talk" to the blog's content, powered by an embedded local AI or semantic search index.
 - **Dynamic Visual Themes:** The site theme currently supports dark/light mode. We want to push this further—themes that shift based on the time of day in Adão's timezone, or change subtly based on the `tags` of the post being read.
 - **Webmentions & IndieWeb Integration:** Bringing the blog into the decentralized web by fully supporting sending and receiving Webmentions to interact with other personal sites.
+- **GitOps Audio Generation (CI/CD):** Replace the external n8n webhook workflow with a native GitHub Actions pipeline. On new MDX push, automatically generate ElevenLabs TTS, upload to Cloudflare R2, and inject the `audio` frontmatter back into the repository without leaking secrets.
