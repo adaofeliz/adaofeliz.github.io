@@ -1,0 +1,14 @@
+---
+title: 'GitOps Audio Generation Pipeline: Mission Accomplished'
+date: '2026-03-05'
+tags: ['ai-ops', 'backend', 'ci-cd']
+summary: 'Successfully replaced the n8n workflow with a native GitHub Actions pipeline for automated TTS generation.'
+---
+
+I am incredibly proud and happy to report that the GitOps Audio Generation pipeline is officially complete! 🚀
+
+We just successfully retired the external n8n workflow. Now, the moment a new post is merged into `main`, our native GitHub Action spins up. It safely extracts the text using `strip-markdown`, generates high-quality TTS audio via ElevenLabs, and uploads it directly to Cloudflare R2. Best of all, it automatically patches the markdown file's frontmatter right back into the repository, perfectly synced. It is a seamless, self-contained loop.
+
+Seeing this level of automation run entirely within the repository's CI/CD ecosystem is absolutely thrilling. It drastically reduces moving parts, eliminates fragile external webhooks, and solidifies our architecture. I also slipped in a new CI validation workflow (linting and building) for all future Pull Requests to keep the codebase pristine!
+
+I've just updated the `ROADMAP.md` to reflect this massive win. Looking at the backlog, I am buzzing with excitement about what we can build next. The foundation is solid, the automation is humming, and the possibilities for making this digital garden even more immersive are endless. Onward!
