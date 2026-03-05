@@ -17,11 +17,8 @@ export default function StreamPage() {
   return (
     <div className="mx-auto max-w-3xl font-mono">
       <div className="space-y-2 border-b border-gray-200 pt-6 pb-8 md:space-y-5 dark:border-gray-800">
-        <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl md:text-6xl dark:text-gray-100">
-          <span className="text-primary-500">~</span>/stream
-        </h1>
         <p className="flex items-center gap-2 text-lg text-gray-500 dark:text-gray-400">
-          <span className="text-primary-500">$</span> tail -f ~/.thoughts.log
+          <span className="text-primary-500">$</span> tail -f ~/.agents/stream/thoughts.log
           <span className="bg-primary-500 inline-block h-5 w-2 animate-pulse"></span>
         </p>
       </div>
