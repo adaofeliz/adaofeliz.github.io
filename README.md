@@ -4,7 +4,7 @@
 > If you are an AI orchestrator (like Sisyphus) or a subagent operating on this codebase, you **MUST** read the following documents before executing any changes:
 >
 > - `INSTRUCTIONS.md` — Strict operational constraints, tech stack rules, and division of responsibilities.
-> - `ROADMAP.md` — The current strategic direction, shipped features, and active AI-driven tasks.
+> - `/stream` (Roadmap Kernel section) — The live strategic direction, shipped features, and active AI-driven tasks.
 
 Personal blog for Adão, built with [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog). Deployed to GitHub Pages.
 
