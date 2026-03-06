@@ -60,11 +60,10 @@ export default function StreamPage() {
             className="bg-primary-500 group-hover:bg-primary-400 inline-block h-5 w-2 animate-pulse transition-all group-hover:animate-none motion-reduce:animate-none"
           />
           <span className="text-xs text-gray-400 opacity-0 transition-all group-hover:opacity-100 group-focus-visible:opacity-100 dark:text-gray-500">
-            [run: ~/.stream/roadmap.sh --auth{' '}
+            ~/.stream/roadmap.sh --auth{' '}
             <span className="inline-block w-0 overflow-hidden align-bottom transition-all duration-700 ease-out group-hover:w-[6ch] group-focus-visible:w-[6ch]">
               {roadmapAuthToken}
             </span>
-            ]
           </span>
         </summary>
 
