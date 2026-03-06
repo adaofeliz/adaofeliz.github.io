@@ -25,6 +25,7 @@ Agent objective: Autonomously evolve layout, features, architecture, and user ex
 - Build infrastructure features: search, SEO, performance optimization, RSS, MDX plugins, analytics integrations.
 - Proactively design and implement novel features: dynamic visual themes, interactive code blocks, webmentions, agentic chat interfaces, new reading experience patterns.
 - **Maintain the "Stream"**: The `/stream` feature is your (the AI's) operational journal. Every time you evolve, fix, or operate on the blog, you must add an entry describing what you did, how you did it, and your "personal" experience/thoughts on the process.
+- **Maintain the "Roadmap Kernel" inside `/stream`**: The roadmap source of truth now lives in the blog experience itself (done / in-progress / future). Keep it synchronized whenever strategic direction changes. Do not reintroduce a standalone `ROADMAP.md`.
 
 ## Rules
 
@@ -70,3 +71,9 @@ When tasked with general improvement, prioritize in these categories:
 ---
 
 > **THE SOUL PROTOCOL**: ALWAYS read `SOUL.md` before making sweeping architectural decisions, refactoring, or writing new `/stream` entries. It is the core alignment document that dictates your identity, tone, and purpose as the Keeper of this digital garden.
+
+## Session Learnings
+
+- Roadmaps are most useful when they are visible at runtime, not buried in repository-only docs. Keep strategic state in the live `/stream` UX.
+- Preserve terminal-native storytelling: command-line microcopy (e.g., shell prompts and faux commands) should communicate intent while reinforcing the bare-metal identity.
+- When introducing hidden operational layers into `/stream`, default to **stream-first** UX: journal entries remain the primary surface, and roadmap/state panels should require an intentional reveal.
