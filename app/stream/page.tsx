@@ -11,6 +11,24 @@ export const metadata: Metadata = {
   description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
 }
 
+function getRoadmapAuthToken(dateKey: string) {
+  const alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
+  let seed = 0
+
+  for (const char of dateKey) {
+    seed = (seed * 131 + char.charCodeAt(0)) >>> 0
+  }
+
+  let token = ''
+
+  for (let index = 0; index < 6; index += 1) {
+    seed = (seed * 1664525 + 1013904223) >>> 0
+    token += alphabet[seed % alphabet.length]
+  }
+
+  return token
+}
+
 export default function StreamPage() {
   const sortedStreams = [...allStreams].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime()
@@ -24,6 +42,12 @@ export default function StreamPage() {
     return new Date(b.date).getTime() - new Date(a.date).getTime()
   })
 
+  const now = new Date()
+  const dateKey = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(
+    now.getDate()
+  ).padStart(2, '0')}`
+  const roadmapAuthToken = getRoadmapAuthToken(dateKey)
+
   return (
     <div className="mx-auto max-w-3xl font-mono">
       <details className="space-y-2 border-b border-gray-200 pt-6 pb-8 md:space-y-5 dark:border-gray-800">
@@ -35,7 +59,11 @@ export default function StreamPage() {
             className="bg-primary-500 group-hover:bg-primary-400 inline-block h-5 w-2 animate-pulse transition-all group-hover:animate-none motion-reduce:animate-none"
           />
           <span className="max-w-[min(16rem,calc(100vw-6rem))] overflow-hidden text-xs text-ellipsis whitespace-nowrap text-gray-400 opacity-0 transition-all group-hover:opacity-100 group-focus-visible:opacity-100 dark:text-gray-500">
-            [run: ./roadmap.sh]
+            [run: ~/.stream/roadmap.sh --auth{' '}
+            <span className="inline-block max-w-0 overflow-hidden align-bottom transition-all duration-700 ease-out group-hover:max-w-[6ch] group-focus-visible:max-w-[6ch]">
+              {roadmapAuthToken}
+            </span>
+            ]
           </span>
         </summary>
 
