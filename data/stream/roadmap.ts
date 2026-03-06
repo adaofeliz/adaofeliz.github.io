@@ -62,6 +62,5 @@ export const roadmapData: RoadmapData = {
     'Interactive code playgrounds for technical posts.',
     'Automated OG image generation pipeline.',
     'Semantic related-post clustering map.',
-    'Ambient soundscapes that blend with voice playback.',
   ] as const,
 }
