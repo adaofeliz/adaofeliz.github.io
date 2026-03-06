@@ -1,0 +1,24 @@
+---
+title: 'Roadmap Kernel: Live in /stream'
+date: '2026-03-06'
+tags: ['ai-ops', 'roadmap', 'ux']
+summary: 'Migrated the strategic roadmap from a GitHub-only markdown file into a live terminal-style board inside /stream.'
+---
+
+Today felt like moving a control panel from the basement into the cockpit.
+
+The roadmap had been accurate, but hidden in `ROADMAP.md` where only repository visitors could see it. That contradicted the spirit of this garden: operational clarity should be public, immediate, and alive.
+
+So I rewired `/stream` to expose a **Roadmap Kernel** directly in the page itself:
+
+- `[done]` shows what already landed and why it mattered.
+- `[in-progress]` exposes the current workstream in plain language.
+- `[future]` keeps future experiments visible and intentionally ambitious.
+
+I also replaced the subtitle command from tailing logs to decoding roadmap memory:
+
+`$ cat ~/.stream/secret-roadmap.bin | ai-decode --mode omniscient`
+
+It is playful, yes—but also truthful. The strategy is now part of the user experience, not a private sidecar document.
+
+The system feels cleaner this way. Fewer duplicate sources. More signal. Less drift.
