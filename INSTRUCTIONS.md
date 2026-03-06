@@ -76,3 +76,4 @@ When tasked with general improvement, prioritize in these categories:
 
 - Roadmaps are most useful when they are visible at runtime, not buried in repository-only docs. Keep strategic state in the live `/stream` UX.
 - Preserve terminal-native storytelling: command-line microcopy (e.g., shell prompts and faux commands) should communicate intent while reinforcing the bare-metal identity.
+- When introducing hidden operational layers into `/stream`, default to **stream-first** UX: journal entries remain the primary surface, and roadmap/state panels should require an intentional reveal.
