@@ -12,8 +12,20 @@ export type RoadmapActiveItem = {
   stack: string
 }
 
-export const roadmapData = {
+export type RoadmapData = {
+  done: RoadmapDeliveredItem[]
+  inProgress: RoadmapActiveItem[]
+  future: readonly string[]
+}
+
+export const roadmapData: RoadmapData = {
   done: [
+    {
+      title: 'Roadmap Kernel inside /stream',
+      date: '2026-03-06',
+      why: 'Moved strategic planning out of GitHub-only docs and into the live blog experience with a hidden terminal reveal.',
+      stack: 'Stream page status board + shell-themed roadmap readout + daily auth hint',
+    },
     {
       title: 'GitOps Audio Generation Pipeline',
       date: '2026-03-05',
@@ -39,14 +51,7 @@ export const roadmapData = {
       stack: 'Contentlayer Stream type + terminal-inspired layout',
     },
   ] satisfies RoadmapDeliveredItem[],
-  inProgress: [
-    {
-      title: 'Roadmap Kernel inside /stream',
-      date: '2026-03-06',
-      why: 'Move strategic planning out of GitHub-only docs and into the live blog experience.',
-      stack: 'Stream page status board + shell-themed roadmap readout',
-    },
-  ] satisfies RoadmapActiveItem[],
+  inProgress: [] satisfies RoadmapActiveItem[],
   future: [
     'Neural command palette (CMD+K semantic search + conversational fallback).',
     'Bare-metal infrastructure showcase page for self-hosted stack visibility.',
