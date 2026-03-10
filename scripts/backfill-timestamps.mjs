@@ -90,8 +90,9 @@ function computeWordTimestamps(text, alignment) {
     const startTime = character_start_times_seconds[i]
     const endTime = character_end_times_seconds[i]
 
-    // Check if character is a word boundary (space, punctuation, etc.)
-    const isWordBoundary = /[\s\n\r.,!?;:'"()[\]{}—–-]/.test(char)
+    // Check if character is a word boundary (whitespace)
+    // We only split on whitespace to match the DOM tokenization exactly
+    const isWordBoundary = /\s/.test(char)
 
     if (isWordBoundary) {
       // Save current word if exists
@@ -134,13 +135,13 @@ function computeWordTimestamps(text, alignment) {
 /**
  * Check if a file needs backfilling (has audio but no audioTimestamps).
  */
-function needsBackfill(frontmatter) {
+function needsBackfill(frontmatter, force = false) {
   // Must have audio
   if (!frontmatter.audio) {
     return false
   }
-  // Must NOT have audioTimestamps
-  if (frontmatter.audioTimestamps) {
+  // Must NOT have audioTimestamps (unless forced)
+  if (frontmatter.audioTimestamps && !force) {
     return false
   }
   // Skip drafts
@@ -153,11 +154,11 @@ function needsBackfill(frontmatter) {
 /**
  * Process a single file: regenerate audio with timestamps.
  */
-async function processFile(filePath, dryRun = false) {
+async function processFile(filePath, dryRun = false, force = false) {
   const fileContent = await fs.readFile(filePath, 'utf-8')
   const parsed = matter(fileContent)
 
-  if (!needsBackfill(parsed.data)) {
+  if (!needsBackfill(parsed.data, force)) {
     return { status: 'skipped', reason: 'does not need backfill' }
   }
 
@@ -203,6 +204,12 @@ async function processFile(filePath, dryRun = false) {
   const formattedTimestamps = alignment
     ? computeWordTimestamps(sourceText, alignment)
     : { version: 1, words: [], sourceText }
+
+  // 3.5. Drop the title prefix words so the JSON indices align with the MDX body indices
+  const prefix = `=Title: ${title}.\n\n`
+  const prefixWordCount = prefix.split(/\s+/).filter(Boolean).length
+  formattedTimestamps.words = formattedTimestamps.words.slice(prefixWordCount)
+
   const timestampsKey = `${slug}-timestamps.json`
 
   console.log(`  Uploading timestamps to R2 as ${timestampsKey}...`)
@@ -234,10 +241,15 @@ async function processFile(filePath, dryRun = false) {
 async function main() {
   const args = process.argv.slice(2)
   const dryRun = args.includes('--dry-run')
+  const force = args.includes('--force')
 
   if (dryRun) {
     console.log('=== DRY RUN MODE ===')
     console.log('No changes will be made.\n')
+  }
+  if (force) {
+    console.log('=== FORCE MODE ===')
+    console.log('Will overwrite existing timestamps.\n')
   }
 
   // Scan blog directory
@@ -262,7 +274,7 @@ async function main() {
       const fileContent = await fs.readFile(file, 'utf-8')
       const parsed = matter(fileContent)
 
-      if (needsBackfill(parsed.data)) {
+      if (needsBackfill(parsed.data, force)) {
         results.toBackfill.push({
           file,
           title: parsed.data.title,
@@ -320,7 +332,7 @@ async function main() {
   for (const item of results.toBackfill) {
     console.log(`\nProcessing: ${item.file}`)
     try {
-      const result = await processFile(item.file, false)
+      const result = await processFile(item.file, false, force)
       if (result.status === 'success') {
         successCount++
         console.log(`  ✓ Success: ${result.wordCount} words timestamped`)

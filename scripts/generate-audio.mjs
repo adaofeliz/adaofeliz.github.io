@@ -90,8 +90,9 @@ function computeWordTimestamps(text, alignment) {
     const startTime = character_start_times_seconds[i]
     const endTime = character_end_times_seconds[i]
 
-    // Check if character is a word boundary (space, punctuation, etc.)
-    const isWordBoundary = /[\s\n\r.,!?;:'"()[\]{}—–-]/.test(char)
+    // Check if character is a word boundary (whitespace)
+    // We only split on whitespace to match the DOM tokenization exactly
+    const isWordBoundary = /\s/.test(char)
 
     if (isWordBoundary) {
       // Save current word if exists
@@ -218,6 +219,12 @@ async function processFile(filePath) {
   const formattedTimestamps = alignment
     ? computeWordTimestamps(sourceText, alignment)
     : { version: 1, words: [], sourceText }
+
+  // 3.5. Drop the title prefix words so the JSON indices align with the MDX body indices
+  const prefix = `=Title: ${title}.\n\n`
+  const prefixWordCount = prefix.split(/\s+/).filter(Boolean).length
+  formattedTimestamps.words = formattedTimestamps.words.slice(prefixWordCount)
+
   const timestampsKey = `${slug}-timestamps.json`
 
   console.log(`Uploading timestamps to R2 as ${timestampsKey}...`)
