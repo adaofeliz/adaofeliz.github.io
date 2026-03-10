@@ -185,11 +185,9 @@ async function processFile(filePath) {
     return false
   }
 
-  const title = parsed.data.title || 'Untitled'
   const plainTextContent = await extractPlainText(parsed.content)
 
-  // Format matching n8n logic
-  const textToRead = `=Title: ${title}.\n\n${plainTextContent}`
+  const textToRead = plainTextContent
   console.log(`Text to generate (first 100 chars): ${textToRead.substring(0, 100)}...`)
 
   // Ensure API keys are present
@@ -219,11 +217,6 @@ async function processFile(filePath) {
   const formattedTimestamps = alignment
     ? computeWordTimestamps(sourceText, alignment)
     : { version: 1, words: [], sourceText }
-
-  // 3.5. Drop the title prefix words so the JSON indices align with the MDX body indices
-  const prefix = `=Title: ${title}.\n\n`
-  const prefixWordCount = prefix.split(/\s+/).filter(Boolean).length
-  formattedTimestamps.words = formattedTimestamps.words.slice(prefixWordCount)
 
   const timestampsKey = `${slug}-timestamps.json`
 

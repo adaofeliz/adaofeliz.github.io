@@ -6,6 +6,7 @@ import { useAudioHighlight } from './AudioHighlightContext'
 export default function InlineAudio({ src }: { src: string }) {
   const highlightCtx = useAudioHighlight()
   const audioRef = useRef<HTMLAudioElement>(null)
+  const syncRafRef = useRef<number | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
   const [currentTime, setCurrentTime] = useState<number>(0)
@@ -14,29 +15,54 @@ export default function InlineAudio({ src }: { src: string }) {
     const audio = audioRef.current
     if (!audio) return
 
+    const stopSyncLoop = () => {
+      if (syncRafRef.current !== null) {
+        cancelAnimationFrame(syncRafRef.current)
+        syncRafRef.current = null
+      }
+    }
+
+    const syncCurrentTime = () => {
+      if (!audio.paused) {
+        highlightCtx?.setCurrentTime(audio.currentTime)
+        syncRafRef.current = requestAnimationFrame(syncCurrentTime)
+      } else {
+        stopSyncLoop()
+      }
+    }
+
+    const startSyncLoop = () => {
+      stopSyncLoop()
+      syncRafRef.current = requestAnimationFrame(syncCurrentTime)
+    }
+
     const handlePlay = () => {
       setIsPlaying(true)
       highlightCtx?.setIsPlaying(true)
+      startSyncLoop()
     }
     const handlePause = () => {
       setIsPlaying(false)
       highlightCtx?.setIsPlaying(false)
+      stopSyncLoop()
     }
     const handleEnded = () => {
       setIsPlaying(false)
       highlightCtx?.setIsPlaying(false)
+      stopSyncLoop()
     }
     const handleLoadedMetadata = () => setDuration(audio.duration)
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime)
-      highlightCtx?.setCurrentTime(audio.currentTime)
     }
+    const handleSeeked = () => highlightCtx?.setCurrentTime(audio.currentTime)
 
     audio.addEventListener('play', handlePlay)
     audio.addEventListener('pause', handlePause)
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('loadedmetadata', handleLoadedMetadata)
     audio.addEventListener('timeupdate', handleTimeUpdate)
+    audio.addEventListener('seeked', handleSeeked)
 
     if (audio.readyState >= 1) {
       setDuration(audio.duration)
@@ -48,8 +74,10 @@ export default function InlineAudio({ src }: { src: string }) {
       audio.removeEventListener('ended', handleEnded)
       audio.removeEventListener('loadedmetadata', handleLoadedMetadata)
       audio.removeEventListener('timeupdate', handleTimeUpdate)
+      audio.removeEventListener('seeked', handleSeeked)
+      stopSyncLoop()
     }
-  }, [])
+  }, [highlightCtx])
 
   const togglePlay = (e: React.MouseEvent) => {
     e.preventDefault()
