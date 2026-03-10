@@ -89,6 +89,7 @@ export const Blog = defineDocumentType(() => ({
     bibliography: { type: 'string' },
     canonicalUrl: { type: 'string' },
     audio: { type: 'string' },
+    audioTimestamps: { type: 'string' },
   },
   computedFields: {
     ...computedFields,

@@ -9,6 +9,8 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import InlineAudio from '@/components/InlineAudio'
+import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
+import HighlightableContent from '@/components/HighlightableContent'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -18,7 +20,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, next, prev, children }: LayoutProps) {
-  const { path, slug, date, title, audio } = content
+  const { path, slug, date, title, audio, audioTimestamps } = content
 
   return (
     <SectionContainer>
@@ -43,16 +45,18 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div>
-                {audio && (
-                  <div className="pt-10 pb-4">
-                    <InlineAudio src={audio} />
-                  </div>
+                {audio ? (
+                  <AudioHighlightProvider timestampUrl={audioTimestamps}>
+                    <div className="pt-10 pb-4">
+                      <InlineAudio src={audio} />
+                    </div>
+                    <div className="prose dark:prose-invert max-w-none pt-2 pb-8">
+                      <HighlightableContent>{children}</HighlightableContent>
+                    </div>
+                  </AudioHighlightProvider>
+                ) : (
+                  <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
                 )}
-                <div
-                  className={`prose dark:prose-invert max-w-none pb-8 ${audio ? 'pt-2' : 'pt-10'}`}
-                >
-                  {children}
-                </div>
               </div>
             </div>
             {siteMetadata.comments && (

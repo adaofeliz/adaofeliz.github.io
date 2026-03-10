@@ -132,56 +132,33 @@ function computeWordTimestamps(text, alignment) {
 }
 
 /**
- * Format timestamps into our standard format.
+ * Check if a file needs backfilling (has audio but no audioTimestamps).
  */
-function formatTimestamps(timestamps, sourceText) {
-  // If timestamps are already in word format [{text, start, end}]
-  if (timestamps.length > 0 && 'text' in timestamps[0]) {
-    return {
-      version: 1,
-      words: timestamps.map((t) => ({
-        word: t.text,
-        start: t.start,
-        end: t.end,
-      })),
-      sourceText,
-    }
+function needsBackfill(frontmatter) {
+  // Must have audio
+  if (!frontmatter.audio) {
+    return false
   }
-
-  // If timestamps are in character alignment format
-  if (timestamps.length > 0 && 'character' in timestamps[0]) {
-    const alignment = {
-      characters: timestamps.map((t) => t.character),
-      character_start_times_seconds: timestamps.map((t) => t.start_time || t.start),
-      character_end_times_seconds: timestamps.map((t) => t.end_time || t.end),
-    }
-    return computeWordTimestamps(sourceText, alignment)
+  // Must NOT have audioTimestamps
+  if (frontmatter.audioTimestamps) {
+    return false
   }
-
-  // Fallback: return empty timestamps
-  return {
-    version: 1,
-    words: [],
-    sourceText,
+  // Skip drafts
+  if (frontmatter.draft) {
+    return false
   }
+  return true
 }
 
-async function processFile(filePath) {
-  console.log(`Processing file: ${filePath}`)
-
+/**
+ * Process a single file: regenerate audio with timestamps.
+ */
+async function processFile(filePath, dryRun = false) {
   const fileContent = await fs.readFile(filePath, 'utf-8')
   const parsed = matter(fileContent)
 
-  // Skip if it already has an audio url
-  if (parsed.data.audio) {
-    console.log(`Skipping ${filePath} - audio already exists.`)
-    return false
-  }
-
-  // Skip drafts or non-blog posts
-  if (parsed.data.draft) {
-    console.log(`Skipping ${filePath} - draft post.`)
-    return false
+  if (!needsBackfill(parsed.data)) {
+    return { status: 'skipped', reason: 'does not need backfill' }
   }
 
   const title = parsed.data.title || 'Untitled'
@@ -189,7 +166,15 @@ async function processFile(filePath) {
 
   // Format matching n8n logic
   const textToRead = `=Title: ${title}.\n\n${plainTextContent}`
-  console.log(`Text to generate (first 100 chars): ${textToRead.substring(0, 100)}...`)
+
+  if (dryRun) {
+    return {
+      status: 'dry-run',
+      title,
+      textPreview: textToRead.substring(0, 100) + '...',
+      currentAudio: parsed.data.audio,
+    }
+  }
 
   // Ensure API keys are present
   if (!ELEVENLABS_API_KEY) {
@@ -197,14 +182,14 @@ async function processFile(filePath) {
   }
 
   // 1. Generate audio with timestamps via ElevenLabs
-  console.log('Calling ElevenLabs API with timestamps...')
+  console.log(`  Calling ElevenLabs API with timestamps...`)
   const { audioBuffer, alignment, sourceText } = await generateTTSWithTimestamps(textToRead)
 
-  // 2. Upload MP3 to Cloudflare R2
+  // 2. Upload MP3 to Cloudflare R2 (overwrites existing)
   const slug = path.basename(filePath, path.extname(filePath))
   const mp3Key = `${slug}.mp3`
 
-  console.log(`Uploading MP3 to R2 as ${mp3Key}...`)
+  console.log(`  Uploading MP3 to R2 as ${mp3Key}...`)
   await s3Client.send(
     new PutObjectCommand({
       Bucket: BUCKET_NAME,
@@ -220,7 +205,7 @@ async function processFile(filePath) {
     : { version: 1, words: [], sourceText }
   const timestampsKey = `${slug}-timestamps.json`
 
-  console.log(`Uploading timestamps to R2 as ${timestampsKey}...`)
+  console.log(`  Uploading timestamps to R2 as ${timestampsKey}...`)
   await s3Client.send(
     new PutObjectCommand({
       Bucket: BUCKET_NAME,
@@ -230,59 +215,128 @@ async function processFile(filePath) {
     })
   )
 
-  // 4. Update the markdown file with both URLs
-  const audioUrl = `${PUBLIC_AUDIO_URL_BASE}/${mp3Key}`
+  // 4. Update the markdown file with timestamps URL
   const timestampsUrl = `${PUBLIC_AUDIO_URL_BASE}/${timestampsKey}`
-
-  parsed.data.audio = audioUrl
   parsed.data.audioTimestamps = timestampsUrl
 
   const newFileContent = matter.stringify(parsed.content, parsed.data)
   await fs.writeFile(filePath, newFileContent, 'utf-8')
 
-  console.log(`Successfully processed ${filePath} and updated frontmatter.`)
-  console.log(`  - Audio: ${audioUrl}`)
-  console.log(`  - Timestamps: ${timestampsUrl} (${formattedTimestamps.words.length} words)`)
-  return true
+  return {
+    status: 'success',
+    title,
+    audioUrl: parsed.data.audio,
+    timestampsUrl,
+    wordCount: formattedTimestamps.words.length,
+  }
 }
 
 async function main() {
-  let files = process.argv.slice(2)
+  const args = process.argv.slice(2)
+  const dryRun = args.includes('--dry-run')
 
-  if (files.length === 0) {
-    console.log('No files passed, scanning data/blog directory...')
-    const blogDir = 'data/blog'
-    const allFiles = await fs.readdir(blogDir)
-    files = allFiles
-      .filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
-      .map((f) => path.join(blogDir, f))
+  if (dryRun) {
+    console.log('=== DRY RUN MODE ===')
+    console.log('No changes will be made.\n')
   }
 
-  if (files.length === 0) {
-    console.log('No files to process.')
-    return
+  // Scan blog directory
+  const blogDir = 'data/blog'
+  const allFiles = await fs.readdir(blogDir)
+  const mdxFiles = allFiles
+    .filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
+    .map((f) => path.join(blogDir, f))
+
+  console.log(`Scanning ${mdxFiles.length} blog posts...\n`)
+
+  const results = {
+    toBackfill: [],
+    skipped: [],
+    success: [],
+    errors: [],
   }
 
-  let updatedCount = 0
-  for (const file of files) {
-    if (file.startsWith('data/blog/') && (file.endsWith('.mdx') || file.endsWith('.md'))) {
-      try {
-        const updated = await processFile(file)
-        if (updated) updatedCount++
-      } catch (error) {
-        console.error(`Error processing file ${file}:`, error)
-        process.exit(1)
+  // First pass: identify files that need backfilling
+  for (const file of mdxFiles) {
+    try {
+      const fileContent = await fs.readFile(file, 'utf-8')
+      const parsed = matter(fileContent)
+
+      if (needsBackfill(parsed.data)) {
+        results.toBackfill.push({
+          file,
+          title: parsed.data.title,
+          audio: parsed.data.audio,
+        })
+      } else if (parsed.data.audio && parsed.data.audioTimestamps) {
+        results.skipped.push({ file, reason: 'already has timestamps' })
+      } else if (!parsed.data.audio) {
+        results.skipped.push({ file, reason: 'no audio' })
+      } else if (parsed.data.draft) {
+        results.skipped.push({ file, reason: 'draft' })
       }
-    } else {
-      console.log(`Skipping non-blog file: ${file}`)
+    } catch (error) {
+      results.errors.push({ file, error: error.message })
     }
   }
 
-  // To let GitHub actions know if it needs to commit
-  if (updatedCount > 0) {
-    console.log(`::set-output name=updated::true`)
-  } else {
-    console.log(`::set-output name=updated::false`)
+  // Report findings
+  console.log('=== SCAN RESULTS ===')
+  console.log(`Files needing backfill: ${results.toBackfill.length}`)
+  results.toBackfill.forEach((f) => {
+    console.log(`  - ${f.file}`)
+    console.log(`    Title: ${f.title}`)
+    console.log(`    Audio: ${f.audio}`)
+  })
+
+  console.log(`\nFiles skipped: ${results.skipped.length}`)
+  results.skipped.forEach((f) => {
+    console.log(`  - ${f.file} (${f.reason})`)
+  })
+
+  if (results.errors.length > 0) {
+    console.log(`\nErrors: ${results.errors.length}`)
+    results.errors.forEach((e) => {
+      console.log(`  - ${e.file}: ${e.error}`)
+    })
+  }
+
+  // If dry run, stop here
+  if (dryRun) {
+    console.log('\n=== DRY RUN COMPLETE ===')
+    console.log(`Would process ${results.toBackfill.length} files.`)
+    return
+  }
+
+  // Process files that need backfilling
+  if (results.toBackfill.length === 0) {
+    console.log('\nNo files to process.')
+    return
+  }
+
+  console.log('\n=== PROCESSING ===')
+  let successCount = 0
+
+  for (const item of results.toBackfill) {
+    console.log(`\nProcessing: ${item.file}`)
+    try {
+      const result = await processFile(item.file, false)
+      if (result.status === 'success') {
+        successCount++
+        console.log(`  ✓ Success: ${result.wordCount} words timestamped`)
+        console.log(`    Timestamps: ${result.timestampsUrl}`)
+      }
+    } catch (error) {
+      console.error(`  ✗ Error: ${error.message}`)
+      results.errors.push({ file: item.file, error: error.message })
+    }
+  }
+
+  console.log('\n=== SUMMARY ===')
+  console.log(`Processed: ${successCount}/${results.toBackfill.length}`)
+  if (results.errors.length > 0) {
+    console.log(`Errors: ${results.errors.length}`)
+    process.exit(1)
   }
 }
 

@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 import InlineAudio from '@/components/InlineAudio'
+import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
+import HighlightableContent from '@/components/HighlightableContent'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Link from '@/components/Link'
@@ -21,7 +23,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, audio } = content
+  const { filePath, path, slug, date, title, tags, audio, audioTimestamps } = content
   const basePath = path.split('/')[0]
   const category = getPostCategory(tags)
 
@@ -72,16 +74,18 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div>
-                {audio && (
-                  <div className="pt-10 pb-4">
-                    <InlineAudio src={audio} />
-                  </div>
+                {audio ? (
+                  <AudioHighlightProvider timestampUrl={audioTimestamps}>
+                    <div className="pt-10 pb-4">
+                      <InlineAudio src={audio} />
+                    </div>
+                    <div className="prose dark:prose-invert max-w-none pt-2 pb-8">
+                      <HighlightableContent>{children}</HighlightableContent>
+                    </div>
+                  </AudioHighlightProvider>
+                ) : (
+                  <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
                 )}
-                <div
-                  className={`prose dark:prose-invert max-w-none pb-8 ${audio ? 'pt-2' : 'pt-10'}`}
-                >
-                  {children}
-                </div>
               </div>
             </div>
             <footer>

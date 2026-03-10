@@ -10,6 +10,8 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import InlineAudio from '@/components/InlineAudio'
+import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
+import HighlightableContent from '@/components/HighlightableContent'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -19,7 +21,7 @@ interface LayoutProps {
 }
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
-  const { slug, title, images, audio } = content
+  const { slug, title, images, audio, audioTimestamps } = content
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
 
@@ -40,14 +42,18 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
               <PageTitle>{title}</PageTitle>
             </div>
           </div>
-          {audio && (
-            <div className="pt-10 pb-4">
-              <InlineAudio src={audio} />
-            </div>
+          {audio ? (
+            <AudioHighlightProvider timestampUrl={audioTimestamps}>
+              <div className="pt-10 pb-4">
+                <InlineAudio src={audio} />
+              </div>
+              <div className="prose dark:prose-invert max-w-none pt-2 pb-4">
+                <HighlightableContent>{children}</HighlightableContent>
+              </div>
+            </AudioHighlightProvider>
+          ) : (
+            <div className="prose dark:prose-invert max-w-none pt-4 pb-4">{children}</div>
           )}
-          <div className={`prose dark:prose-invert max-w-none pb-4 ${audio ? 'pt-2' : 'pt-4'}`}>
-            {children}
-          </div>
           {siteMetadata.comments && (
             <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
               <Comments slug={slug} />

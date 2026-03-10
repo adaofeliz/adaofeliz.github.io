@@ -1,8 +1,10 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
+import { useAudioHighlight } from './AudioHighlightContext'
 
 export default function InlineAudio({ src }: { src: string }) {
+  const highlightCtx = useAudioHighlight()
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [duration, setDuration] = useState<number | null>(null)
@@ -12,11 +14,23 @@ export default function InlineAudio({ src }: { src: string }) {
     const audio = audioRef.current
     if (!audio) return
 
-    const handlePlay = () => setIsPlaying(true)
-    const handlePause = () => setIsPlaying(false)
-    const handleEnded = () => setIsPlaying(false)
+    const handlePlay = () => {
+      setIsPlaying(true)
+      highlightCtx?.setIsPlaying(true)
+    }
+    const handlePause = () => {
+      setIsPlaying(false)
+      highlightCtx?.setIsPlaying(false)
+    }
+    const handleEnded = () => {
+      setIsPlaying(false)
+      highlightCtx?.setIsPlaying(false)
+    }
     const handleLoadedMetadata = () => setDuration(audio.duration)
-    const handleTimeUpdate = () => setCurrentTime(audio.currentTime)
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime)
+      highlightCtx?.setCurrentTime(audio.currentTime)
+    }
 
     audio.addEventListener('play', handlePlay)
     audio.addEventListener('pause', handlePause)

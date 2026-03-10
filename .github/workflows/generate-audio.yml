@@ -1,6 +1,7 @@
 name: Generate GitOps Audio
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -34,7 +35,9 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_ACCESS_KEY_ID }}
           CLOUDFLARE_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }}
-        run: node scripts/generate-audio.mjs
+        run: |
+          node scripts/generate-audio.mjs
+          node scripts/backfill-timestamps.mjs
 
       - name: Commit and push changes
         run: |

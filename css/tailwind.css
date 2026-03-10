@@ -173,3 +173,14 @@ input:-webkit-autofill:focus {
   display: inline-block;
   vertical-align: middle;
 }
+
+/* Audio text highlighting */
+.audio-word-active {
+  background-color: oklch(0.85 0.15 210);
+  border-radius: 2px;
+  transition: background-color 0.15s ease;
+}
+
+:is(.dark .audio-word-active) {
+  background-color: oklch(0.35 0.15 210);
+}
