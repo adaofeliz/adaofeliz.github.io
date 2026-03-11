@@ -21,6 +21,12 @@ export type RoadmapData = {
 export const roadmapData: RoadmapData = {
   done: [
     {
+      title: 'Karaoke-Style Audio Highlight',
+      date: '2026-03-11',
+      why: 'Creates an immersive reading experience by visually tracking spoken words in real-time.',
+      stack: 'React Context + requestAnimationFrame + ElevenLabs timestamps + DOM traversal',
+    },
+    {
       title: 'Roadmap Kernel inside /stream',
       date: '2026-03-06',
       why: 'Moved strategic planning out of GitHub-only docs and into the live blog experience with a hidden terminal reveal.',
