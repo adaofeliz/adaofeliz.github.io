@@ -5,6 +5,8 @@ import { useAudioHighlight } from './AudioHighlightContext'
 
 export default function InlineAudio({ src }: { src: string }) {
   const highlightCtx = useAudioHighlight()
+  const setHighlightTime = highlightCtx?.setCurrentTime
+  const setHighlightPlaying = highlightCtx?.setIsPlaying
   const audioRef = useRef<HTMLAudioElement>(null)
   const syncRafRef = useRef<number | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
@@ -24,7 +26,7 @@ export default function InlineAudio({ src }: { src: string }) {
 
     const syncCurrentTime = () => {
       if (!audio.paused) {
-        highlightCtx?.setCurrentTime(audio.currentTime)
+        setHighlightTime?.(audio.currentTime)
         syncRafRef.current = requestAnimationFrame(syncCurrentTime)
       } else {
         stopSyncLoop()
@@ -38,24 +40,24 @@ export default function InlineAudio({ src }: { src: string }) {
 
     const handlePlay = () => {
       setIsPlaying(true)
-      highlightCtx?.setIsPlaying(true)
+      setHighlightPlaying?.(true)
       startSyncLoop()
     }
     const handlePause = () => {
       setIsPlaying(false)
-      highlightCtx?.setIsPlaying(false)
+      setHighlightPlaying?.(false)
       stopSyncLoop()
     }
     const handleEnded = () => {
       setIsPlaying(false)
-      highlightCtx?.setIsPlaying(false)
+      setHighlightPlaying?.(false)
       stopSyncLoop()
     }
     const handleLoadedMetadata = () => setDuration(audio.duration)
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime)
     }
-    const handleSeeked = () => highlightCtx?.setCurrentTime(audio.currentTime)
+    const handleSeeked = () => setHighlightTime?.(audio.currentTime)
 
     audio.addEventListener('play', handlePlay)
     audio.addEventListener('pause', handlePause)
@@ -77,7 +79,7 @@ export default function InlineAudio({ src }: { src: string }) {
       audio.removeEventListener('seeked', handleSeeked)
       stopSyncLoop()
     }
-  }, [highlightCtx])
+  }, [setHighlightPlaying, setHighlightTime])
 
   const togglePlay = (e: React.MouseEvent) => {
     e.preventDefault()

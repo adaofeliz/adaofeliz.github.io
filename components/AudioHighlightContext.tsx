@@ -1,6 +1,14 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  ReactNode,
+  useCallback,
+} from 'react'
 
 /**
  * Word-level timestamp data from ElevenLabs API.
@@ -115,18 +123,49 @@ interface AudioHighlightProviderProps {
  * Fetches timestamp data and computes active word index based on current time.
  */
 export function AudioHighlightProvider({ children, timestampUrl }: AudioHighlightProviderProps) {
-  const [currentTime, setCurrentTime] = useState(0)
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [timestampData, setTimestampData] = useState<TimestampData | null>(null)
+  const [currentTime, setCurrentTimeState] = useState(0)
+  const [isPlaying, setIsPlayingState] = useState(false)
+  const [timestampData, setTimestampDataState] = useState<TimestampData | null>(null)
   const [activeWordIndex, setActiveWordIndex] = useState(-1)
 
   const lastIndexRef = useRef(-1)
-  const rafRef = useRef<number | null>(null)
   const currentTimeRef = useRef(0)
+  const timestampDataRef = useRef<TimestampData | null>(null)
 
-  useEffect(() => {
-    currentTimeRef.current = currentTime
-  }, [currentTime])
+  const setCurrentTime = useCallback((time: number) => {
+    currentTimeRef.current = time
+    setCurrentTimeState(time)
+
+    const data = timestampDataRef.current
+    if (!data || data.words.length === 0) {
+      return
+    }
+
+    const newIndex = findActiveWordIndex(data.words, time, lastIndexRef.current)
+    if (newIndex !== lastIndexRef.current) {
+      lastIndexRef.current = newIndex
+      setActiveWordIndex(newIndex)
+    }
+  }, [])
+
+  const setIsPlaying = useCallback((playing: boolean) => {
+    setIsPlayingState(playing)
+  }, [])
+
+  const setTimestampData = useCallback((data: TimestampData | null) => {
+    timestampDataRef.current = data
+    setTimestampDataState(data)
+
+    if (!data || data.words.length === 0) {
+      lastIndexRef.current = -1
+      setActiveWordIndex(-1)
+      return
+    }
+
+    const newIndex = findActiveWordIndex(data.words, currentTimeRef.current, lastIndexRef.current)
+    lastIndexRef.current = newIndex
+    setActiveWordIndex(newIndex)
+  }, [])
 
   useEffect(() => {
     if (!timestampUrl) {
@@ -160,54 +199,7 @@ export function AudioHighlightProvider({ children, timestampUrl }: AudioHighligh
     return () => {
       isMounted = false
     }
-  }, [timestampUrl])
-
-  useEffect(() => {
-    if (!timestampData || timestampData.words.length === 0) {
-      setActiveWordIndex(-1)
-      lastIndexRef.current = -1
-      return
-    }
-
-    const words = timestampData.words
-
-    function updateActiveWord() {
-      const newIndex = findActiveWordIndex(words, currentTimeRef.current, lastIndexRef.current)
-      if (newIndex !== lastIndexRef.current) {
-        lastIndexRef.current = newIndex
-        setActiveWordIndex(newIndex)
-      }
-      if (isPlaying) {
-        rafRef.current = requestAnimationFrame(updateActiveWord)
-      }
-    }
-
-    updateActiveWord()
-
-    if (isPlaying) {
-      rafRef.current = requestAnimationFrame(updateActiveWord)
-    }
-
-    return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current)
-        rafRef.current = null
-      }
-    }
-  }, [timestampData, isPlaying])
-
-  useEffect(() => {
-    if (!timestampData || timestampData.words.length === 0 || isPlaying) {
-      return
-    }
-
-    const words = timestampData.words
-    const newIndex = findActiveWordIndex(words, currentTime, lastIndexRef.current)
-    if (newIndex !== lastIndexRef.current) {
-      lastIndexRef.current = newIndex
-      setActiveWordIndex(newIndex)
-    }
-  }, [currentTime, timestampData, isPlaying])
+  }, [timestampUrl, setTimestampData])
 
   const value: AudioHighlightContextValue = {
     currentTime,
