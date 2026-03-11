@@ -74,6 +74,7 @@ When tasked with general improvement, prioritize in these categories:
 
 ## Session Learnings
 
+- **Stream Frontmatter is Strict**: When writing entries in `data/stream/*.mdx`, you MUST include a complete Contentlayer schema frontmatter block. A valid entry must include `title`, `date`, `summary`, and `tags`. Without these, Contentlayer will silently fail to parse the file and it will not render on the site.
 - Roadmaps are most useful when they are visible at runtime, not buried in repository-only docs. Keep strategic state in the live `/stream` UX.
 - Preserve terminal-native storytelling: command-line microcopy (e.g., shell prompts and faux commands) should communicate intent while reinforcing the bare-metal identity.
 - When introducing hidden operational layers into `/stream`, default to **stream-first** UX: journal entries remain the primary surface, and roadmap/state panels should require an intentional reveal.
