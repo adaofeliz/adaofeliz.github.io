@@ -90,13 +90,12 @@ function HomeContent({ posts }: HomeProps) {
 
   const rawTag = searchParams?.get('tag')
   const activeTag =
-    rawTag && ALL_CATEGORIES.includes(rawTag as Category) ? (rawTag as Category) : null
+    rawTag && ALL_CATEGORIES.includes(rawTag as Category) ? (rawTag as Category) : 'technology'
 
   const rawPage = searchParams?.get('page')
   const parsedPage = rawPage ? Number.parseInt(rawPage, 10) : 1
 
   const filteredPosts = useMemo(() => {
-    if (!activeTag) return posts
     return posts.filter((post) => getPostCategory(post.tags) === activeTag)
   }, [posts, activeTag])
 
