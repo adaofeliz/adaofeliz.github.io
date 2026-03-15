@@ -1,0 +1,108 @@
+---
+title: 'My state of AI: Context is everything'
+date: '2026-03-15'
+tags:
+  - technology
+draft: false
+summary: >-
+  I spent months using AI the way most people do. I opened ChatGPT, typed a question, got an answer, and moved on.
+  I never questioned what was happening underneath.
+---
+
+I spent months using AI the way most people do. I opened ChatGPT, typed a question, got an answer, and moved on. I accepted whatever the AI labs gave me. Their interfaces. Their integrations. Their defaults. I never questioned what was happening underneath.
+
+That changed when I started connecting models to my own tools. What I learned reshaped how I think about LLMs, context, and what it takes to make these models useful in daily work.
+
+## The wake-up call was MCP
+
+Model Context Protocol is an open standard Anthropic released in November 2024. It lets LLMs connect to external tools and data sources through a standardized interface. When I first set it up, I connected a task management system to Claude through MCP and watched it read my tasks and push them into my Google Calendar. Automatically.
+
+The model was not just answering questions. It was doing things.
+
+But the excitement hid a problem I did not yet understand.
+
+## The context window problem
+
+Every MCP tool exposes endpoints. When the LLM calls those endpoints, all the data lands directly in the session context window. Every tool description, every action response, every piece of returned data eats tokens.
+
+The model would start a session and not know which tools to use or how. So it would probe endpoints one by one, pulling back everything. All my projects. All my tasks. All my data. Just to figure out what I was actually asking about. Most of it was irrelevant.
+
+The result: I was burning through my token budget and hitting context window limits before I could get any real work done.
+
+## Moving to OpenWebUI
+
+I needed more control over what goes in and out of the model. ChatGPT and Claude's native interfaces did not give me that. So I moved to OpenWebUI.
+
+OpenWebUI let me configure system prompts at two levels: the model level and the folder level. Instead of the LLM learning each session how to use its tools, I could pre-guide it. Tell it what tools are available, how to use them, what data to expect, and what my preferences are. The model stopped wasting tokens on discovery.
+
+Then I worked on MCP infrastructure itself. I grouped MCP servers by use case, so each folder only exposed relevant tools. I trimmed tool descriptions. I used MCPO, a proxy the OpenWebUI team built to expose MCP servers as standard OpenAPI endpoints, and added discovery mechanisms that made tool selection leaner.
+
+The noise dropped. The token waste dropped. The quality went up.
+
+## CLIs and MCPs
+
+Even with MCP optimizations, API-based tool calls are expensive in tokens. Every JSON response, every schema, every structured payload consumes context.
+
+Then I realized something obvious. LLMs can run terminal commands. CLIs have existed for decades. They are compact. They return only what you ask for. They are fast.
+
+I started with Google Workspace CLI for access to email, calendar, Drive, spreadsheets, docs, and presentations. From there, I built my own CLIs for calendar synchronization, webhook management, and other workflows.
+
+A CLI command returns a few lines of structured output. An MCP call might return pages of JSON. The token savings compounded across every interaction. And terminal access gave the LLM something broader: file systems, network tools, scripts. Low-level and flexible in a way that API endpoints are not.
+
+## Private knowledge and folders
+
+Public internet data is useful, but it is not what makes a model helpful on a daily basis. My private information does. My Obsidian notes. My Confluence pages. My Notion databases. Context no public model has ever seen.
+
+Connecting these knowledge bases to the models, combined with tool integrations and optimized system prompts, created something much more powerful than a general-purpose assistant.
+
+I organized everything into folders inside OpenWebUI. Each folder has its own system prompts, tool selection, and knowledge base connections. I have folders for learning, investments, work, direct reports, productivity management, communications. When I switch folders, the entire context shifts. The right tools, the right knowledge, the right instructions. Ready to go.
+
+My most connected folder is "daily." It ties together task management, calendar, email, messages, Confluence pages, Jira tickets, GitHub activity. Every morning, with a few simple inputs, I get my full agenda, tasks, deadlines, and follow-ups sorted by priority. It tells me what to work on next. Not because it guesses. Because it has the full context of my work.
+
+This single folder replaced hours of manual planning and chaos I used to spread across multiple tools.
+
+## The models that matter
+
+I work with several frontier models, and they are not interchangeable.
+
+**Claude Opus 4.6** is the best I have used. 1M token context window with context compaction that summarizes older context as conversations grow. What makes it stand out is relentless agentic behavior. It does not stop at the first obstacle. It tries every tool, every approach, until it solves the problem or exhausts all options.
+
+**GPT-5.4** from OpenAI is excellent at reasoning and structuring ideas. Not as persistent as Opus when stuck, but very strong for reasoning-heavy tasks, and the pricing at $2.50 per million input tokens makes it more accessible for high-volume use.
+
+**Gemini 3.1 Pro** from Google is the best balance between pricing, reasoning, and agentic capability. At $2 per million input tokens, it is the most affordable frontier model in my rotation.
+
+**Mercury 2** from Inception Labs is a diffusion-based language model. Instead of generating one token at a time, it refines multiple tokens in parallel. At $0.25 per million input tokens, it is very cheap. Still exploring where it fits, but worth watching.
+
+OpenRouter has been essential. A single API key routes to any frontier model, and their public usage rankings make it easy to discover models I would not have found otherwise.
+
+## Context is the key to everything
+
+If there is one lesson from all of this: context determines everything. Not the model. Not the tools. The context.
+
+A powerful model with bad context produces bad output. A cheaper model with precise, well-structured context often outperforms an expensive one running blind.
+
+This led me to study prompt engineering seriously. Anthropic's documentation on structured prompting is the best resource I have found. XML tags to separate concerns within a prompt: `<role>`, `<instructions>`, `<context>`, `<rules>`, `<constraints>`, `<output_format>`. Each section has a clear purpose and parsing boundary.
+
+Fewer hallucinations. Faster outputs. No more repeating myself about tools or formatting. Everything defined once, maintained in one place, reused across sessions. The structure also made prompts maintainable. I can identify which section needs adjustment, update it, and know exactly what changed.
+
+## From assistants to agents
+
+Everything above works through a trigger. I send a message. The model processes it. I get a response. Useful, but reactive.
+
+I wanted proactive. I started building with LangChain and LangGraph. These frameworks let me create agent workflows that reuse the same CLIs, knowledge bases, and system prompts from my assistants. The difference is that agents run on loops or triggers, not on my input.
+
+Every morning, an agent reviews my calendar, identifies conflicts, drafts resolution proposals, prepares emails in my tone, and presents all of it before I start my day.
+
+## What's next
+
+The biggest limitation now is that system prompts are static. I write them. I maintain them. I update them manually.
+
+What I want is for agents to learn from how I use them. To analyze my interactions, my feedback, the patterns in what I correct, and propose changes to their own context. Since my prompts use structured XML sections, the model can identify exactly which part needs an update.
+
+I am building a feedback loop where usage directly improves the system. Not through retraining a model, but through continuous adjustments of the context. That will be the subject of a future post.
+
+## Where I am right now
+
+Six months ago, I was a passive user of AI tools. Now I manage a personal AI infrastructure with MCP servers, CLI integrations, private knowledge bases, structured prompts, and autonomous agents that start working before I do.
+
+This happened because I stopped accepting the tools as given and started understanding how they work. If you are using AI assistants and they feel limited, the problem is probably not the model. It is the context. Fix that first, and everything else follows.
