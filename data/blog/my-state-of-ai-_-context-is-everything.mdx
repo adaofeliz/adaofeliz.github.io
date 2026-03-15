@@ -8,9 +8,6 @@ summary: >-
   I spent months using AI the way most people do. I opened ChatGPT, typed a
   question, got an answer, and moved on. I never questioned what was happening
   underneath.
-audio: 'https://audio.adaofeliz.com/my-state-of-ai-_-context-is-everything.mp3'
-audioTimestamps: >-
-  https://audio.adaofeliz.com/my-state-of-ai-_-context-is-everything-timestamps.json
 ---
 
 I spent months using AI the way most people do. I opened ChatGPT, typed a question, got an answer, and moved on. I accepted whatever the AI labs gave me. Their interfaces. Their integrations. Their defaults. I never questioned what was happening underneath.
@@ -88,14 +85,6 @@ A powerful model with bad context produces bad output. A cheaper model with prec
 This led me to study prompt engineering seriously. Anthropic's documentation on structured prompting is the best resource I have found. XML tags to separate concerns within a prompt: `<role>`, `<instructions>`, `<context>`, `<rules>`, `<constraints>`, `<output_format>`. Each section has a clear purpose and parsing boundary.
 
 Fewer hallucinations. Faster outputs. No more repeating myself about tools or formatting. Everything defined once, maintained in one place, reused across sessions. The structure also made prompts maintainable. I can identify which section needs adjustment, update it, and know exactly what changed.
-
-## From assistants to agents
-
-Everything above works through a trigger. I send a message. The model processes it. I get a response. Useful, but reactive.
-
-I wanted proactive. I started building with LangChain and LangGraph. These frameworks let me create agent workflows that reuse the same CLIs, knowledge bases, and system prompts from my assistants. The difference is that agents run on loops or triggers, not on my input.
-
-Every morning, an agent reviews my calendar, identifies conflicts, drafts resolution proposals, prepares emails in my tone, and presents all of it before I start my day.
 
 ## What's next
 
