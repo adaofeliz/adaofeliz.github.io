@@ -1,0 +1,94 @@
+---
+title: 'My Journey with Vibe Coding: Agentic Development at Scale'
+date: '2026-03-25'
+tags: ['technology']
+summary: 'Moving from personal experiments to company-wide agentic development. How I am building the playbook for AI enablement while still learning myself.'
+---
+
+I wrote code like it was meditation for fifteen years.
+
+You enter the zone. Boolean logic clicks in. You hold the full architecture in your head, shape it line by line, pattern by pattern. Design patterns refined over decades. Code so readable it documents itself. That was the craft. That was the thing I spent years getting good at.
+
+Now I am learning to direct agents that write it for me. And as a CTO, it is my responsibility to make sure our engineering organization can do the same.
+
+## The responsibility
+
+Part of my role is understanding emerging technologies well enough to decide when and how they should change the way we work. AI enablement is one of those decisions, and I am not delegating it.
+
+I am building this across three tracks. First, Business AI enablement. Giving every team across the company access to tools that make them more efficient, not just engineering. Second, Product AI intake, a new track where engineering builds AI-native products, internal agents, and connectors like MCP servers so external AI applications can integrate with our systems. Third, Agentic Development for software engineering teams, backed by a token budget we multiplied by a thousand times compared to what we spent before.
+
+That third track is the hardest. Not because of the tools. Because of the people. Because changing how experienced engineers think about their craft requires more than infinite tokens and a training session.
+
+## Standardizing what agents need to know
+
+The tools are evolving fast. Claude Code from Anthropic. Codex from OpenAI. Antigravity from Google. Each has its own naming conventions, its own way of structuring agent context. But when you look past the surface, the patterns converge.
+
+Every codebase needs a set of persistent instructions that any agent reads at the start of every session. Anthropic documents this as `CLAUDE.md`, a markdown file at the root of your repository. Other tools use `AGENTS.md` sub-folders or their own formats. The concept is the same: tell the agent what this codebase is, how it is structured, what patterns to follow, what to avoid, and how the full development lifecycle works, from test-driven development to pull request reviews.
+
+We are building a template for this across our engineering teams. The blueprint comes from Anthropic's documentation because they are the most transparent about how to structure agent instructions. But I believe the principles transfer across models. Frontier models from different labs share enough mechanics that good instructions for one will benefit the others.
+
+The template covers the basics: project overview, tech stack, architecture, conventions, known patterns, and anti-patterns. But the real value is in the specifics.
+
+## Instructions as a first-class task
+
+One of the biggest shifts in how we work is treating agent instructions as seriously as production code.
+
+Every time a developer learns something from an agentic session, a pattern that works, a mistake the agent keeps making, a convention that needs clarifying, that learning needs to be documented. Not in a Slack message. In the instruction files.
+
+We do this through dedicated pull requests. Separate from the feature PR. The instruction update gets reviewed by the full team. The author explains how they reached the conclusion that this instruction should exist. The team agrees, pushes back, or refines it.
+
+I would rather have a small, correct set of instructions than a comprehensive wrong one. A bad instruction pollutes every line of code the agent generates from that point forward. That kind of damage compounds fast and is painful to undo. Start small. Add incrementally. Review aggressively.
+
+## What "senior" means now
+
+I am starting this rollout with senior developers and engineering managers. Not juniors.
+
+Juniors, by definition, work on scoped chunks. Someone points them to the right file, describes the algorithm, and they implement it. They do not need the full picture of the codebase to be productive. They build that understanding over years.
+
+A senior developer in the agentic era needs that full picture on every single prompt. Not just their specialty. Not just the language they know best. The entire lifecycle. Architecture decisions and why they exist. Design patterns and when to apply them. How the test suite is structured. What the deployment pipeline expects. How pull requests should be reviewed. Naming conventions. Data access patterns. All of it.
+
+This is what I mean when I say we need to go back to the basics, something I touched on in my previous post. The fundamentals of software architecture and design patterns matter more now than they did when we were writing code by hand. Because now you are not implementing. You are describing. And if your description is vague, incomplete, or wrong, the agent will produce code that looks fine but breaks in ways you cannot diagnose.
+
+The definition of senior is shifting. Years of experience and a title are not enough. If a senior developer cannot clearly articulate the full context an agent needs to produce correct, maintainable, incremental code, they are not ready for this yet.
+
+I am being direct about this. Small sessions with selected engineers and managers. Full honesty about readiness. No waiting for the perfect standard. The productivity gains are real and we cannot leave them on the table.
+
+## The context-switching flip
+
+For years, I fought to minimize context switching. We all did. We knew it had a tax. We kept teams focused on specific domains because their compound experience made them faster and more reliable. Context switching was the enemy.
+
+A [study](https://hbr.org/2026/02/ai-doesnt-reduce-work-it-intensifies-it) published in Harvard Business Review by researchers Aruna Ranganathan and Xingqi Maggie Ye found that AI tools do not reduce work. They intensify it. Employees in their eight-month case study worked at a faster pace, took on broader scope, logged more unpaid hours, and multitasked constantly. The cognitive load increased even as individual tasks got easier.
+
+The DORA 2025 [report](https://services.google.com/fh/files/misc/2025_state_of_ai_assisted_software_development.pdf), backed by Faros AI telemetry from over ten thousand developers, quantified a similar pattern: developers using AI interact with 9% more task contexts and 47% more pull requests daily. Individual output goes up, 21% more tasks completed and 98% more PRs merged, but organizational delivery metrics stay flat. Code review time increased 91%. PR size grew 154%. Bug rates climbed 9%.
+
+AI amplifies individual speed. It does not automatically improve team throughput.
+
+This is the tension I am watching closely. In agentic development, you manage multiple agent sessions across different tasks. You switch between them. You give input where an agent is blocked, check progress on another, review output on a third. Context switching is no longer the enemy. It is the work.
+
+I believe the ability to switch contexts effectively will become one of the defining skills of a productive developer in this era. But I also know the risks. Burnout. Cognitive overload. The same problems we fought for years, just in a different shape.
+
+I do not have all the answers here yet. This technology has been available at scale for less than six months. There is not enough public data on how teams sustain this over time. What I do know is that I am close enough to the work to see the signals early and adjust before they become problems.
+
+## Measuring what matters
+
+When we first adopted AI-assisted tools for front-end teams, we did not measure well enough. We had qualitative signals, better quality, easier onboarding to new frameworks, roughly double the throughput, but no hard numbers.
+
+With the budget increase we committed to, qualitative is not enough.
+
+We will run a controlled comparison. Developers with agentic tools and token budget versus developers without. We will track PR throughput, test coverage, bug rates, and deployment frequency. We will add DORA metrics like lead time from commit to production. And we will watch for the signals the DORA 2025 data highlighted: whether code review time spikes, whether PR size inflates, whether bug rates creep up as volume increases.
+
+If we hit a meaningful productivity multiplier, great. If we do not, we refine. The point is to measure, not to assume.
+
+## Moving, not waiting
+
+I want to be clear about where I am. I do not have a finished playbook. But I have a strategy, a team that is already in motion, training sessions running this week, and senior engineers willing to be the first wave.
+
+The tools are new. The workflows are new. The risks around cognitive load and burnout are real and poorly understood. The definition of what makes a developer effective is changing in real time. All of this is true.
+
+What is also true is that this is already happening. Not as a plan. As work. We are running the sessions. We are writing the instruction templates. We are building the use cases. The fact that I can do this while understanding the technology at a deep technical level is what gives me confidence that we are making the right calls.
+
+What I keep coming back to is the same thing I wrote in my first post: the technology is new, but the discipline required to use it well is not. Go incremental. Check your work. Stay close to what is being built. Document what you learn. Review it as a team.
+
+That has not changed. It just applies to a different layer now.
+
+If you are rolling out agentic development in your organization, I would like to hear how you are approaching it. What is working. What is not. We are all figuring this out, and the teams that share what they learn will move faster than the ones that wait.
