@@ -8,33 +8,29 @@ summary: >-
   I have been in technology long enough to know that having multiple paths to a
   goal is normal. The danger is not in having options. It is in chasing all of
   them at once, without a strategy you can govern, monitor, and extend.
-audio: >-
-  https://audio.adaofeliz.com/my-state-of-ai-_-ai-enablement-as-an-engineering-problem.mp3
-audioTimestamps: >-
-  https://audio.adaofeliz.com/my-state-of-ai-_-ai-enablement-as-an-engineering-problem-timestamps.json
 ---
 
 Everyone has an opinion about how we should use AI.
 
-That is the problem.
+Social media makes every tool sound like a revolution. Early adopters, the curious ones who started experimenting months ago, have already formed strong opinions about which tools work and which do not. Some of those opinions are good. Some are shaped by hype. All of them create pressure.
 
-Social media makes every tool sound like a revolution. Internal builders, the curious ones who started experimenting weeks ago, have already formed strong opinions about which tools work and which do not. Some of those opinions are good. Some are shaped by hype. All of them create pressure.
+That's a problem.
 
-The pressure is not about whether to adopt AI. That decision is made. The pressure is about why we are not doing it a different way. Every week, someone shares a new article, a new tool, a new approach. And every week, the question comes back: why are we not following that?
+The pressure is not about whether to adopt AI. That decision is made. The pressure is about why we are not doing it in a different way. Every week, someone shares a new article, a new tool, a new approach. And every week, the question comes back: why are we not following that?
 
 I have been in technology long enough to know that having multiple paths to a goal is normal. The danger is not in having options. It is in chasing all of them at once, without a strategy you can govern, monitor, and extend.
 
-So we built one.
+So, this will be about the strategy we built.
 
 ## The structure
 
 We split the rollout into layers.
 
-At the top, a steering committee. This is where we discuss everything openly: the strategy itself, the opportunities we should explore, how adoption is progressing, and how the KPIs we defined are tracking. Nothing is decided in isolation. The committee sees the full picture.
+At the top, a steering committee. This is where we discuss everything openly: the strategy itself, the opportunities we should explore, emerging technology, how adoption is progressing, and how the KPIs we defined are tracking. Nothing is decided in isolation. The committee sees the full picture.
 
 Outside the committee, each team has AI champions. These are not people who just use AI well. They are the ones who listen to the strategy, gather inputs from their teams, and support implementation on the ground. They can influence the direction, but the decisions stay centralized.
 
-This matters because we cannot listen to every person on every team in real time. But we can set clear goals for each team, define how we want them to use AI, measure success, and create a workflow for ideas and feedback to flow upward. The champions are that workflow.
+This matters because we cannot listen to every person on every team in real time. But we can set clear goals for each team, define how we want them to use AI, measure success, and have in place a workflow for ideas and feedback to flow upward. The champions are that workflow.
 
 Because the KPIs come from the top, we always know how to prioritize. Even when the world of experimentation feels infinite.
 
@@ -44,7 +40,7 @@ The strategy splits into three pillars. Each one targets a different part of the
 
 ### Business AI
 
-This is the broadest. Every team, not just engineering, has manual tasks that happen on a laptop or a computer. Repetitive work. Data collection. Report generation. Tasks that consume time without creating differentiated value.
+This is the broadest. Every team, has manual tasks that happen on a laptop or a computer. Repetitive work. Data collection. Report generation. Tasks that consume time without creating differentiated value.
 
 For each team, champions run workshops. The team lists every repetitive and manual task they perform. They estimate the weekly time spent. Then, with the tools they already have access to, or with inputs back to us about what connectors and integrations are needed, we automate those use cases.
 
@@ -54,37 +50,37 @@ We are not building AI assistants that only retrieve information. We are buildin
 
 As a company with a product engineering team that builds custom software, the goal here is clear: every new feature we implement needs to be AI native.
 
-That means every feature should be accessible through APIs, MCPs, or tool integrations so that AI systems can interact with our data and our actions. Not just read. Act.
+That means every feature should be accessible through CLIs, MCPs, or SKILLS so that AI systems can interact with our data and perform actions. Not just read. Act.
 
 Product managers need to keep this top of mind. One hundred percent of new features should be either manageable by AI or built as AI products. We are also adding AI agents and AI-driven flows to the roadmap across multiple areas of the business. This is how we modernize. Not by bolting AI onto what we already have, but by building with it as a first-class citizen.
 
 ### Agentic Development
 
-This is the one closest to what I have been writing about in this series [3]. As a company with a large engineering team building custom software, our goal is to empower engineers to run multiple streams of development through agentic tools, backed by a token budget we are willing to invest in seriously.
+This is the one closest to what I have been writing about in this series. As a company with a large engineering team building custom software, our goal is to empower engineers to run multiple streams of development through agentic tools, backed by a token budget we are willing to invest in seriously.
 
-This is a mindset shift. Engineers go from writing every line to directing agents that write for them. The KPIs reflect that shift: PR throughput, PR density, lead time from creation to approval. Secondary KPIs include lines of code, test coverage, and reported bugs.
+This is a mindset shift. Engineers go from writing every line to directing agents that write for them. The KPIs reflect that shift: PR throughput, PR density, PR lead time from creation to approval. Secondary KPIs include lines of code, test coverage, and reported bugs.
 
-The AI champions for this pillar are the engineering managers. They do more than track metrics. They are the gatekeepers of the code instructions, the CLAUDE.md and AGENTS.md files I wrote about in my last post [3]. They decide which MCPs and tools each team uses. They evolve the shared knowledge base for agentic development across the organization. And they follow up with engineers as we roll out in waves.
+The AI champions for this pillar are the engineering managers. They do more than track metrics. They are the gatekeepers of the code instructions, the AGENTS.md files, the code base instructions I've talk about in my last post. They decide which MCPs and tools each team uses. They evolve the shared knowledge base for agentic development across the organization. And they follow up with engineers as we roll out in waves.
 
-The waves are deliberate. First, engineering managers, tech leads, and senior engineers. Then all engineers. Then the full engineering organization. We start with the people who have the deepest context on the codebase, because as I wrote before, agentic development demands that you can describe the full picture on every prompt [3].
+The waves are deliberate. First, engineering managers, and tech leads. Then all senior engineers. Then the full engineering organization. We start with the people who have the deepest context on the codebase, because as I wrote before, agentic development demands that you can describe the full picture on every prompt.
 
 ## The checklist problem
 
-One thing has been on my mind throughout this process. Atul Gawande's _The Checklist Manifesto_.
+One thing has been on my mind throughout this process, thanks to a recent friend recommendation. Atul Gawande's _The Checklist Manifesto_.
 
 Gawande studied how aviation and surgery handle complexity. Both fields have highly trained professionals doing work where a single mistake can be catastrophic. And both fields use checklists. Not because the professionals do not know the basics. Because under stress, pressure, and fatigue, even the most experienced people skip steps.
 
 AI enablement feels like that right now. There is enormous pressure to move fast, to adopt the latest tool, to change the approach every time a new report comes out. The temptation is to improvise. To let each team figure it out on their own.
 
-Our approach is the opposite. We define the checklist. The champions enforce it. When someone on a team believes the checklist should change, that feedback flows through the champions to the steering committee. We listen to everyone. But we make centralized, governed decisions about when and how the approach changes.
+Our approach is the opposite. We define the checklist. The AI champions enforce it. When someone on a team believes the checklist should change, that feedback flows through the champions to the steering committee. We listen to everyone. But we make centralized, governed decisions about when and how the approach changes.
 
-This is not bureaucracy. It is discipline. The same discipline I have written about throughout this series. Go incremental. Check your work. Stay close to what is being built [3].
+This is not bureaucracy. It is discipline. Go incremental. Check your work. Stay close to what is being built.
 
 ## What the industry data says
 
 I have been reading the major 2026 reports on enterprise AI adoption. The patterns are consistent.
 
-[Deloitte's State of AI in the Enterprise](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html) found that skills gaps are the biggest barrier to scaling. Seventy-one percent of companies are piloting agentic AI, but only thirty percent are ready to scale it. [Kearney's AI Trends Report](https://www.kearney.com/service/digital-analytics/article/kearney-ai-trends-report-2026) reported a forty-six percent failure rate on AI pilots, largely due to poor integration and lack of governance. [McKinsey's State of AI Trust](https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/tech-forward/state-of-ai-trust-in-2026-shifting-to-the-agentic-era) highlighted real cost benefits in software engineering but noted that nearly two-thirds of enterprises are still experimenting, not scaling.
+Deloitte's [State of AI in the Enterprise](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html) found that skills gaps are the biggest barrier to scaling. Seventy-one percent of companies are piloting agentic AI, but only thirty percent are ready to scale it. Kearney's [AI Trends Report](https://www.kearney.com/service/digital-analytics/article/kearney-ai-trends-report-2026) reported a forty-six percent failure rate on AI pilots, largely due to poor integration and lack of governance. McKinsey's [State of AI Trust](https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/tech-forward/state-of-ai-trust-in-2026-shifting-to-the-agentic-era) highlighted real cost benefits in software engineering but noted that nearly two-thirds of enterprises are still experimenting, not scaling.
 
 Our strategy addresses all three concerns directly. The skills gap is why we roll out in waves, starting with seniors who already have the deep context. The pilot failure rate is why we have a steering committee and top-down KPIs instead of letting a hundred experiments run without direction. The scaling problem is why we measure before we expand.
 
@@ -94,12 +90,12 @@ I am not claiming we have it figured out. We are early. But reading these report
 
 This is not a retrospective. This is a plan being executed.
 
-Agentic development is rolling out in waves. The first sessions are running this week. Business AI hits its first major team tomorrow. We split the engineering rollout into two sessions because the team is large enough that doing it all at once would compromise quality.
+The first sessions are running this week. Business AI hits its first major team today. Agentic development is rolling out in waves. We split the engineering rollout into two sessions because the team is large enough that doing it all at once would compromise quality.
 
 From here, we track. KPIs, costs, return on investment. We fine-tune before we expand. If something is not working, we adjust. If a pillar needs more resources, we redirect. If a KPI proves misleading, we replace it.
 
 The technology is moving fast. The reports confirm what I see every day: most companies are still figuring out how to go from pilot to production. The ones that will get there are the ones with a clear strategy, governed execution, and the patience to measure before they scale.
 
-I keep coming back to the same thing I wrote in my first post [3]. The technology is new. The discipline required to use it well is not.
+I keep coming back to the same thing I wrote in my first post. The technology is new. The discipline required to use it well is not.
 
 If you are leading AI enablement in your organization, I would like to hear how you are structuring it. What is working. What is not. The teams that share will learn faster than the ones that wait.
