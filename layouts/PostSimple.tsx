@@ -8,6 +8,7 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import ShareButton from '@/components/ShareButton'
 import InlineAudio from '@/components/InlineAudio'
 import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
 import HighlightableContent from '@/components/HighlightableContent'
@@ -57,6 +58,9 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                 ) : (
                   <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
                 )}
+                <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
+                  <ShareButton title={title} url={path} />
+                </div>
               </div>
             </div>
             {siteMetadata.comments && (

@@ -11,6 +11,7 @@ import SectionContainer from '@/components/SectionContainer'
 import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import ShareButton from '@/components/ShareButton'
 import { getPostCategory } from '@/lib/categories'
 import { formatDate } from 'pliny/utils/formatDate'
 
@@ -86,6 +87,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 ) : (
                   <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
                 )}
+                <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
+                  <ShareButton title={title} url={path} />
+                </div>
               </div>
             </div>
             <footer>

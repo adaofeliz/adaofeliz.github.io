@@ -41,12 +41,16 @@ interface AudioHighlightContextValue {
   timestampData: TimestampData | null
   /** Index of the currently active word in timestampData.words */
   activeWordIndex: number
+  /** Whether autoscroll is enabled */
+  isAutoScrollEnabled: boolean
   /** Update current playback time */
   setCurrentTime: (time: number) => void
   /** Update playing state */
   setIsPlaying: (playing: boolean) => void
   /** Set timestamp data directly */
   setTimestampData: (data: TimestampData | null) => void
+  /** Toggle autoscroll on/off */
+  toggleAutoScroll: () => void
 }
 
 const AudioHighlightContext = createContext<AudioHighlightContextValue | null>(null)
@@ -127,6 +131,7 @@ export function AudioHighlightProvider({ children, timestampUrl }: AudioHighligh
   const [isPlaying, setIsPlayingState] = useState(false)
   const [timestampData, setTimestampDataState] = useState<TimestampData | null>(null)
   const [activeWordIndex, setActiveWordIndex] = useState(-1)
+  const [isAutoScrollEnabled, setIsAutoScrollEnabled] = useState(true)
 
   const lastIndexRef = useRef(-1)
   const currentTimeRef = useRef(0)
@@ -150,6 +155,10 @@ export function AudioHighlightProvider({ children, timestampUrl }: AudioHighligh
 
   const setIsPlaying = useCallback((playing: boolean) => {
     setIsPlayingState(playing)
+  }, [])
+
+  const toggleAutoScroll = useCallback(() => {
+    setIsAutoScrollEnabled((prev) => !prev)
   }, [])
 
   const setTimestampData = useCallback((data: TimestampData | null) => {
@@ -206,9 +215,11 @@ export function AudioHighlightProvider({ children, timestampUrl }: AudioHighligh
     isPlaying,
     timestampData,
     activeWordIndex,
+    isAutoScrollEnabled,
     setCurrentTime,
     setIsPlaying,
     setTimestampData,
+    toggleAutoScroll,
   }
 
   return <AudioHighlightContext.Provider value={value}>{children}</AudioHighlightContext.Provider>

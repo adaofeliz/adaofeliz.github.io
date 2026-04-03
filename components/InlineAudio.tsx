@@ -9,6 +9,8 @@ export default function InlineAudio({ src }: { src: string }) {
   const highlightCtx = useAudioHighlight()
   const setHighlightTime = highlightCtx?.setCurrentTime
   const setHighlightPlaying = highlightCtx?.setIsPlaying
+  const isAutoScrollEnabled = highlightCtx?.isAutoScrollEnabled ?? false
+  const toggleAutoScroll = highlightCtx?.toggleAutoScroll
   const audioRef = useRef<HTMLAudioElement>(null)
   const syncRafRef = useRef<number | null>(null)
   const speedIndexRef = useRef(2) // default to 1x (index 2)
@@ -243,6 +245,35 @@ export default function InlineAudio({ src }: { src: string }) {
             title={`Speed: ${SPEED_OPTIONS[speedIndex]}x`}
           >
             {SPEED_OPTIONS[speedIndex]}x
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              toggleAutoScroll?.()
+            }}
+            className={`rounded px-1 py-0.5 transition-colors ${
+              isAutoScrollEnabled
+                ? 'text-primary-500 hover:text-primary-600 dark:text-primary-400 dark:hover:text-primary-300'
+                : 'text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300'
+            }`}
+            aria-label={isAutoScrollEnabled ? 'Disable auto-scroll' : 'Enable auto-scroll'}
+            aria-pressed={isAutoScrollEnabled}
+            title={isAutoScrollEnabled ? 'Auto-scroll: on' : 'Auto-scroll: off'}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-4 w-4"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 3a.75.75 0 0 1 .75.75v10.638l3.96-4.158a.75.75 0 1 1 1.08 1.04l-5.25 5.5a.75.75 0 0 1-1.08 0l-5.25-5.5a.75.75 0 1 1 1.08-1.04l3.96 4.158V3.75A.75.75 0 0 1 10 3Z"
+                clipRule="evenodd"
+              />
+            </svg>
           </button>
 
           <button
