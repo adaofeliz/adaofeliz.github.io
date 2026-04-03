@@ -95,6 +95,9 @@ export default function InlineAudio({ src }: { src: string }) {
     }
   }, [setHighlightPlaying, setHighlightTime])
 
+  const hasStarted = currentTime > 0
+  const hasEnded = duration !== null && currentTime >= duration
+
   useEffect(() => {
     const sentinel = sentinelRef.current
     if (!sentinel) return
@@ -102,14 +105,14 @@ export default function InlineAudio({ src }: { src: string }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         isScrolledPast.current = !entry.isIntersecting
-        setIsSticky(!entry.isIntersecting && isPlaying)
+        setIsSticky(!entry.isIntersecting && hasStarted && !hasEnded)
       },
       { threshold: 0 }
     )
 
     observer.observe(sentinel)
     return () => observer.disconnect()
-  }, [isPlaying])
+  }, [hasStarted, hasEnded])
 
   const togglePlay = (e: React.MouseEvent) => {
     e.preventDefault()
