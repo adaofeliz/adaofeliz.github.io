@@ -9,6 +9,7 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import ShareButton from '@/components/ShareButton'
 import InlineAudio from '@/components/InlineAudio'
 import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
 import HighlightableContent from '@/components/HighlightableContent'
@@ -21,7 +22,7 @@ interface LayoutProps {
 }
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
-  const { slug, title, images, audio, audioTimestamps } = content
+  const { path, slug, title, images, audio, audioTimestamps } = content
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
 
@@ -54,6 +55,9 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           ) : (
             <div className="prose dark:prose-invert max-w-none pt-4 pb-4">{children}</div>
           )}
+          <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
+            <ShareButton title={title} url={path} />
+          </div>
           {siteMetadata.comments && (
             <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
               <Comments slug={slug} />

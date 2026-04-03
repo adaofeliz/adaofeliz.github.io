@@ -98,7 +98,6 @@ export default function HighlightableContent({ children }: HighlightableContentP
     isWrappedRef.current = true
   }, [context?.timestampData])
 
-  // On activeWordIndex change, update highlighting via direct DOM manipulation
   useEffect(() => {
     if (!context?.timestampData?.words?.length) return
     if (!isWrappedRef.current) return
@@ -116,16 +115,30 @@ export default function HighlightableContent({ children }: HighlightableContentP
       }
     }
 
-    // Add highlight to current word
     if (activeIndex >= 0) {
       const currentWord = container.querySelector(`[data-word-index="${activeIndex}"]`)
       if (currentWord) {
         currentWord.classList.add('audio-word-active')
+
+        if (context.isAutoScrollEnabled && context.isPlaying) {
+          const rect = currentWord.getBoundingClientRect()
+          const viewportHeight = window.innerHeight
+          const targetZone = viewportHeight * 0.4
+
+          if (rect.top < 80 || rect.top > targetZone) {
+            currentWord.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }
+        }
       }
     }
 
     lastActiveIndexRef.current = activeIndex
-  }, [context?.activeWordIndex, context?.timestampData])
+  }, [
+    context?.activeWordIndex,
+    context?.timestampData,
+    context?.isAutoScrollEnabled,
+    context?.isPlaying,
+  ])
 
   return <div ref={containerRef}>{children}</div>
 }
