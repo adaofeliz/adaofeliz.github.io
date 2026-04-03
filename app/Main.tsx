@@ -187,7 +187,7 @@ function HomeContent({ posts }: HomeProps) {
                         </div>
                       </div>
                       <div className="flex items-center gap-2 text-base leading-6 font-medium">
-                        {audio && <InlineAudio src={audio} />}
+                        {audio && <InlineAudio src={audio} compact />}
                         {audio && <span className="text-gray-400 dark:text-gray-500">|</span>}
                         <Tag text={category} />
                         <span className="text-gray-400 dark:text-gray-500">|</span>
