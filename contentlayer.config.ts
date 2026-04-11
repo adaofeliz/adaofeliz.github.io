@@ -90,6 +90,7 @@ export const Blog = defineDocumentType(() => ({
     canonicalUrl: { type: 'string' },
     audio: { type: 'string' },
     audioTimestamps: { type: 'string' },
+    mindmap: { type: 'string' },
   },
   computedFields: {
     ...computedFields,
