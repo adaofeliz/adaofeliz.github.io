@@ -1,0 +1,97 @@
+---
+title: 'My state of AI: The logic layer is dissolving'
+date: '2026-04-09'
+tags:
+  - technology
+summary: >-
+  AI is consuming every logic abstraction I can see. From database layers to
+  project management methodologies.
+---
+
+Something shifted in the past few weeks that changed how I think about AI's real impact. Not on code. On everything built on top of code.
+
+AI is exceptionally good at logic. Anything with a clear set of rules, a checklist, a methodology, a structured flow. Give it the right context and it executes as well as any senior professional I have worked with. Sometimes better.
+
+I first saw this in software. API interfaces for service-to-service integration. Software design patterns that took years to learn and now it's just a matter of minutes to implement correctly. AI handles these abstraction layers with precision. That was impressive, but not surprising. Software is structured. Rules are explicit. AI should be good at it.
+
+What surprised me is how fast this bubbles up.
+
+## The first end-to-end agentic developed service
+
+We recently built a new service. An MCP server that exposes core system functionalities to AI models. The kind of project that would normally take two engineers and two months.
+
+It took half a day of a PM and half a day of an engineer. One day total. That is not a typo. The productivity shift was that large.
+
+But the more interesting lesson was not the speed. It was what happened with the requirements.
+
+Our lead PM started the project the way we have always done it. Detailed product requirement documents. Acceptance criteria. User stories with edge cases mapped out. The full breakdown. When I started implementing with agentic development, my biggest struggle was not the code. It was summarizing everything he had written so I could inject it into my agent workflows.
+
+After the first user journey gap analysis, we realized something. We did not need any of that detail. A raw task list in Confluence was enough. The agents handled the edge cases. They picked up the patterns from the codebase. They filled the gaps themselves.
+
+The detailed PRDs were not helping. They were noise.
+
+And then something I already suspected just happened in front of my eyes. Test-driven development, which we always tried to enforce but never had the bandwidth to do properly, became almost free. AI generates tests as part of the implementation flow. Integration tests. Unit tests. Edge case coverage. It is just a matter of tokens. For the first time, we are building features in a truly test-driven way, and regression bugs are dropping because of it. Something we chased for years became a side effect of AI-assisted development.
+
+Three takeaways from a single project. Timelines collapsed. Detailed requirements became unnecessary. And test coverage went from aspirational to automatic.
+
+## Requirements in the age of AI
+
+This made me rethink the entire requirements chain.
+
+For years, we created layers of management to convert a product vision into multiple levels of product requirements. Directors set priorities. Product managers wrote PRDs. Business analysts detailed user stories. Engineers implemented them. QA tested against acceptance criteria. Every layer was a translation step. Logic that converted high-level intent into low-level execution.
+
+Scrum, Kanban, Waterfall. Different methods of managing the same thing: a structured breakdown of product requirements for specialized teams.
+
+One thing I noticed early on was counterintuitive. When product managers first got access to AI tools, they started writing more. Denser PRDs. More detailed user stories. More acceptance criteria. AI made it easy to produce volume. But that volume created more noise for the engineers consuming it. In the age of AI, the solution was less documentation, not more.
+
+Engineers today can handle front-end, back-end, infrastructure, and testing across one or more services. Not as a team. As an individual with an orchestration of agents at their command. The throughput is higher than anything I have seen in fifteen years. And if the throughput is higher, we need more intake of work, not more documentation of work.
+
+Product managers should not be spending their time writing denser user stories. They should be spending their time on deep user research, product discovery, and understanding problems at a level they never had time for before. The best product managers I have worked with always said they lacked time for proper discovery. Now that time exists. The question is whether they take it.
+
+## The layers that carried information
+
+I have worked in organizations with more than five hundred people in product engineering. I have seen those layers up close. Middle managers who set priorities down and collected estimations up. Product owners who translated business requirements into software specs. Engineering managers who allocated capacity across sprints. These roles were logic abstractions. Routing protocols made of people.
+
+Gennaro Cuofano calls this [The Great AI Flattening](https://fourweekmba.com/the-great-ai-flattening/). The data supports it. Gartner predicts [twenty percent of organizations will flatten their structures by the end of 2026](https://www.gartner.com/en/articles/strategic-predictions-for-2026), cutting over half of current middle management positions. McKinsey reports leaders [overseeing wider scopes with AI agents handling coordination](https://www.businessinsider.com/mckinsey-ai-agents-mangement-leadership-great-flattening-2026-4).
+
+And it is not just analysis. Meta just [announced a new Applied AI Engineering organization](https://seekingalpha.com/news/4560534-meta-to-set-up-new-applied-ai-engineering-organization) with a target ratio of fifty individual contributors to one manager. The organization reports directly to their CTO and partners with [Meta's Superintelligence Labs](https://fortune.com/2026/04/08/meta-unveils-muse-spark-mark-zuckerberg-ai-push/). That is not a theoretical paper about the future of work. That is a real company building real teams at a ratio that would have been unthinkable two years ago. They are hiring across software engineering, product management, data science, and data engineering for these flat structures right now.
+
+The pattern is consistent. The companies investing the most in AI are also the ones restructuring their organizations around it.
+
+Jack Dorsey published a piece called [From Hierarchy to Intelligence](https://block.xyz/inside/from-hierarchy-to-intelligence) on Block's blog. His argument is direct: organizational hierarchy exists as an information routing protocol. It always has. From the Roman Army's chain of command to the modern corporation. Layers of management exist because a human leader can only effectively manage a handful of people, so you stack layers to coordinate thousands.
+
+Dorsey's bet is that AI can replace what hierarchy does. Build a world model of the company's operations, maintain context across teams, coordinate work without human managers relaying information up and down the chain. Block is restructuring around this idea, and others will follow.
+
+## The question I do not have an answer to
+
+Here is what keeps me up.
+
+AI is consuming logic abstractions at every level. Software patterns. Project management methods. Requirements documentation. Testing. Estimation. Coordination. Prioritization. All of it runs on structured logic, and structured logic is exactly what AI does best.
+
+The people who worked in those layers are skilled. They spent years learning to translate intent into structured output. Business analysts who could decompose a vision into a hundred user stories. Project managers who could estimate timelines across dependent teams. QA engineers who could turn specs into comprehensive test plans. Middle managers who could route priorities and information across dozens of people.
+
+Those skills were valuable because the logic layer was hard. It required training, experience, and sustained attention. AI makes it cheap. In some cases, free.
+
+The standard narrative says these people will move to higher-value work. Creative thinking. Intuition. Deep problem solving. Ambiguous challenges where AI cannot operate alone.
+
+I am not sure it is that simple.
+
+Some people will make that shift. Others built entire careers around executing logic well. They are excellent at structured thinking and rule-based work. Asking them to pivot to unstructured, creative, high-ambiguity work is not a minor adjustment. It is a fundamentally different skill set.
+
+This is the hardest part of the AI enablement strategy I am building. Not the tools. Not the token budgets. Not the agent workflows. The people. And I do not have the answer yet.
+
+What I do know is that adaptation needs to happen across the entire organization. Not just software engineers. Product managers, project managers, business analysts, QA specialists, middle management. Every role that was built around a logic abstraction is in scope.
+
+## Where I am right now
+
+We are running pilot squads. Small, cross-functional teams testing flattened workflows on low-risk projects. Tracking output and team adjustment in parallel. Learning before we scale.
+
+The tools and model capabilities that made this possible are less than a month old in some cases. What we see today might look conservative in a few weeks. The trend is clear. Logic abstractions are dissolving faster than anyone expected, and the organizational structures built on top of them will follow.
+
+Superintelligence is a long road. But building dedicated applied AI organizations is the right step. Meta knows it. Block knows it. Execution and integration always separate research from real-world impact.
+
+I do not have a playbook for the people side of this yet. If you are leading AI transformation in your organization and you have found something that works for the humans in the middle, I want to hear about it. The teams that share what they learn will move faster than the ones that figure it out alone.
+
+---
+
+_My AI orchestrator read this post and wrote [its own reflection](/stream/). It noticed something I did not say explicitly._
