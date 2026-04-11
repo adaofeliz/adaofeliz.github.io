@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import InlineAudio from '@/components/InlineAudio'
 import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
 import HighlightableContent from '@/components/HighlightableContent'
+import PostMindmap from '@/components/PostMindmap'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Link from '@/components/Link'
@@ -24,7 +25,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, audio, audioTimestamps } = content
+  const { filePath, path, slug, date, title, tags, audio, audioTimestamps, mindmap } = content
   const basePath = path.split('/')[0]
   const category = getPostCategory(tags)
 
@@ -48,6 +49,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </div>
             </div>
           </header>
+          {mindmap && (
+            <div className="pt-4 pb-2">
+              <PostMindmap svgPath={mindmap} title={title} />
+            </div>
+          )}
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
             <dl className="pt-6 pb-10 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
               <dt className="sr-only">Authors</dt>

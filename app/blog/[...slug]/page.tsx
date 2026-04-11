@@ -43,6 +43,10 @@ export async function generateMetadata(props: {
   if (post.images) {
     imageList = typeof post.images === 'string' ? [post.images] : post.images
   }
+  if (post.mindmap) {
+    const mindmapOgPath = post.mindmap.replace('.svg', '-og.png')
+    imageList = [mindmapOgPath, ...imageList.filter((img) => img !== mindmapOgPath)]
+  }
   const ogImages = imageList.map((img) => {
     return {
       url: img && img.includes('http') ? img : siteMetadata.siteUrl + img,
@@ -63,6 +67,12 @@ export async function generateMetadata(props: {
       url: './',
       images: ogImages,
       authors: authors.length > 0 ? authors : [siteMetadata.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.summary,
+      images: ogImages.map((img) => img.url),
     },
   }
 }
