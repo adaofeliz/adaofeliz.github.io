@@ -1,1 +1,21 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run lint-staged (existing behavior)
 npx --no-install lint-staged
+
+# Mindmap generation for staged blog posts (fail-open — never blocks commit)
+# Detects staged data/blog/*.mdx files and generates mindmaps for them
+STAGED_BLOG_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '^data/blog/.*\.mdx$' || true)
+
+if [ -n "$STAGED_BLOG_FILES" ]; then
+  if [ -z "$OPENROUTER_API_KEY" ]; then
+    echo "⚠️  Mindmap generation skipped: OPENROUTER_API_KEY not set"
+  else
+    echo "🗺  Generating mindmaps for staged blog posts..."
+    # Pass each staged file as argument to the generation script
+    node scripts/generate-mindmap.mjs $STAGED_BLOG_FILES || echo "⚠️  Mindmap generation failed (non-blocking)"
+    # Auto-stage any newly generated mindmap assets
+    git add public/static/mindmaps/ data/blog/ 2>/dev/null || true
+  fi
+fi
