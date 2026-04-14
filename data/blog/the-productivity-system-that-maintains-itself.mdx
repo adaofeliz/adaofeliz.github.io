@@ -1,0 +1,106 @@
+---
+title: 'The Productivity System That Maintains Itself'
+date: '2026-04-14'
+tags:
+  - technology
+summary: >-
+  Every productivity framework I tried failed within weeks. Not because the
+  tools were bad. Because the maintenance was designed for someone more
+  disciplined than me. AI fixed that part.
+---
+
+I have tried every productivity framework I could find. Tiago Forte's PARA. Jira. Trello. Notion. TickTick. I wrote about my current system in [Time Management: A system that actually fits my Life](/blog/time_management-_-a-system-that-actually_fits-my_life) a few months ago. But there is a part of that story I only touched on: why every framework before it failed, and what made this one the first I did not abandon.
+
+It was not the tools. It was not discipline. AI took over the one part I could never sustain on my own.
+
+## Every framework started strong
+
+[PARA](https://fortelabs.com/blog/para/) looked perfect during setup. Projects, Areas, Resources, Archives. Clean hierarchy. Clear logic. I spent hours building the structure, tagging items, sorting everything into the right place. For about two weeks, it worked.
+
+Then a new project appeared that did not fit into an existing category. I needed a new tag. That tag should have applied retroactively to a dozen other items. I moved something from Projects to Areas and lost the context attached to it. A small restructure cascaded into hours of rework.
+
+The pattern repeated with every tool. Jira with full project management, subtasks, time estimates, comments. Trello with detailed lanes and labels. Notion with databases and relations. Each time, the setup phase felt like real progress. Each time, the maintenance phase killed it within weeks.
+
+The more detail I added, the harder it became to keep current. And the moment I fell behind on processing the inbox, categorizing new items, and remembering where everything belonged, the whole structure decayed. Not because the framework was bad. Because maintaining it required a consistency I could not keep up.
+
+## A friend who made it work
+
+A friend of mine ran his entire life through a Trello Kanban board. Work, personal, long-term plans. He had lanes for every stage, categories for every area, and he updated it multiple times a day. He never missed anything.
+
+What stood out was the calm it gave him. He could focus completely on one task because he knew nothing was falling through. That kind of mental clarity, where you can commit to what is in front of you without the background noise of things you might be forgetting, was exactly what I wanted.
+
+So I copied his setup. Built a detailed board with priorities, categories, time estimates, every field I could think of. For a while, it worked.
+
+Two things broke it. First, when a task was done, all its context vanished. The notes, decisions, and details I spent time entering were archived or deleted. Gone. Second, the overhead was not sustainable. Categorizing, describing, prioritizing, estimating, tracking time. All manual. All competing with the work I actually needed to do.
+
+My friend had the discipline to keep that habit running every day. I did not. The framework worked for him because of a personal consistency most people cannot replicate long-term. Including me.
+
+## What AI actually fixed
+
+When I started connecting AI assistants to my tools, the change was not what I expected.
+
+I was not using AI to do my tasks. I was using it to maintain the framework itself.
+
+All the operational work that makes a productivity system useful, categorizing, prioritizing, linking context, connecting tasks to projects and areas of life, AI handled that. Not once during setup. Every single day. Without draining my energy.
+
+The configuration was different too. Instead of clicking through settings and learning each tool's interface, I described what I wanted in plain English. How my life areas are structured. Which projects belong to each. What counts as [focus and what counts as noise](/blog/time_management-_-a-system-that-actually_fits-my_life). How priorities should compare to each other. The AI understood that description and set everything up accordingly.
+
+A concrete example. My calendar is connected to the system. AI retrieves all scheduled meetings and places them on my task board automatically. During the meeting, a recording tool transcribes and structures the notes. After the meeting, an agent extracts follow-up actions, adds them to my task list with the right context, and stores new information in my knowledge base linked to relevant projects and past discussions. None of this required me to do anything manually. It happened while I was still in the room.
+
+When I want to change something, add a category, restructure a project, introduce a new priority level, AI does it retroactively across everything. The rework that used to take hours became a conversation in natural language.
+
+I never had to abandon this framework. Not because I got more disciplined. Because the system maintains itself.
+
+## From monolith to distributed system
+
+We all started with ChatGPT open in one window and our tools in another. Copy context into the chat. Get a response. Copy it back. That workflow had the same bottleneck as every manual framework. It did not scale.
+
+The shift came when AI could connect directly to the tools. Through APIs, protocols like MCP, CLIs. Not through my clipboard.
+
+I think about this the way I think about software architecture. We moved away from monolithic applications toward microservices because specialization works. A service that does one thing well is easier to maintain and improve than one that tries to handle everything. The same logic applies here. No single tool handles my entire life. Each one is specialized. AI is what connects them into a coherent system.
+
+## What I run today
+
+The system is not one tool. It is a distributed set of tools, each with a clear role, connected through AI.
+
+- [Obsidian](https://obsidian.md) is my knowledge base and where ideas start. I think of it as my IDE for natural language. I write notes, describe projects, and capture context from every part of my life. AI assistants connected to my vault iterate on those notes, structure them, and turn them into implementation plans.
+- [Planka](https://planka.app) is my self-hosted Kanban board, similar to Trello, but I own the data and the API. I built a custom MCP server so my AI agents can create tasks, update priorities, and move cards directly.
+- [Granola](https://www.granola.ai) records and transcribes meetings. A plugin syncs transcriptions into Obsidian, where an agent processes them, pulls follow-up actions, updates my board, and connects new context to existing projects.
+- [OpenWebUI](https://github.com/open-webui/open-webui) gives me access to multiple AI models in distinct folders with different contexts, tools, and instructions. Specialized assistants for work, investments, product design, daily planning. I also use its Channels feature as an interface for operating agents.
+- [OpenCode](https://github.com/sst/opencode) is my agentic development tool, connected to Obsidian and the rest of the system through MCPs and CLIs. When a project is described and ready in Obsidian, I can start it in OpenCode with full context already loaded.
+- [Grok](https://x.ai/grok) is what I use while driving. I talk through ideas, plan blog posts, describe things I want to build. A tool I built fetches those conversations and feeds them into my knowledge base.
+- [OpenRouter](https://openrouter.ai) is my models provider. A single API key gives access to every frontier model available. Different agents and tools use different models depending on the task.
+
+Everything runs on a Proxmox home lab cluster with Docker Compose for deployments and a GitOps pipeline for automation and version control.
+
+## Own the data, externalize the intelligence
+
+My rule for picking tools: self-hosted and open source. No exceptions when it comes to data. I manage the infrastructure, databases, APIs, and backups myself.
+
+The only thing I externalize is access to frontier models. I cannot yet run models locally that are capable enough for these workflows. So the intelligence runs at the AI labs in the cloud. Everything else stays under my roof.
+
+Data ownership means I can connect, extend, and migrate anything without asking a vendor for permission. Externalizing the intelligence means I get the best models available today. When local models are good enough, that last external dependency goes away too.
+
+## What actually improved
+
+Two things stand out after months on this system.
+
+I never forget anything. Every task, idea, and meeting follow-up is captured. Things planned months ahead are already visible. The anxiety of losing track of something important is gone. When I sit down to work, I can focus completely because I know nothing is slipping through. That mental shift alone changed how I operate day to day.
+
+I never stopped using the framework. Every system before this, I abandoned within weeks. This one persists because AI maintains it for me. I ask the AI to update my framework, and it processes the inbox, checks overdue items, reorganizes priorities against my calendar and availability. I do not manage the tool. I use it.
+
+## What is next
+
+The next challenge is visibility. As more agents run in the background, handling work while I am away from the computer, I need to know what they are doing. Did something fail? Do they need updated instructions or permissions? Are they performing as expected?
+
+Deploying an agent is the easy part now. Monitoring a dozen of them running in parallel, across different tools and responsibilities, is not. What I need is an orchestration and observability layer. Something comparable to what modern workflow management platforms offer, but built for AI agents and compatible with a self-hosted environment.
+
+That is the next thing I am building toward. Agents that work while I am away from the desk, with clear visibility into what happened when I return.
+
+## Less screen, more thinking
+
+This might be the part that matters most. Agents could be the thing that actually reduces time spent at the computer. Not by cutting corners. By handling the administrative and operational work that currently requires someone sitting at a screen.
+
+If agents manage the information flow, process the updates, and keep everything organized, then my role becomes answering the questions they cannot resolve on their own. Reviewing. Deciding. Researching. Spending time away from the desk, in places where creativity and real problem-solving actually happen.
+
+Every productivity framework I tried before was designed for humans to operate manually. AI removed that requirement. And it freed me to spend my energy on the things only I can do.
