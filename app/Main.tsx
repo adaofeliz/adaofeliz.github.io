@@ -90,12 +90,13 @@ function HomeContent({ posts }: HomeProps) {
 
   const rawTag = searchParams?.get('tag')
   const activeTag =
-    rawTag && ALL_CATEGORIES.includes(rawTag as Category) ? (rawTag as Category) : 'technology'
+    rawTag && ALL_CATEGORIES.includes(rawTag as Category) ? (rawTag as Category) : null
 
   const rawPage = searchParams?.get('page')
   const parsedPage = rawPage ? Number.parseInt(rawPage, 10) : 1
 
   const filteredPosts = useMemo(() => {
+    if (!activeTag) return posts
     return posts.filter((post) => getPostCategory(post.tags) === activeTag)
   }, [posts, activeTag])
 
@@ -151,7 +152,15 @@ function HomeContent({ posts }: HomeProps) {
             >
               other
             </Link>{' '}
-            stuff.
+            stuff.{' '}
+            {activeTag && (
+              <Link
+                href="/"
+                className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              >
+                (show all)
+              </Link>
+            )}
           </p>
           <ActivityTracker posts={posts} />
         </div>
