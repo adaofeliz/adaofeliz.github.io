@@ -2,12 +2,6 @@ name: Generate GitOps Audio
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - 'data/blog/**.md'
-      - 'data/blog/**.mdx'
 
 jobs:
   generate-audio:

@@ -1,0 +1,85 @@
+---
+title: 'My state of AI: The multi-agent illusion'
+date: '2026-04-27'
+tags:
+  - technology
+draft: false
+summary: >-
+  The internet is obsessed with multi-agent systems. I understand why. They are powerful, flexible, and exciting to build. But when we tried to scale them for real business automation, the illusion broke. The answer was not more agents. It was a better routing layer.
+---
+
+Our teams juggle tickets across platforms every day.
+
+For predictive and reactive maintenance, the workflow is a manual grind. An operations team member creates a ticket for a field technician. Every day, someone prioritizes urgency, plots optimal routes on maps to minimize travel time, and slots those routes into Google Calendars. Some technicians have their calendars synced with their car, which automatically picks up the next destination. Once the schedule is set, a Slack message goes out to confirm everything is live.
+
+This happens every single day. It is exactly the kind of process you want to automate.
+
+## The frontier model problem
+
+When we first looked at automating this, the approach was simple. Give the entire workflow to a frontier model. Models from the Opus family are capable enough to handle end-to-end reasoning. They can assess priority, interact with calendars, and draft messages without much hand-holding.
+
+The problem was the cost.
+
+Frontier models are incredible, but their token cost is insane. If you default your entire company to the smartest model available, that model ends up doing everything. It plans complex multi-stop maintenance routes, which is great. But it also scans Slack messages and peeks at calendars for trivial updates, which is a massive waste of budget.
+
+We tried compromising with mid-tier models. That failed too. The mid-tier models could handle the simple API checks, but they failed on the complex planning and spatial reasoning required for optimal routing.
+
+We were stuck between overpaying for basic tasks and underperforming on hard ones.
+
+## The multi-agent illusion
+
+To fix the cost problem, we dove into multi-agent systems.
+
+We used frameworks like [LangChain](https://github.com/langchain-ai/langchain) and [LangGraph](https://github.com/langchain-ai/langgraph) to split tasks. A time-triggered graph routed simple sub-tasks, like text analysis or embeddings, to cheap models, and reserved the expensive reasoning, like route planning, for frontier models.
+
+Then we went deeper. We used [Paperclip AI](https://github.com/paperclipai/paperclip) to orchestrate specialized agent teams. We assigned specific roles, bounded budgets, and precise system prompts to different agents, effectively building a zero-human company to process our tickets.
+
+It worked. Costs dropped, and quality stayed high. But it created a new bottleneck: us.
+
+The infrastructure overhead was crushing. To make it work, we had to manually define every agent, every prompt, every pathway. When users wanted to explore a new automation or tweak an existing one, they could not just change a prompt. They had to ask us to reconfigure the code. We spent all our time managing the web of specialized agents instead of solving business problems.
+
+Scaling that approach across an enterprise was impossible.
+
+## The single model was not the illusion
+
+The epiphany was realizing that users do not care about the infrastructure. They do not want to choose between thirty different models or configure a six-agent swarm. They just want to describe their task and have it done.
+
+So, we hid everything.
+
+If you look at our internal interface today, you see a single, friendly model. It has a name. Users trust it. They type "Automate my maintenance routing" and the system handles the rest.
+
+But behind that text box, there is no single model. There is an embedded smart routing abstraction layer.
+
+For every request, and for every step of a multi-step task, the router runs a classification. It determines the complexity tier (simple, standard, complex, deep research) and the task type (coding, scheduling, email, web research, mapping). Based on that classification, it dynamically routes the specific step to the optimal model or tool.
+
+The overhead for this routing decision is about 20 milliseconds.
+
+If the task has ten steps, it might use five different models to complete them. The user never sees this. To them, it is one continuous, intelligent interaction.
+
+## The results are real
+
+By routing request by request, we are projecting a 50% or greater reduction in operational costs. This aligns with what we see in the broader industry for 2026. Organizations leveraging multi-model routing are slashing OpEx by 20% to 80% while maintaining frontier-level quality.
+
+We no longer make mid-tier compromises. Cheap tasks go to cheap, fast models. Heavy reasoning goes to the absolute best models available. And because the backend handles the optimization, the user experience is frictionless.
+
+## The open source balance
+
+None of this would be possible without the open-source community.
+
+While proprietary labs like [OpenAI](https://openai.com), [Anthropic](https://anthropic.com), and [Google DeepMind](https://deepmind.google) push the boundaries of what models can do, it is the open-source ecosystem that gives us the tools to actually build with them at scale.
+
+[LangGraph](https://github.com/langchain-ai/langgraph) gave us the foundation for resilient graph-based workflows. [Paperclip AI](https://github.com/paperclipai/paperclip) proved what was possible when coordinating specialized agent roles. And projects like [Manifest](https://github.com/mnfst/manifest), a smart model router for personal AI agents, are democratizing the exact routing capabilities we built, bringing up to 70% cost savings to individual developers.
+
+The open-source boom we are seeing in the AI space is magical. It acts as a balancing mechanism, ensuring that developers and enterprises are not entirely dependent on a single AI lab or a single point of failure.
+
+If you are benefiting from these tools, contribute back. Submit pull requests. Give feedback. Share your architecture. Donate to the maintainers. This ecosystem is what keeps the future of AI open and accessible.
+
+## Where we go from here
+
+I suspect this routing abstraction might be a temporary necessity. As the market matures, frontier models will likely develop dynamic, tier-based pricing natively, adjusting cost based on the cognitive load of the specific prompt.
+
+But for now, the abstraction layer is the right solution. It gives us the best of both worlds. A simple, unified interface for the user, and a highly optimized, cost-effective infrastructure on the backend.
+
+The technology strategy we are building at Powerdot relies on this kind of independence. We control the data. We control the routing. We control the interface. The models are interchangeable engines, swapped in and out based on who is providing the best performance per dollar today.
+
+In the end, AI enablement is not about picking the right model. It is about building the right system to manage them all.
