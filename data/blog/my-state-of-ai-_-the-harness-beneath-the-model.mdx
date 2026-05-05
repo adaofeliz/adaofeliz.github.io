@@ -1,0 +1,113 @@
+---
+title: 'My state of AI: The harness beneath the model'
+date: '2026-05-05'
+tags:
+  - technology
+draft: false
+summary: >-
+  I wrote about killing the multi-agent illusion with smart routing. But routing
+  is only the first layer. The harder problem is what sits between the model and
+  the user: context injection, tool exposure, auth impersonation, and non-deterministic
+  auditing. The AI harness is the new software architecture, and it will define who
+  wins the next decade.
+---
+
+In my last AI post, I described how we killed the multi-agent illusion. We hid thirty models behind a single, friendly interface. A smart router classifies every request and sends it to the right engine. The user types "Automate my maintenance routing" and the system quietly hits five different models to complete ten steps. The user never sees it. Costs dropped by fifty percent or more.
+
+That was the easy part.
+
+## The problem that routing does not solve
+
+Routing answers one question: which model should handle this task? It is a cost optimization problem dressed in latency constraints. Classify. Dispatch. Done. Twenty milliseconds of overhead.
+
+What routing does not answer is everything else.
+
+Which tools should this session have access to? Which memories should be active? Which past conversations are relevant? What context does this specific user need injected into every single prompt? Which MCP server should be connected, which CLI should be available, which database should be reachable?
+
+In a platform like Claude, this is handled for you. Claude knows your account. It knows which tools you connected at the account level. When you start a new chat, it dynamically discovers and exposes the right set of tools to the session. You do not configure anything. You just type.
+
+That is not magic. That is a harness. And if you are building your own AI infrastructure instead of buying Claude, you need to build one too.
+
+## The ownership tax
+
+We made a deliberate choice. We control the data. We control the routing. We control the interface. We are model-independent. Anthropic is one supplier among several, and if a better model emerges tomorrow from a different lab, we swap it in.
+
+The cost of that independence is that we are always one step behind platforms like Claude.
+
+Observing what they ship. Reverse-engineering the abstraction they built. Figuring out how to get parity with a feature they already launched, using open-source components and custom code. It is exhausting. It is also, I believe, the right long-term bet.
+
+Not just for independence. For optionality. If a competitor to Anthropic releases models that are cheaper at the same quality, or significantly more capable, we move. Companies locked into Claude's harness cannot move without rebuilding everything. We can.
+
+But the work is real. And the hardest part is not the models.
+
+## The two layers no one talks about
+
+Getting this right means solving two layers of complexity that most AI discussions skip entirely.
+
+The first is user metadata injection. When a user sends a message to the model, the model needs more than the text. It needs to know who this person is. What account type they have. What permissions they hold. What chat ID they are typing from. What organization they belong to. If the model is going to make decisions about what tools to reach for, it needs the full picture of who is on the other side.
+
+This means every single completion call carries a rich envelope of user context. Not just the system prompt. Not just the message. The full identity layer. Getting that right without bloating every prompt or leaking information is a non-trivial engineering problem.
+
+The second layer is authentication impersonation. The user already logged into your platform. They already connected their Google Calendar, their Slack, their email. Those OAuth tokens and API keys are stored somewhere, encrypted at rest.
+
+The agentic layer behind the model needs access to those exact same tokens. Not copies. Not separate credentials the user has to configure again. The same tokens, reused seamlessly, so the model can operate with the same level of access the user already granted.
+
+We call this the impersonation abstraction layer. It lives on the backend, behind the single-model interface. It decrypts and proxies user tokens to whichever model or tool needs them for a given step. The user never sets up anything twice. They never even know it happened.
+
+## The agentic middle layer
+
+Between the user-facing single-model interface and the smart model router, we are inserting a new layer. An agentic layer.
+
+This is not a model. It is infrastructure that uses models. Its job is to understand what the user is asking, figure out which tools and contexts are relevant, activate the right memories, pull the right histories, and then route the actual execution to the optimal models behind the router.
+
+The user sees a chat. They type what they want. The agentic layer does everything else.
+
+This is the same pattern Claude pioneered. An AI agent that does not just generate text, but reasons about what it needs, discovers available tools, pulls context, and orchestrates execution across multiple models from multiple labs.
+
+The difference is that ours is model-agnostic. Claude is not.
+
+## The non-deterministic auditing problem
+
+There is a deeper challenge here that I have been sitting with.
+
+Software is deterministic. An API has a defined input contract and an expected output schema. You can log every call, set guardrails, trigger alerts when something deviates. Auditing is a solved problem.
+
+AI is not deterministic. You do not know what the model will produce. You cannot define an expected output schema for every possible prompt. The lack of a deterministic contract makes auditing, guardrails, and observability fundamentally harder than anything we have built before.
+
+We have people with years of experience in logging, telemetry, and multi-layer verification. But the old playbooks only partially apply. We are now designing systems where multiple checks must validate non-deterministic outputs, where guardrails are probabilistic rather than binary, and where the architecture itself must compensate for the fact that you cannot fully predict what the model will do.
+
+This is where the AI harness becomes the discipline. Not just connecting tools to models. Designing the scaffolding that makes non-deterministic systems auditable, observable, and safe.
+
+## AI harnesses are the new software architecture
+
+Anthropic is fascinating to study not just for their models, but for their software. Their harness is closed-source. You cannot read it. You can only observe its behavior from the outside and slowly connect the dots.
+
+What you see, when you study it long enough, is a system of execution loops, tool registries, context managers, lifecycle hooks, evaluation pipelines, and managed agent sessions with decoupled brain and hands. Design patterns that did not exist five years ago, built specifically around the properties of language models.
+
+Open-source projects are catching up. [OpenClaw](https://github.com/openclaw/openclaw) is a personal AI assistant runtime with skills and tool loops. [Hermes Agent](https://github.com/NousResearch/Hermes-Agent) is the agent that grows with you, adapting across sessions. [LangGraph](https://github.com/langchain-ai/langgraph) builds resilient language agents as graphs. And the [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering) list is cataloguing the emerging ecosystem: tools, patterns, evals, memory, MCP, permissions, observability, and orchestration.
+
+For software developers, this is a new era. The patterns we spent decades mastering, monoliths, microservices, event sourcing, CQRS, are still relevant. But now there is an additional layer. AI harness design patterns. Execution loops that wrap non-deterministic reasoning. Tool registries that auto-discover capabilities. Context managers that inject the right information at the right time. Auditing pipelines that catch what schemas cannot define.
+
+## The fork ahead
+
+I see two paths for companies over the next few years.
+
+The first is building custom AI harnesses in-house. Deep integration with your own tools, your own data, your own industry workflows. Engineering teams that understand both traditional software architecture and the new harness design patterns. Full control. Full differentiation.
+
+The second is buying per-industry optimized harnesses from vendors. The new Salesforce for AI. Someone builds the harness for healthcare. Someone else builds it for logistics. You subscribe. You configure. You stay in the box.
+
+Both paths will exist. Both will work for different kinds of companies. But I believe what made companies competitive in the past will make them competitive here too. The ones with strong in-house engineering teams, the ones that build rather than buy, the ones that control their own differentiation, will have an edge that vendors cannot replicate.
+
+Internal software development was always a competitive moat. AI harnesses will be the next layer of that moat.
+
+## Where we go from here
+
+Right now, I am deep in the architecture. Studying the harnesses that exist. Mapping the design patterns. Building the impersonation layer, the context injection pipeline, the agentic middle layer. Experimenting with what works and discarding what does not.
+
+This is not about picking the right model anymore. That part is solved. The router handles it. This is about building the system that makes any model useful at scale. The layer between the user and the intelligence. The harness.
+
+The models will keep improving. They will get cheaper. They will get faster. They will become more capable. But the harness, the system that gives them context, tools, memory, identity, and guardrails, that is where the real work is. That is where the differentiation lives. That is what will separate companies that use AI from companies that are built on it.
+
+If you are working on this too, I would like to hear about it. What patterns are you discovering? What open-source harnesses are you building on? What problems are you hitting that no documentation covers yet?
+
+We are all figuring this out. The teams that share what they learn will move faster than the ones that wait.
