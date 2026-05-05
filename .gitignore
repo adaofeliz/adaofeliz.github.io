@@ -53,3 +53,4 @@ yarn-error.log*
 # A garden needs a keeper, and a keeper needs a soul.
 SOUL.md
 
+.env
