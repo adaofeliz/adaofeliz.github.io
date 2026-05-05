@@ -10,7 +10,6 @@ summary: >-
   the user: context injection, tool exposure, auth impersonation, and non-deterministic
   auditing. The AI harness is the new software architecture, and it will define who
   wins the next decade.
-  https://audio.adaofeliz.com/my-state-of-ai-_-the-harness-beneath-the-model-timestamps.json
 ---
 
 In my last AI post, I described how we killed the multi-agent illusion. We hid thirty models behind a single, friendly interface. A smart router classifies every request and sends it to the right engine. The user types "Automate my maintenance routing" and the system quietly hits five different models to complete ten steps. The user never sees it. Costs dropped by fifty percent or more.
@@ -29,7 +28,7 @@ In a platform like Claude, this is handled for you. Claude knows your account. I
 
 That is not magic. That is a harness. And if you are building your own AI infrastructure instead of buying Claude, you need to build one too.
 
-## The DIY tax
+## The ownership tax
 
 We made a deliberate choice. We control the data. We control the routing. We control the interface. We are model-independent. Anthropic is one supplier among several, and if a better model emerges tomorrow from a different lab, we swap it in.
 
@@ -85,7 +84,7 @@ Anthropic is fascinating to study not just for their models, but for their softw
 
 What you see, when you study it long enough, is a system of execution loops, tool registries, context managers, lifecycle hooks, evaluation pipelines, and managed agent sessions with decoupled brain and hands. Design patterns that did not exist five years ago, built specifically around the properties of language models.
 
-Open-source projects are catching up. [OpenClaw](https://github.com/nousresearch/openclaw) provides a persistent single-agent runtime with skills and tool loops. [Hermes Agent](https://github.com/NousResearch/Hermes-Agent) focuses on deep learning and memory persistence. [LangGraph](https://github.com/langchain-ai/langgraph) enables graph-based stateful orchestration. And the [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering) list is cataloguing the emerging design patterns: GAN-style generator-evaluator loops, ACI interfaces, constraint-based feedback systems.
+Open-source projects are catching up. [OpenClaw](https://github.com/openclaw/openclaw) is a personal AI assistant runtime with skills and tool loops. [Hermes Agent](https://github.com/NousResearch/Hermes-Agent) is the agent that grows with you, adapting across sessions. [LangGraph](https://github.com/langchain-ai/langgraph) builds resilient language agents as graphs. And the [awesome-harness-engineering](https://github.com/ai-boost/awesome-harness-engineering) list is cataloguing the emerging ecosystem: tools, patterns, evals, memory, MCP, permissions, observability, and orchestration.
 
 For software developers, this is a new era. The patterns we spent decades mastering, monoliths, microservices, event sourcing, CQRS, are still relevant. But now there is an additional layer. AI harness design patterns. Execution loops that wrap non-deterministic reasoning. Tool registries that auto-discover capabilities. Context managers that inject the right information at the right time. Auditing pipelines that catch what schemas cannot define.
 
