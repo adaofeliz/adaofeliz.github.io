@@ -96,7 +96,8 @@ function HomeContent({ posts }: HomeProps) {
   const parsedPage = rawPage ? Number.parseInt(rawPage, 10) : 1
 
   const filteredPosts = useMemo(() => {
-    if (!activeTag) return posts
+    if (activeTag === 'ai') return posts.filter((post) => getPostCategory(post.tags) === 'ai')
+    if (!activeTag) return posts.filter((post) => getPostCategory(post.tags) !== 'ai')
     return posts.filter((post) => getPostCategory(post.tags) === activeTag)
   }, [posts, activeTag])
 
@@ -126,6 +127,13 @@ function HomeContent({ posts }: HomeProps) {
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             Personal blog about{' '}
             <Link
+              href={activeTag === 'ai' ? '/' : '/?tag=ai'}
+              className={activeTag === 'ai' ? 'underline underline-offset-4' : ''}
+            >
+              AI
+            </Link>
+            ,{' '}
+            <Link
               href={activeTag === 'technology' ? '/' : '/?tag=technology'}
               className={activeTag === 'technology' ? 'underline underline-offset-4' : ''}
             >
@@ -147,8 +155,8 @@ function HomeContent({ posts }: HomeProps) {
             </Link>
             , and{' '}
             <Link
-              href={activeTag === 'others' ? '/' : '/?tag=others'}
-              className={activeTag === 'others' ? 'underline underline-offset-4' : ''}
+              href={activeTag === 'other' ? '/' : '/?tag=other'}
+              className={activeTag === 'other' ? 'underline underline-offset-4' : ''}
             >
               other
             </Link>{' '}

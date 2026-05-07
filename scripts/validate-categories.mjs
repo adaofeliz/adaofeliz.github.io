@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const blogDir = path.join(__dirname, '../data/blog')
 
-const ALLOWED_CATEGORIES = ['technology', 'fitness', 'life', 'others']
+const ALLOWED_CATEGORIES = ['technology', 'fitness', 'life', 'other']
 
 function extractFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/)
