@@ -96,9 +96,8 @@ function HomeContent({ posts }: HomeProps) {
   const parsedPage = rawPage ? Number.parseInt(rawPage, 10) : 1
 
   const filteredPosts = useMemo(() => {
-    if (activeTag === 'ai') return posts.filter((post) => getPostCategory(post.tags) === 'ai')
-    if (!activeTag) return posts.filter((post) => getPostCategory(post.tags) !== 'ai')
-    return posts.filter((post) => getPostCategory(post.tags) === activeTag)
+    if (activeTag) return posts.filter((post) => getPostCategory(post.tags) === activeTag)
+    return posts.filter((post) => post.listed !== false)
   }, [posts, activeTag])
 
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / postsPerPage))
