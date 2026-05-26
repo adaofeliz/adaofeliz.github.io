@@ -52,6 +52,7 @@ export async function generateMetadata(props: {
   return {
     title: post.title,
     description: post.summary,
+    ...(post.listed === false && { robots: { index: false, follow: false } }),
     openGraph: {
       title: post.title,
       description: post.summary,
@@ -75,7 +76,10 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
   // Filter out drafts in production
-  const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
+  const allSortedCoreContents = allCoreContent(sortPosts(allBlogs))
+  const sortedCoreContents = allSortedCoreContents.filter(
+    (p) => p.listed !== false || p.slug === slug
+  )
   const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
   if (postIndex === -1) {
     return notFound()
