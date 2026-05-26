@@ -1,7 +1,4 @@
 import { ReactNode } from 'react'
-import InlineAudio from '@/components/InlineAudio'
-import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
-import HighlightableContent from '@/components/HighlightableContent'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Link from '@/components/Link'
@@ -12,6 +9,7 @@ import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ShareButton from '@/components/ShareButton'
+import PostContent from '@/components/PostContent'
 import { getPostCategory } from '@/lib/categories'
 import { formatDate } from 'pliny/utils/formatDate'
 
@@ -24,8 +22,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, audio, audioTimestamps } = content
-  const basePath = path.split('/')[0]
+  const { path, date, title, tags, audio, audioTimestamps } = content
   const category = getPostCategory(tags)
 
   return (
@@ -75,18 +72,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div>
-                {audio ? (
-                  <AudioHighlightProvider timestampUrl={audioTimestamps}>
-                    <div className="pt-10 pb-4">
-                      <InlineAudio src={audio} />
-                    </div>
-                    <div className="prose dark:prose-invert max-w-none pt-2 pb-8">
-                      <HighlightableContent>{children}</HighlightableContent>
-                    </div>
-                  </AudioHighlightProvider>
-                ) : (
-                  <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
-                )}
+                <PostContent audio={audio} audioTimestamps={audioTimestamps}>
+                  {children}
+                </PostContent>
                 <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
                   <ShareButton title={title} url={path} />
                 </div>

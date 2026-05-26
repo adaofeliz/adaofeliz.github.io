@@ -3,15 +3,13 @@ import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
-import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ShareButton from '@/components/ShareButton'
-import InlineAudio from '@/components/InlineAudio'
-import { AudioHighlightProvider } from '@/components/AudioHighlightContext'
-import HighlightableContent from '@/components/HighlightableContent'
+import PostContent from '@/components/PostContent'
+import PostNavFooter from '@/components/PostNavFooter'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -46,18 +44,9 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
               <div>
-                {audio ? (
-                  <AudioHighlightProvider timestampUrl={audioTimestamps}>
-                    <div className="pt-10 pb-4">
-                      <InlineAudio src={audio} />
-                    </div>
-                    <div className="prose dark:prose-invert max-w-none pt-2 pb-8">
-                      <HighlightableContent>{children}</HighlightableContent>
-                    </div>
-                  </AudioHighlightProvider>
-                ) : (
-                  <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
-                )}
+                <PostContent audio={audio} audioTimestamps={audioTimestamps}>
+                  {children}
+                </PostContent>
                 <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
                   <ShareButton title={title} url={path} />
                 </div>
@@ -68,32 +57,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                 <Comments slug={slug} />
               </div>
             )}
-            <footer>
-              <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
-                {prev && prev.path && (
-                  <div className="pt-4 xl:pt-8">
-                    <Link
-                      href={`/${prev.path}`}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                      aria-label={`Previous post: ${prev.title}`}
-                    >
-                      &larr; {prev.title}
-                    </Link>
-                  </div>
-                )}
-                {next && next.path && (
-                  <div className="pt-4 xl:pt-8">
-                    <Link
-                      href={`/${next.path}`}
-                      className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                      aria-label={`Next post: ${next.title}`}
-                    >
-                      {next.title} &rarr;
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </footer>
+            <PostNavFooter prev={prev} next={next} />
           </div>
         </div>
       </article>
