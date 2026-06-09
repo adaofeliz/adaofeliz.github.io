@@ -10,7 +10,12 @@ import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
-import { ALLOWED_CATEGORIES, type Category, getPostCategory } from '@/lib/categories'
+import {
+  ALLOWED_CATEGORIES,
+  CATEGORY_LABELS,
+  type Category,
+  getPostCategory,
+} from '@/lib/categories'
 
 const POSTS_PER_PAGE = 5
 const ALL_CATEGORIES: Category[] = [...ALLOWED_CATEGORIES]
@@ -125,40 +130,22 @@ function HomeContent({ posts }: HomeProps) {
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             Personal blog about{' '}
-            <Link
-              href={activeTag === 'ai' ? '/' : '/?tag=ai'}
-              className={activeTag === 'ai' ? 'underline underline-offset-4' : ''}
-            >
-              AI
-            </Link>
-            ,{' '}
-            <Link
-              href={activeTag === 'technology' ? '/' : '/?tag=technology'}
-              className={activeTag === 'technology' ? 'underline underline-offset-4' : ''}
-            >
-              technology
-            </Link>
-            ,{' '}
-            <Link
-              href={activeTag === 'fitness' ? '/' : '/?tag=fitness'}
-              className={activeTag === 'fitness' ? 'underline underline-offset-4' : ''}
-            >
-              fitness
-            </Link>
-            ,{' '}
-            <Link
-              href={activeTag === 'life' ? '/' : '/?tag=life'}
-              className={activeTag === 'life' ? 'underline underline-offset-4' : ''}
-            >
-              life
-            </Link>
-            , and{' '}
-            <Link
-              href={activeTag === 'other' ? '/' : '/?tag=other'}
-              className={activeTag === 'other' ? 'underline underline-offset-4' : ''}
-            >
-              other
-            </Link>{' '}
+            {ALL_CATEGORIES.map((cat, i) => {
+              const isLast = i === ALL_CATEGORIES.length - 1
+              const label = CATEGORY_LABELS[cat]
+              return (
+                <span key={cat}>
+                  {i > 0 && !isLast && ', '}
+                  {i > 0 && isLast && ', and '}
+                  <Link
+                    href={activeTag === cat ? '/' : `/?tag=${cat}`}
+                    className={activeTag === cat ? 'underline underline-offset-4' : ''}
+                  >
+                    {label}
+                  </Link>
+                </span>
+              )
+            })}{' '}
             stuff.{' '}
             {activeTag && (
               <Link

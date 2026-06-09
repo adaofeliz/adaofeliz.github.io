@@ -1,14 +1,7 @@
-/**
- * Single source of truth for blog categories
- */
-
 export const ALLOWED_CATEGORIES = ['ai', 'technology', 'fitness', 'life', 'other'] as const
 
 export type Category = (typeof ALLOWED_CATEGORIES)[number]
 
-/**
- * Display labels for categories (Title Case)
- */
 export const CATEGORY_LABELS: Record<Category, string> = {
   ai: 'AI',
   technology: 'Technology',
@@ -17,10 +10,6 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   other: 'Other',
 }
 
-/**
- * Tailwind CSS classes for each category
- * Includes base styles, hover states, and dark mode support
- */
 export const CATEGORY_STYLES: Record<Category, string> = {
   ai: 'bg-red-100 text-red-800 hover:bg-red-200 dark:bg-red-900 dark:text-red-200 dark:hover:bg-red-800',
   technology:
@@ -32,11 +21,6 @@ export const CATEGORY_STYLES: Record<Category, string> = {
     'bg-gray-100 text-gray-800 hover:bg-gray-200 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800',
 }
 
-/**
- * Extract category from post tags
- * Returns the single category when tags.length === 1 and it's allowed
- * Otherwise returns 'other' and warns in development
- */
 export function getPostCategory(tags: string[] | undefined): Category {
   if (!tags || tags.length === 0) {
     if (process.env.NODE_ENV === 'development') {

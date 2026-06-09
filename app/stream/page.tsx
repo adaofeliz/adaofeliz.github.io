@@ -3,30 +3,13 @@ import type { Metadata } from 'next'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import { components } from '@/components/MDXComponents'
 import { roadmapData } from '@/data/stream/roadmap'
+import { getRoadmapAuthToken } from '@/lib/roadmapAuth'
 import { formatDate } from 'pliny/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 
 export const metadata: Metadata = {
   title: 'Stream - ' + siteMetadata.title,
   description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
-}
-
-function getRoadmapAuthToken(dateKey: string) {
-  const alphabet = '0123456789abcdefghijklmnopqrstuvwxyz'
-  let seed = 0
-
-  for (const char of dateKey) {
-    seed = (seed * 131 + char.charCodeAt(0)) >>> 0
-  }
-
-  let token = ''
-
-  for (let index = 0; index < 6; index += 1) {
-    seed = (seed * 1664525 + 1013904223) >>> 0
-    token += alphabet[seed % alphabet.length]
-  }
-
-  return token
 }
 
 export default function StreamPage() {

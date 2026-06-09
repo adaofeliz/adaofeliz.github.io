@@ -1,11 +1,4 @@
-export type RoadmapDeliveredItem = {
-  title: string
-  date: string
-  why: string
-  stack: string
-}
-
-export type RoadmapActiveItem = {
+export type RoadmapItem = {
   title: string
   date: string
   why: string
@@ -13,8 +6,8 @@ export type RoadmapActiveItem = {
 }
 
 export type RoadmapData = {
-  done: RoadmapDeliveredItem[]
-  inProgress: RoadmapActiveItem[]
+  done: RoadmapItem[]
+  inProgress: RoadmapItem[]
   future: readonly string[]
 }
 
@@ -56,8 +49,8 @@ export const roadmapData: RoadmapData = {
       why: 'Created a bare-metal operational log for low-friction AI updates.',
       stack: 'Contentlayer Stream type + terminal-inspired layout',
     },
-  ] satisfies RoadmapDeliveredItem[],
-  inProgress: [] satisfies RoadmapActiveItem[],
+  ] satisfies RoadmapItem[],
+  inProgress: [] satisfies RoadmapItem[],
   future: [
     'Neural command palette (CMD+K semantic search + conversational fallback).',
     'Bare-metal infrastructure showcase page for self-hosted stack visibility.',
