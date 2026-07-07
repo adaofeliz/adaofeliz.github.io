@@ -375,7 +375,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: MobileNav also filters — find and remove same filter there too
     Commit: Y | `feat(header): render Home nav link by removing href filter`
 
-- [ ] 10. Per-page metadata: Add `export const metadata` to `app/page.tsx` and `app/blog/page.tsx`
+- [x] 10. Per-page metadata: Add `export const metadata` to `app/page.tsx` and `app/blog/page.tsx`
       What to do: Verify both files already have `metadata` exports (they should from Todos 5 and 8). If either is missing, add it now:
   - `app/page.tsx` metadata (if missing):
     ```ts
@@ -409,7 +409,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: metadata export conflicts with layout — ensure no duplicate `title` key
     Commit: N (no separate commit needed if already in Todos 5 and 8; if added here, commit as `feat(seo): add per-page metadata to homepage and blog index`)
 
-- [ ] 11. `data/stream/2026-07-07-homepage-launch.mdx`: Add stream entry documenting this structural change
+- [x] 11. `data/stream/2026-07-07-homepage-launch.mdx`: Add stream entry documenting this structural change
       What to do: Create new file `data/stream/2026-07-07-homepage-launch.mdx` with the following required frontmatter (see INSTRUCTIONS.md §Session Learnings — "Stream Frontmatter is Strict"):
 
   ```mdx
