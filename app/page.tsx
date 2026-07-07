@@ -1,7 +1,7 @@
 import HomePage from './HomePage'
 import siteMetadata from '@/data/siteMetadata'
 
-const title = 'Adão Feliz — CTO, builder, engineering leader'
+const title = '$ ~/_adflz'
 const description =
   'Personal website of Adão Feliz. CTO at Powerdot. Building EV infrastructure, AI systems, and engineering teams across Europe.'
 const url = siteMetadata.siteUrl
