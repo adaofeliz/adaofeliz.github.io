@@ -18,8 +18,8 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {
-    default: siteMetadata.title,
-    template: `%s | ${siteMetadata.title}`,
+    default: '$ ~/_adflz',
+    template: `$ ~/_adflz | %s`,
   },
   description: siteMetadata.description,
   authors: [{ name: siteMetadata.author, url: siteMetadata.siteUrl }],

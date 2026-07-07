@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     canonical: `${siteMetadata.siteUrl}/stream`,
   },
   openGraph: {
-    title: `Stream | ${siteMetadata.title}`,
+    title: `$ ~/_adflz | Stream`,
     description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
     url: `${siteMetadata.siteUrl}/stream`,
     siteName: siteMetadata.title,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         url: `${siteMetadata.siteUrl}/static/images/logo.png`,
         width: 1200,
         height: 630,
-        alt: `Stream | ${siteMetadata.title}`,
+        alt: `$ ~/_adflz | Stream`,
       },
     ],
     locale: 'en_US',
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `Stream | ${siteMetadata.title}`,
+    title: `$ ~/_adflz | Stream`,
     description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
     images: [`${siteMetadata.siteUrl}/static/images/logo.png`],
   },

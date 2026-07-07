@@ -28,7 +28,7 @@ export function genPageMetadata({
       canonical: resolvedCanonical,
     },
     openGraph: {
-      title: `${title} | ${siteMetadata.title}`,
+      title: `$ ~/_adflz | ${title}`,
       description: resolvedDescription,
       url: resolvedCanonical,
       siteName: siteMetadata.title,
@@ -37,7 +37,7 @@ export function genPageMetadata({
           url: resolvedImage,
           width: 1200,
           height: 630,
-          alt: `${title} | ${siteMetadata.title}`,
+          alt: `$ ~/_adflz | ${title}`,
         },
       ],
       locale: 'en_US',
@@ -45,7 +45,7 @@ export function genPageMetadata({
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${title} | ${siteMetadata.title}`,
+      title: `$ ~/_adflz | ${title}`,
       description: resolvedDescription,
       images: [resolvedImage],
     },
