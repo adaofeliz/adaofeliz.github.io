@@ -39,7 +39,7 @@ const homepageData: HomepageData = {
   focusAreas: [
     {
       id: 'ev-charging-infrastructure',
-      title: 'EV Charging Infrastructure',
+      title: 'EV Infrastructure',
       description:
         'Leading technology strategy for 3,500+ charging locations and 15,000+ charging points with ownership of the OCPP and OCPI platforms that cover interoperability, tariffs, roaming, and security across Europe.',
     },
