@@ -61,7 +61,6 @@ export default function StreamPage() {
     <div className="mx-auto max-w-3xl font-mono">
       <details className="space-y-2 border-b border-gray-200 pt-6 pb-8 md:space-y-5 dark:border-gray-800">
         <summary className="group flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 text-lg text-gray-500 marker:content-none focus:outline-none dark:text-gray-400">
-          <span className="text-primary-500">$</span>
           <span>tail -f ~/.stream/*.log</span>
           <span
             aria-hidden="true"
