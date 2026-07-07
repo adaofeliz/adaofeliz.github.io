@@ -1,0 +1,65 @@
+---
+title: 'My Take on Scaling AI: Words Are Spells'
+date: '2026-07-07'
+tags:
+  - ai
+summary: >-
+  Words carry energy. I learned this in human relationships. AI and LLMs have
+  only reinforced it. The people who will thrive in this new world are not the
+  ones who type the fastest. They are the ones who understand that the right
+  sequence of words, delivered with the right intent, changes what happens next.
+---
+
+Words carry energy.
+
+I have believed this for a long time. The word "spelling" itself gives it away. To spell something is to cast a spell. When you tell someone they are not worthy, even as a joke, the energy lands. It lands deeper than you intended and stays longer than you think. The same works in reverse. Positive words, spoken to yourself or to others, do not just describe reality. They shape it.
+
+This was a belief I held loosely for years, mostly in the domain of team management and human relationships. What I did not expect was how much AI would reinforce it.
+
+## The natural language bridge
+
+A few months ago I was given the responsibility to lead AI enablement at Powerdot. I built [the stack](https://www.adaofeliz.com/blog/my-state-of-ai-_-the-harness-beneath-the-model) from the ground up. The routing. The models. The MCP gateways that give the models access to Jira, Slack, Google Workspace, our databases. The skills. The system prompts. Every piece of infrastructure that sits between a person typing a sentence and the machine actually doing something useful.
+
+Because I built it, I know things that no user can see.
+
+I know exactly which words trigger which tools. I know that "send a message" is too vague. It could mean Slack. It could mean a Jira comment. It could mean a reply to an email. Without the platform hint, the LLM does not hallucinate, but might just pick the wrong option. I know the small signals embedded in the skill names, the tool descriptions, the context window that loads before every session. These signals are invisible to everyone else, but to me they are the difference between the machine doing what I want and the machine doing something adjacent but wrong.
+
+Dogfooding my own stack taught me this faster than anything else could. I moved my daily AI use from my personal home lab into our enterprise-grade stack so I could feel what others would feel. What I discovered was a gap that is hard to describe.
+
+I know the spells.
+
+## The knowledge nobody can see
+
+This is where the problem lives.
+
+I have insider knowledge from building the infrastructure. I know the exact descriptions I wrote for each tool. I know the skill names. I know the system prompt phrasing that makes one model respond differently than another. This knowledge makes me vastly more effective with the same tools that everyone else has.
+
+And I do not know how to transmit it.
+
+I can write documentation. I can explain the architecture. But the thing that makes the difference is not architectural. It is the intuition for which word opens which door. It is the muscle memory of phrasing a request so the right tool fires on the first attempt. It is knowing when to add a hint and when to let the model figure it out.
+
+This is not a Powerdot problem. It is an industry problem. Every company deploying AI internally has a handful of people who know the spells and a much larger group who do not. The spells are not documented because the people who cast them do not always know they are casting them.
+
+## Show and tell
+
+My current strategy is simple. Short videos. 3 to 5 minutes each. Not tutorials in the traditional sense. Demos of a single spell at a time. Here is what I type. Here is what happens. Here is why I added that word and not another one.
+
+I do not have the structure figured out. I do not know if it will gain traction. But I know that writing a fifty-page guide will not work because nobody will read it. Watching someone cast a spell in thirty seconds, seeing the tool fire and the result land, that might stick.
+
+## What comes next
+
+Half of the solution is long-term memory.
+
+Every person who uses AI regularly develops patterns. They ask for things in a certain way. They expect certain outcomes. If the AI remembers those patterns across sessions, it starts to anticipate. It knows the path before the user finishes typing. The labs are already shipping this. ChatGPT has memory. Claude agents have memory. And in our stack, every user already has their own long-term memory space. For the individual, this half is underway.
+
+The other half is harder.
+
+The shared layer, the system prompts and skills and tool descriptions that every user inherits, is static. It was written once, by someone like me, and it sits there. It does not learn. It does not notice when two skills overlap. It does not flag when a description is ambiguous in a way that causes the model to pick the wrong tool three times out of ten. It does not improve unless a human notices the problem and fixes it manually. The labs ship prompt optimizers, but those are tools a developer runs by hand. They do not watch what actually happens in production.
+
+This is what we are building now. An autonomous layer that watches every session. Not the content of the conversations. The signals. Which tools fired. Which ones were tried and rejected. Where the model hesitated. Where the user had to rephrase three times to get the right result. These signals are patterns. And patterns can teach the static layer to improve itself.
+
+Not just for one user. For everyone.
+
+That is the vision. A feedback loop where individual sessions feed into a collective improvement engine. The alignment team gets the signals. The static layer gets better. The spells get sharper. And the gap between the people who built the stack and the people who use it starts to close.
+
+Onwards, wizards.
