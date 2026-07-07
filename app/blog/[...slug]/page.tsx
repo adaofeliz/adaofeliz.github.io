@@ -53,6 +53,9 @@ export async function generateMetadata(props: {
     title: post.title,
     description: post.summary,
     ...(post.listed === false && { robots: { index: false, follow: false } }),
+    alternates: {
+      canonical: `${siteMetadata.siteUrl}/blog/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.summary,
@@ -61,9 +64,15 @@ export async function generateMetadata(props: {
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,
-      url: './',
+      url: `${siteMetadata.siteUrl}/blog/${slug}`,
       images: ogImages,
       authors: authors.length > 0 ? authors : [siteMetadata.author],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.summary,
+      images: ogImages.map((img) => img.url),
     },
   }
 }

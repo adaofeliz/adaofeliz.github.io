@@ -8,8 +8,33 @@ import { formatDate } from 'pliny/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 
 export const metadata: Metadata = {
-  title: 'Stream - ' + siteMetadata.title,
+  title: 'Stream',
   description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
+  alternates: {
+    canonical: `${siteMetadata.siteUrl}/stream`,
+  },
+  openGraph: {
+    title: `Stream | ${siteMetadata.title}`,
+    description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
+    url: `${siteMetadata.siteUrl}/stream`,
+    siteName: siteMetadata.title,
+    images: [
+      {
+        url: `${siteMetadata.siteUrl}/static/images/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: `Stream | ${siteMetadata.title}`,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Stream | ${siteMetadata.title}`,
+    description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
+    images: [`${siteMetadata.siteUrl}/static/images/logo.png`],
+  },
 }
 
 export default function StreamPage() {
