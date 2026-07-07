@@ -1,0 +1,3 @@
+10:  const blogRoutes = allBlogs
+22:  return [...routes, ...blogRoutes]
+(no output = blog successfully removed from static routes)

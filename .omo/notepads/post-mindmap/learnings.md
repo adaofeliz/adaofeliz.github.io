@@ -1,0 +1,5 @@
+- Generated mindmaps for 11 non-draft posts via scripts/generate-mindmap.mjs.
+- Verified 12 SVGs, 12 PNGs, and 12 posts with mindmap frontmatter.
+- Confirmed PNG outputs are 1200x630 and yarn build passes.
+- Final browser QA on `http://localhost:3000/blog/hello-world` found the post mindmap is already visible while the toggle reports `aria-expanded="false"` and "View mindmap".
+- Clicking the toggle flips label/`aria-expanded`, but the mindmap container remains visible after collapse; dark theme, light theme, OG metadata, and alternate post mindmap rendering all passed.

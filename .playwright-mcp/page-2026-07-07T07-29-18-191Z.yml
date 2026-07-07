@@ -1,0 +1,233 @@
+- generic [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - link "adaofeliz" [ref=f7e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f7e6]: adaofeliz
+      - generic [ref=f7e7]:
+        - generic [ref=f7e8]:
+          - link "Blog" [active] [ref=f7e9] [cursor=pointer]:
+            - /url: /blog/
+          - link "Stream" [ref=f7e10] [cursor=pointer]:
+            - /url: /stream/
+          - link "About" [ref=f7e11] [cursor=pointer]:
+            - /url: /about/
+        - button "Theme switcher" [ref=f7e15]:
+          - img [ref=f7e16]
+    - main [ref=f7e18]:
+      - generic [ref=f7e94]:
+        - generic [ref=f7e95]:
+          - paragraph [ref=f7e96]:
+            - text: Personal blog about
+            - link "AI" [ref=f7e98] [cursor=pointer]:
+              - /url: /blog/?tag=ai
+            - generic [ref=f7e99]:
+              - text: ","
+              - link "Technology" [ref=f7e100] [cursor=pointer]:
+                - /url: /blog/?tag=technology
+            - generic [ref=f7e101]:
+              - text: ","
+              - link "Fitness" [ref=f7e102] [cursor=pointer]:
+                - /url: /blog/?tag=fitness
+            - generic [ref=f7e103]:
+              - text: ","
+              - link "Life" [ref=f7e104] [cursor=pointer]:
+                - /url: /blog/?tag=life
+            - generic [ref=f7e105]:
+              - text: ", and"
+              - link "Other" [ref=f7e106] [cursor=pointer]:
+                - /url: /blog/?tag=other
+            - text: stuff.
+          - generic "Blog post activity tracker" [ref=f7e107]:
+            - generic "No posts week of 2025-07-15" [ref=f7e108]
+            - generic "No posts week of 2025-07-22" [ref=f7e109]
+            - generic "No posts week of 2025-07-29" [ref=f7e110]
+            - generic "No posts week of 2025-08-05" [ref=f7e111]
+            - generic "No posts week of 2025-08-12" [ref=f7e112]
+            - generic "No posts week of 2025-08-19" [ref=f7e113]
+            - generic "No posts week of 2025-08-26" [ref=f7e114]
+            - generic "No posts week of 2025-09-02" [ref=f7e115]
+            - generic "No posts week of 2025-09-09" [ref=f7e116]
+            - generic "No posts week of 2025-09-16" [ref=f7e117]
+            - generic "No posts week of 2025-09-23" [ref=f7e118]
+            - generic "No posts week of 2025-09-30" [ref=f7e119]
+            - generic "No posts week of 2025-10-07" [ref=f7e120]
+            - generic "No posts week of 2025-10-14" [ref=f7e121]
+            - generic "No posts week of 2025-10-21" [ref=f7e122]
+            - generic "No posts week of 2025-10-28" [ref=f7e123]
+            - generic "No posts week of 2025-11-04" [ref=f7e124]
+            - generic "No posts week of 2025-11-11" [ref=f7e125]
+            - generic "No posts week of 2025-11-18" [ref=f7e126]
+            - generic "No posts week of 2025-11-25" [ref=f7e127]
+            - generic "No posts week of 2025-12-02" [ref=f7e128]
+            - generic "No posts week of 2025-12-09" [ref=f7e129]
+            - generic "No posts week of 2025-12-16" [ref=f7e130]
+            - generic "No posts week of 2025-12-23" [ref=f7e131]
+            - generic "No posts week of 2025-12-30" [ref=f7e132]
+            - generic "No posts week of 2026-01-06" [ref=f7e133]
+            - generic "No posts week of 2026-01-13" [ref=f7e134]
+            - generic "No posts week of 2026-01-20" [ref=f7e135]
+            - generic "Posted week of 2026-01-27" [ref=f7e136]
+            - generic "No posts week of 2026-02-03" [ref=f7e137]
+            - generic "No posts week of 2026-02-10" [ref=f7e138]
+            - generic "Posted week of 2026-02-17" [ref=f7e139]
+            - generic "Posted week of 2026-02-24" [ref=f7e140]
+            - generic "Posted week of 2026-03-03" [ref=f7e141]
+            - generic "Posted week of 2026-03-10" [ref=f7e142]
+            - generic "No posts week of 2026-03-17" [ref=f7e143]
+            - generic "Posted week of 2026-03-24" [ref=f7e144]
+            - generic "Posted week of 2026-03-31" [ref=f7e145]
+            - generic "Posted week of 2026-04-07" [ref=f7e146]
+            - generic "Posted week of 2026-04-14" [ref=f7e147]
+            - generic "Posted week of 2026-04-21" [ref=f7e148]
+            - generic "Posted week of 2026-04-28" [ref=f7e149]
+            - generic "Posted week of 2026-05-05" [ref=f7e150]
+            - generic "No posts week of 2026-05-12" [ref=f7e151]
+            - generic "Posted week of 2026-05-19" [ref=f7e152]
+            - generic "No posts week of 2026-05-26" [ref=f7e153]
+            - generic "No posts week of 2026-06-02" [ref=f7e154]
+            - generic "No posts week of 2026-06-09" [ref=f7e155]
+            - generic "No posts week of 2026-06-16" [ref=f7e156]
+            - generic "No posts week of 2026-06-23" [ref=f7e157]
+            - generic "No posts week of 2026-06-30" [ref=f7e158]
+        - list [ref=f7e159]:
+          - listitem [ref=f7e160]:
+            - article [ref=f7e161]:
+              - generic [ref=f7e162]:
+                - generic [ref=f7e163]:
+                  - term [ref=f7e164]: Published on
+                  - definition [ref=f7e165]:
+                    - time [ref=f7e166]: May 6, 2026
+                - generic [ref=f7e167]:
+                  - generic [ref=f7e168]:
+                    - heading "How This Blog Works" [level=2] [ref=f7e170]:
+                      - link "How This Blog Works" [ref=f7e171] [cursor=pointer]:
+                        - /url: /blog/how-this-blog-works/
+                    - generic [ref=f7e172]: A note on restructuring. Some posts are gone. Here is why I write, how the voice process works, and what I keep.
+                  - generic [ref=f7e173]:
+                    - generic "Listen to article" [ref=f7e174]:
+                      - button "Listen to article" [ref=f7e175]:
+                        - img [ref=f7e176]
+                        - img [ref=f7e179]
+                    - generic [ref=f7e181]: "|"
+                    - link "Other" [ref=f7e182] [cursor=pointer]:
+                      - /url: /?tag=other
+                    - generic [ref=f7e183]: "|"
+                    - 'link "Read more: \"How This Blog Works\"" [ref=f7e184] [cursor=pointer]':
+                      - /url: /blog/how-this-blog-works/
+                      - text: Read more →
+          - listitem [ref=f7e185]:
+            - article [ref=f7e186]:
+              - generic [ref=f7e187]:
+                - generic [ref=f7e188]:
+                  - term [ref=f7e189]: Published on
+                  - definition [ref=f7e190]:
+                    - time [ref=f7e191]: May 5, 2026
+                - generic [ref=f7e192]:
+                  - generic [ref=f7e193]:
+                    - 'heading "My state of AI: The harness beneath the model" [level=2] [ref=f7e195]':
+                      - 'link "My state of AI: The harness beneath the model" [ref=f7e196] [cursor=pointer]':
+                        - /url: /blog/my-state-of-ai-_-the-harness-beneath-the-model/
+                    - generic [ref=f7e197]: "I wrote about killing the multi-agent illusion with smart routing. But routing is only the first layer. The harder problem is what sits between the model and the user: context injection, tool exposure, auth impersonation, and non-deterministic auditing. The AI harness is the new software architecture, and it will define who wins the next decade."
+                  - generic [ref=f7e198]:
+                    - generic "Listen to article" [ref=f7e199]:
+                      - button "Listen to article" [ref=f7e200]:
+                        - img [ref=f7e201]
+                        - img [ref=f7e204]
+                    - generic [ref=f7e206]: "|"
+                    - link "AI" [ref=f7e207] [cursor=pointer]:
+                      - /url: /?tag=ai
+                    - generic [ref=f7e208]: "|"
+                    - 'link "Read more: \"My state of AI: The harness beneath the model\"" [ref=f7e209] [cursor=pointer]':
+                      - /url: /blog/my-state-of-ai-_-the-harness-beneath-the-model/
+                      - text: Read more →
+          - listitem [ref=f7e210]:
+            - article [ref=f7e211]:
+              - generic [ref=f7e212]:
+                - generic [ref=f7e213]:
+                  - term [ref=f7e214]: Published on
+                  - definition [ref=f7e215]:
+                    - time [ref=f7e216]: April 29, 2026
+                - generic [ref=f7e217]:
+                  - generic [ref=f7e218]:
+                    - heading "The Quiet Layer" [level=2] [ref=f7e220]:
+                      - link "The Quiet Layer" [ref=f7e221] [cursor=pointer]:
+                        - /url: /blog/the-quiet-layer/
+                    - generic [ref=f7e222]: I used to think power was loud. I was wrong. The more I pay attention to the world right now, the more I see that the real layers of power, influence, and wealth are the ones that stay quiet.
+                  - generic [ref=f7e223]:
+                    - generic "Listen to article" [ref=f7e224]:
+                      - button "Listen to article" [ref=f7e225]:
+                        - img [ref=f7e226]
+                        - img [ref=f7e229]
+                    - generic [ref=f7e231]: "|"
+                    - link "Other" [ref=f7e232] [cursor=pointer]:
+                      - /url: /?tag=other
+                    - generic [ref=f7e233]: "|"
+                    - 'link "Read more: \"The Quiet Layer\"" [ref=f7e234] [cursor=pointer]':
+                      - /url: /blog/the-quiet-layer/
+                      - text: Read more →
+          - listitem [ref=f7e235]:
+            - article [ref=f7e236]:
+              - generic [ref=f7e237]:
+                - generic [ref=f7e238]:
+                  - term [ref=f7e239]: Published on
+                  - definition [ref=f7e240]:
+                    - time [ref=f7e241]: April 27, 2026
+                - generic [ref=f7e242]:
+                  - generic [ref=f7e243]:
+                    - 'heading "My state of AI: The multi-agent illusion" [level=2] [ref=f7e245]':
+                      - 'link "My state of AI: The multi-agent illusion" [ref=f7e246] [cursor=pointer]':
+                        - /url: /blog/my-state-of-ai-_-the-multi-agent-illusion/
+                    - generic [ref=f7e247]: "Every day, our operations team manually routes field technicians: prioritizing tickets, plotting maps, syncing calendars, sending confirmations. It is the kind of workflow you want to automate. We started with frontier models, hit a cost wall, then dove into multi-agent systems to fix it. Costs dropped, but scaling was impossible. The answer was not more agents. It was hiding the complexity entirely."
+                  - generic [ref=f7e248]:
+                    - generic "Listen to article" [ref=f7e249]:
+                      - button "Listen to article" [ref=f7e250]:
+                        - img [ref=f7e251]
+                        - img [ref=f7e254]
+                    - generic [ref=f7e256]: "|"
+                    - link "AI" [ref=f7e257] [cursor=pointer]:
+                      - /url: /?tag=ai
+                    - generic [ref=f7e258]: "|"
+                    - 'link "Read more: \"My state of AI: The multi-agent illusion\"" [ref=f7e259] [cursor=pointer]':
+                      - /url: /blog/my-state-of-ai-_-the-multi-agent-illusion/
+                      - text: Read more →
+          - listitem [ref=f7e260]:
+            - article [ref=f7e261]:
+              - generic [ref=f7e262]:
+                - generic [ref=f7e263]:
+                  - term [ref=f7e264]: Published on
+                  - definition [ref=f7e265]:
+                    - time [ref=f7e266]: April 24, 2026
+                - generic [ref=f7e267]:
+                  - generic [ref=f7e268]:
+                    - heading "The Privilege of Sore Legs" [level=2] [ref=f7e270]:
+                      - link "The Privilege of Sore Legs" [ref=f7e271] [cursor=pointer]:
+                        - /url: /blog/the-privilege-of-sore-legs/
+                    - generic [ref=f7e272]: Until my early thirties, I felt immortal. I skipped doctors, ignored nutrition, and treated my body like it would just keep going. Then I started watching how people age, and I realized that getting older is not about living longer. It is about living with quality. That changed everything.
+                  - generic [ref=f7e273]:
+                    - generic "Listen to article" [ref=f7e274]:
+                      - button "Listen to article" [ref=f7e275]:
+                        - img [ref=f7e276]
+                        - img [ref=f7e279]
+                    - generic [ref=f7e281]: "|"
+                    - link "Fitness" [ref=f7e282] [cursor=pointer]:
+                      - /url: /?tag=fitness
+                    - generic [ref=f7e283]: "|"
+                    - 'link "Read more: \"The Privilege of Sore Legs\"" [ref=f7e284] [cursor=pointer]':
+                      - /url: /blog/the-privilege-of-sore-legs/
+                      - text: Read more →
+      - navigation [ref=f7e286]:
+        - button "Previous" [disabled] [ref=f7e287]
+        - generic [ref=f7e288]: 1 of 4
+        - link "Next" [ref=f7e289] [cursor=pointer]:
+          - /url: /blog/?page=2
+    - generic [ref=f7e85]:
+      - generic [ref=f7e86]: The views and opinions expressed on this blog are my own and do not represent those of my employer.
+      - generic [ref=f7e87]:
+        - generic [ref=f7e88]: Adão
+        - generic [ref=f7e89]: •
+        - generic [ref=f7e90]: © 2026
+        - generic [ref=f7e91]: •
+        - link "Adão Feliz" [ref=f7e92] [cursor=pointer]:
+          - /url: /
+  - alert [ref=f7e93]: Blog — Adão Feliz | Adão Feliz

@@ -1,0 +1,1 @@
+  description: 'Personal blog about technology, fitness, life, and other stuff.',

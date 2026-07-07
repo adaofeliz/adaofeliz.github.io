@@ -1,0 +1,92 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - generic [ref=f2e3]:
+      - link "adaofeliz" [ref=f2e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f2e6]: adaofeliz
+      - generic [ref=f2e7]:
+        - generic [ref=f2e8]:
+          - link "Blog" [ref=f2e9] [cursor=pointer]:
+            - /url: /blog/
+          - link "Stream" [ref=f2e10] [cursor=pointer]:
+            - /url: /stream/
+          - link "About" [ref=f2e11] [cursor=pointer]:
+            - /url: /about/
+        - button "Theme switcher" [ref=f2e15]:
+          - img [ref=f2e16]
+    - main [ref=f2e18]:
+      - article [ref=f2e20]:
+        - generic [ref=f2e21]:
+          - generic [ref=f2e23]:
+            - generic [ref=f2e25]:
+              - term [ref=f2e26]: Published on
+              - definition [ref=f2e27]:
+                - time [ref=f2e28]: February 1, 2026
+            - heading "Hello world" [level=1] [ref=f2e30]
+          - generic [ref=f2e31]:
+            - generic [ref=f2e32]:
+              - term [ref=f2e33]: Authors
+              - definition [ref=f2e34]:
+                - list [ref=f2e35]:
+                  - listitem [ref=f2e36]:
+                    - img "avatar" [ref=f2e37]
+                    - generic [ref=f2e38]:
+                      - term [ref=f2e39]: Name
+                      - definition [ref=f2e40]: Adão
+            - generic [ref=f2e42]:
+              - generic "Listen to article" [ref=f2e44]:
+                - generic [ref=f2e45]:
+                  - button "Listen to article" [ref=f2e46]:
+                    - img [ref=f2e47]
+                    - img [ref=f2e50]
+                  - generic [ref=f2e52]: 1:23
+                  - button "Playback speed 1x. Click to change." [ref=f2e53]: 1x
+                  - button "Disable auto-scroll" [pressed] [ref=f2e54]:
+                    - img [ref=f2e55]
+                  - button "Expand timeline" [ref=f2e57]:
+                    - img [ref=f2e58]
+              - generic [ref=f2e61]:
+                - paragraph [ref=f2e62]: Every blog needs a first post. So here we are.
+                - heading "Who I am" [level=2] [ref=f2e63]:
+                  - img [ref=f2e65] [cursor=pointer]
+                  - text: Who I am
+                - paragraph [ref=f2e68]: I'm a senior technology leader — currently CTO at Powerdot — with a long career spent building software, leading engineering teams, and trying to stay genuinely curious about how things work. Outside of work, I spend time on my homelab, on my mountain bike, and increasingly in the gym. I read a lot, tinker often, and occasionally have opinions worth writing down.
+                - heading "What this blog is" [level=2] [ref=f2e69]:
+                  - img [ref=f2e71] [cursor=pointer]
+                  - text: What this blog is
+                - paragraph [ref=f2e74]: "This is my personal publishing space. No CMS, no editorial process — just an MDX file, a git push, and whatever I happen to be thinking about. The topics will follow my actual life: technology, fitness, homelab projects, things I've learned, things I've broken, and the occasional reflection on what it's like to do this job at this stage of a career."
+                - heading "What this blog is not" [level=2] [ref=f2e75]:
+                  - img [ref=f2e77] [cursor=pointer]
+                  - text: What this blog is not
+                - paragraph [ref=f2e80]: It is not a corporate communications channel. The views here are my own. Nothing I write represents the position of Powerdot or anyone I work with. That disclaimer is in the footer of every page, and I mean it.
+                - heading "Why now" [level=2] [ref=f2e81]:
+                  - img [ref=f2e83] [cursor=pointer]
+                  - text: Why now
+                - paragraph [ref=f2e86]: I've had drafts sitting in plain Markdown for longer than I care to admit. Building a proper home for them felt like the right first step. The pipeline is working, the domain is live, and there is no longer a good reason to keep writing into a void.
+                - paragraph [ref=f2e87]: "So: hello world. Let's see where this goes..."
+              - button "Share this post" [ref=f2e89]:
+                - img [ref=f2e90]
+                - generic [ref=f2e92]: Share
+            - generic [ref=f2e93]:
+              - generic [ref=f2e94]:
+                - generic [ref=f2e95]:
+                  - heading "Tag" [level=2] [ref=f2e96]
+                  - link "Other" [ref=f2e97] [cursor=pointer]:
+                    - /url: /?tag=other
+                - generic [ref=f2e99]:
+                  - heading "Next Article" [level=2] [ref=f2e100]
+                  - 'link "My Journey with Vibe Coding: Agentic Development" [ref=f2e102] [cursor=pointer]':
+                    - /url: /blog/my-journey-with-vibe-coding-_-agentic-development/
+              - link "Back to home" [ref=f2e104] [cursor=pointer]:
+                - /url: /
+                - text: ← Back to home
+    - generic [ref=f2e106]:
+      - generic [ref=f2e107]: The views and opinions expressed on this blog are my own and do not represent those of my employer.
+      - generic [ref=f2e108]:
+        - generic [ref=f2e109]: Adão
+        - generic [ref=f2e110]: •
+        - generic [ref=f2e111]: © 2026
+        - generic [ref=f2e112]: •
+        - link "Adão Feliz" [ref=f2e113] [cursor=pointer]:
+          - /url: /
+  - alert [ref=f2e114]

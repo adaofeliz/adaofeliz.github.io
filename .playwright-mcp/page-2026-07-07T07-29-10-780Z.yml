@@ -1,0 +1,95 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - link "adaofeliz" [ref=f7e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f7e6]: adaofeliz
+      - generic [ref=f7e7]:
+        - generic [ref=f7e8]:
+          - link "Blog" [ref=f7e9] [cursor=pointer]:
+            - /url: /blog/
+          - link "Stream" [ref=f7e10] [cursor=pointer]:
+            - /url: /stream/
+          - link "About" [ref=f7e11] [cursor=pointer]:
+            - /url: /about/
+        - button "Theme switcher" [ref=f7e15]:
+          - img [ref=f7e16]
+    - main [ref=f7e18]:
+      - generic [ref=f7e19]:
+        - heading "About" [level=1] [ref=f7e21]
+        - generic [ref=f7e22]:
+          - generic [ref=f7e23]:
+            - img "avatar" [ref=f7e24]
+            - heading "Adão" [level=3] [ref=f7e25]
+          - generic [ref=f7e26]:
+            - heading "Hi, I'm Adão 👋" [level=1] [ref=f7e27]:
+              - img [ref=f7e29] [cursor=pointer]
+              - text: Hi, I'm Adão 👋
+            - paragraph [ref=f7e32]:
+              - text: 📍 Portugal | CTO at
+              - link "Powerdot" [ref=f7e33] [cursor=pointer]:
+                - /url: https://powerdot.eu
+            - paragraph [ref=f7e34]: 15+ years designing distributed systems, scaling platforms, and leading engineering teams. Currently building the technology foundation for large-scale EV charging infrastructure across Europe.
+            - heading "Philosophy" [level=3] [ref=f7e35]:
+              - img [ref=f7e37] [cursor=pointer]
+              - text: Philosophy
+            - blockquote [ref=f7e40]:
+              - paragraph [ref=f7e41]: Build systems that scale before the business forces you to. Good architecture is a competitive advantage, not a cost centre.
+            - heading "What I'm Working On" [level=2] [ref=f7e42]:
+              - img [ref=f7e44] [cursor=pointer]
+              - text: What I'm Working On
+            - list [ref=f7e47]:
+              - listitem [ref=f7e48]:
+                - strong [ref=f7e49]: Powerdot
+                - text: "- Leading technology strategy for 3,500+ charging locations and 15,000+ charging points across Europe. Owning OCPP and OCPI platforms covering interoperability, tariffs, roaming, and security."
+              - listitem [ref=f7e50]:
+                - strong [ref=f7e51]: Charging standards
+                - text: "- Contributing to Autocharge with MSP roaming, Cloud Load Management approaches, and OCPP Gateway open source efforts."
+              - listitem [ref=f7e52]:
+                - strong [ref=f7e53]: Industry community
+                - text: "- Publishing whitepapers and participating in CPO standards and innovation forums."
+            - heading "Focus Areas" [level=2] [ref=f7e54]:
+              - img [ref=f7e56] [cursor=pointer]
+              - text: Focus Areas
+            - list [ref=f7e59]:
+              - listitem [ref=f7e60]: OCPP and OCPI platform architecture for interoperability, tariffs, roaming, and security
+              - listitem [ref=f7e61]: Scalable backend systems for real-time session management, pricing, and settlement
+              - listitem [ref=f7e62]: Uptime SLOs, observability standards, and incident response practices
+              - listitem [ref=f7e63]: Asset telemetry, maintenance systems, and field performance at scale
+              - listitem [ref=f7e64]: Technical strategy aligned to growth and unit economics
+            - heading "Background" [level=3] [ref=f7e65]:
+              - img [ref=f7e67] [cursor=pointer]
+              - text: Background
+            - list [ref=f7e70]:
+              - listitem [ref=f7e71]: 15+ years as a builder, software architect, engineering manager, and technology leader
+              - listitem [ref=f7e72]: Advisor to early-stage teams on product strategy, architecture, and technical due diligence
+              - listitem [ref=f7e73]: Founded YMedia, a web agency and automaded online ads service, failed hard in 2018
+              - listitem [ref=f7e74]:
+                - text: Founded
+                - link "Bright Technologies" [ref=f7e75] [cursor=pointer]:
+                  - /url: https://econews.pt/2022/01/26/portuguese-unicorn-buys-bright-technologies-unit/
+                  - strong [ref=f7e76]: Bright Technologies
+                - text: ", acquired by Sword Health in 2021"
+              - listitem [ref=f7e77]:
+                - text: Software Architect for
+                - link "Airchat" [ref=f7e78] [cursor=pointer]:
+                  - /url: https://techcrunch.com/2024/04/13/airchat-launch/
+                  - strong [ref=f7e79]: Airchat
+                - text: (founded by ex-Tinder CPO - Brian Norgard and Naval Ravikant)
+              - listitem [ref=f7e80]:
+                - text: Currently leading technology strategy and delivery at
+                - link "Powerdot" [ref=f7e81] [cursor=pointer]:
+                  - /url: https://powerdot.eu/en/about-us
+                  - strong [ref=f7e82]: Powerdot
+                - text: across Europe
+            - group [ref=f7e83]
+    - generic [ref=f7e85]:
+      - generic [ref=f7e86]: The views and opinions expressed on this blog are my own and do not represent those of my employer.
+      - generic [ref=f7e87]:
+        - generic [ref=f7e88]: Adão
+        - generic [ref=f7e89]: •
+        - generic [ref=f7e90]: © 2026
+        - generic [ref=f7e91]: •
+        - link "Adão Feliz" [ref=f7e92] [cursor=pointer]:
+          - /url: /
+  - alert [ref=f7e93]
