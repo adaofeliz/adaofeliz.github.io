@@ -51,7 +51,7 @@ const homepageData: HomepageData = {
     },
     {
       id: 'networking-with-builders',
-      title: 'Networking with Builders',
+      title: 'Networking',
       description:
         'Meeting, working with, and hiring the people who build things that matter. My focus is building the best engineering teams in the industry, and that starts with real conversations and genuine collaboration.',
     },
