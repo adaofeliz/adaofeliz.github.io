@@ -200,7 +200,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: tsc error on type mismatch → check shape matches existing type expectation
     Commit: Y | `feat(nav): add Blog link and restore Home link in headerNavLinks`
 
-- [ ] 4. `app/Main.tsx`: Add `basePath` prop and replace 3 hardcoded `'/'` href literals
+- [x] 4. `app/Main.tsx`: Add `basePath` prop and replace 3 hardcoded `'/'` href literals
      What to do: This is a pure refactor — zero visual change when `basePath='/'` (the default). Add `basePath: string = '/'` to the `HomeProps` interface and `HomeContent` function signature. Replace the three hardcoded `/` href literals:
   - Line ~124: `getHref` function returns `'/'` as base → replace bare `'/'` with `basePath`
   - Line ~141: category chip `href={activeTag === cat ? '/' : ...}` → replace `'/'` with `basePath`
@@ -221,7 +221,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: TypeScript error on prop — check interface and destructuring match; regression — `href="/"` literal still present, grep to find it
     Commit: Y | `refactor(Main): parameterize basePath prop for blog index reuse`
 
-- [ ] 5. `app/blog/page.tsx`: Create blog index page at `/blog`
+- [x] 5. `app/blog/page.tsx`: Create blog index page at `/blog`
      What to do: Create new file `app/blog/page.tsx`. Mirror the shape of `app/page.tsx` exactly — server component, no `'use client'`. Import `sortPosts`, `allCoreContent` from `pliny/utils/contentlayer`, `allBlogs` from `contentlayer/generated`, and `Main` from `'../Main'`. Sort and pass posts, and pass `basePath="/blog"` to `<Main>`. Add a page-level `export const metadata` export:
 
   ```ts
@@ -251,7 +251,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: build error on Suspense/SSR → ensure no client hooks leak into server component wrapper; check Main's own Suspense boundary is sufficient
     Commit: Y | `feat(routing): add /blog index page`
 
-- [ ] 6. `app/sitemap.ts`: Add `'blog'` route to static routes array
+- [x] 6. `app/sitemap.ts`: Add `'blog'` route to static routes array
      What to do: Edit `app/sitemap.ts` line 17. Change:
 
   ```ts
