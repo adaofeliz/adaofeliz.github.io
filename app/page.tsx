@@ -1,9 +1,11 @@
-import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
-import { allBlogs } from 'contentlayer/generated'
-import Main from './Main'
+import HomePage from './HomePage'
 
-export default async function Page() {
-  const sortedPosts = sortPosts(allBlogs)
-  const posts = allCoreContent(sortedPosts)
-  return <Main posts={posts} />
+export const metadata = {
+  title: 'Adão Feliz — CTO, builder, engineering leader',
+  description:
+    'Personal website of Adão Feliz. CTO at Powerdot. Building EV infrastructure, AI integrations, and self-hosted systems.',
+}
+
+export default function Page() {
+  return <HomePage />
 }

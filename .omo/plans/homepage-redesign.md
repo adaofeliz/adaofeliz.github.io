@@ -279,7 +279,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: sitemap not generated → check `output: 'export'` and route handler shape
     Commit: Y | `feat(seo): add /blog to sitemap routes`
 
-- [ ] 7. `app/HomePage.tsx`: Create homepage server component
+- [x] 7. `app/HomePage.tsx`: Create homepage server component
      What to do: Create new file `app/HomePage.tsx`. This is a React server component (no `'use client'`). Import `homepageData` from `'@/data/homepageData'` and `Link` from `'@/components/Link'`. Render four sections using only Tailwind CSS classes:
   1. **Hero section**: display `hero.tagline` as `<h1>`, `hero.role` + `hero.location` as subtitle, `hero.description` as paragraph. Style: stark, high-contrast, terminal-inspired. No images, no gradients, no rounded cards with drop shadows.
   1. **Focus Areas section**: `<h2>Focus Areas</h2>`, map `focusAreas` into a responsive grid (2-col on md+). Each item: title in bold, description in muted text. Style: minimal, grid-based.
@@ -308,7 +308,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: TypeScript error importing homepageData → ensure Todo 1 is complete first; import path uses `@/data/homepageData`
     Commit: N (commit together with Todo 8)
 
-- [ ] 8. `app/page.tsx`: Replace blog feed with HomePage component
+- [x] 8. `app/page.tsx`: Replace blog feed with HomePage component
      What to do: Replace the entire content of `app/page.tsx` with:
 
   ```ts
@@ -342,7 +342,7 @@ Your next move: run `$start-work` to execute, or tell me what to change first.
   - Failure: build error because `HomePage` not found → confirm Todo 7 completed; check import path `'./HomePage'`
     Commit: Y | `feat(homepage): replace blog feed with personal website homepage`
 
-- [ ] 9. `components/Header.tsx`: Remove `href !== '/'` filter so Home link renders in desktop nav
+- [x] 9. `components/Header.tsx`: Remove `href !== '/'` filter so Home link renders in desktop nav
      What to do: Edit `components/Header.tsx` line 32. Remove the `.filter((link) => link.href !== '/')` call. The line currently reads:
 
   ```tsx
