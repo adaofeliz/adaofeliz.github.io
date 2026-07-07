@@ -15,12 +15,7 @@ const Header = () => {
       <Link href="/" aria-label={siteMetadata.headerTitle}>
         <div className="flex items-center gap-1 font-mono">
           <span className="text-primary-500 text-2xl font-semibold">$</span>
-          <span className="hidden text-2xl font-semibold text-[#1e1e1e] sm:inline dark:text-gray-100">
-            ~/_adflz
-          </span>
-          <span className="inline text-2xl font-semibold text-[#1e1e1e] sm:hidden dark:text-gray-100">
-            ~/_
-          </span>
+          <span className="text-2xl font-semibold text-[#1e1e1e] dark:text-gray-100">~/_adflz</span>
           <span
             aria-hidden="true"
             className="bg-primary-500 inline-block h-5 w-2 animate-pulse motion-reduce:animate-none"
