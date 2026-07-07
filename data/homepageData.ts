@@ -50,10 +50,10 @@ const homepageData: HomepageData = {
         'Driving Autocharge contributions, Cloud Load Management thinking, and OCPP Gateway open-source efforts while publishing whitepapers and rallying the industry community to weave AI/automation into resilient climate tech.',
     },
     {
-      id: 'smart-home-self-hosted',
-      title: 'Smart Home & Self-Hosted',
+      id: 'networking-with-builders',
+      title: 'Networking with Builders',
       description:
-        'Designing asset telemetry, maintenance systems, uptime SLOs, observability standards, and incident response practices so self-hosted smart-home infrastructure performs reliably at scale.',
+        'Actively meeting, working alongside, and hiring the people who build things that matter. Focused on assembling the best engineering teams in the industry — one conversation, one collaboration, one long-term relationship at a time.',
     },
   ],
   featuredRepos: [

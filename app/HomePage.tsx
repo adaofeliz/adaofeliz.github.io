@@ -36,31 +36,6 @@ export default function HomePage() {
 
         <section className="py-16">
           <h2 className="text-primary-600 dark:text-primary-400 text-sm font-semibold tracking-widest uppercase">
-            Featured Work
-          </h2>
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {homepageData.featuredRepos.map((repo) => (
-              <a
-                key={repo.name}
-                href={repo.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block border border-gray-200 p-4 transition-colors hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-600"
-              >
-                <div className="font-medium text-gray-800 dark:text-gray-200">{repo.name}</div>
-                <div className="mt-1 text-sm leading-6 text-gray-500 dark:text-gray-400">
-                  {repo.description}
-                </div>
-                <div className="text-primary-600 dark:text-primary-400 mt-2 text-xs font-medium">
-                  {repo.language}
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <section className="py-16">
-          <h2 className="text-primary-600 dark:text-primary-400 text-sm font-semibold tracking-widest uppercase">
             Philosophy
           </h2>
           <blockquote className="border-primary-500 mt-8 border-l-4 pl-4 text-gray-600 italic dark:text-gray-400">
