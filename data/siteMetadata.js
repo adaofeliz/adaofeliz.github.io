@@ -1,9 +1,10 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: "Adão's Morning Thoughts",
+  title: 'Adão Feliz',
   author: 'Adão',
-  headerTitle: "Adão's Morning Thoughts",
-  description: 'Personal blog about technology, fitness, life, and other stuff.',
+  headerTitle: '~/_adflz',
+  description:
+    'CTO, builder, and engineering leader. Writing about distributed systems, AI, and the craft of building.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://www.adaofeliz.com',

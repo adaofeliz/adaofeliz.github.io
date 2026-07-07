@@ -1,0 +1,15 @@
+{
+  "schema_version": 2,
+  "active_work_id": "homepage-redesign",
+  "works": {
+    "homepage-redesign": {
+      "work_id": "homepage-redesign",
+      "active_plan": ".omo/plans/homepage-redesign.md",
+      "plan_name": "homepage-redesign",
+      "session_ids": [],
+      "status": "active",
+      "worktree_path": null,
+      "started_at": "2026-07-07T00:00:00Z"
+    }
+  }
+}

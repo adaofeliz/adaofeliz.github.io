@@ -22,6 +22,7 @@ const ALL_CATEGORIES: Category[] = [...ALLOWED_CATEGORIES]
 
 interface HomeProps {
   posts: CoreContent<Blog>[]
+  basePath?: string
 }
 
 function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
@@ -89,7 +90,7 @@ function ActivityTracker({ posts }: { posts: CoreContent<Blog>[] }) {
   )
 }
 
-function HomeContent({ posts }: HomeProps) {
+function HomeContent({ posts, basePath = '/' }: HomeProps) {
   const searchParams = useSearchParams()
   const [postsPerPage] = useState(POSTS_PER_PAGE)
 
@@ -121,15 +122,15 @@ function HomeContent({ posts }: HomeProps) {
     if (tag) params.set('tag', tag)
     if (page > 1) params.set('page', String(page))
     const query = params.toString()
-    return query ? `/?${query}` : '/'
+    return query ? `${basePath}?${query}` : basePath
   }
 
   return (
     <>
       <div className="divide-y-0">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            Personal blog about{' '}
+          <p className="font-mono text-lg leading-7 text-gray-500 dark:text-gray-400">
+            <span className="text-primary-500">#</span>{' '}
             {ALL_CATEGORIES.map((cat, i) => {
               const isLast = i === ALL_CATEGORIES.length - 1
               const label = CATEGORY_LABELS[cat]
@@ -138,7 +139,7 @@ function HomeContent({ posts }: HomeProps) {
                   {i > 0 && !isLast && ', '}
                   {i > 0 && isLast && ', and '}
                   <Link
-                    href={activeTag === cat ? '/' : `/?tag=${cat}`}
+                    href={activeTag === cat ? basePath : `${basePath}?tag=${cat}`}
                     className={activeTag === cat ? 'underline underline-offset-4' : ''}
                   >
                     {label}
@@ -146,10 +147,9 @@ function HomeContent({ posts }: HomeProps) {
                 </span>
               )
             })}{' '}
-            stuff.{' '}
             {activeTag && (
               <Link
-                href="/"
+                href={basePath}
                 className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
               >
                 (show all)
@@ -243,10 +243,10 @@ function HomeContent({ posts }: HomeProps) {
   )
 }
 
-export default function Home(props: HomeProps) {
+export default function Home({ posts, basePath = '/' }: HomeProps) {
   return (
     <Suspense fallback={<div className="animate-pulse">Loading...</div>}>
-      <HomeContent {...props} />
+      <HomeContent posts={posts} basePath={basePath} />
     </Suspense>
   )
 }

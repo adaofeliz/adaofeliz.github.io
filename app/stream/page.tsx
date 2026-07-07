@@ -8,8 +8,33 @@ import { formatDate } from 'pliny/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 
 export const metadata: Metadata = {
-  title: 'Stream - ' + siteMetadata.title,
+  title: 'Stream',
   description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
+  alternates: {
+    canonical: `${siteMetadata.siteUrl}/stream`,
+  },
+  openGraph: {
+    title: `$ ~/_adflz | Stream`,
+    description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
+    url: `${siteMetadata.siteUrl}/stream`,
+    siteName: siteMetadata.title,
+    images: [
+      {
+        url: `${siteMetadata.siteUrl}/static/images/logo.png`,
+        width: 1200,
+        height: 630,
+        alt: `$ ~/_adflz | Stream`,
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `$ ~/_adflz | Stream`,
+    description: 'Micro-journaling, server logs, and quiet machine notes beneath the surface.',
+    images: [`${siteMetadata.siteUrl}/static/images/logo.png`],
+  },
 }
 
 export default function StreamPage() {
@@ -33,15 +58,16 @@ export default function StreamPage() {
   const roadmapCommand = `~/.stream/roadmap.sh --auth ${roadmapAuthToken}`
 
   return (
-    <div className="mx-auto max-w-3xl font-mono">
-      <details className="space-y-2 border-b border-gray-200 pt-6 pb-8 md:space-y-5 dark:border-gray-800">
-        <summary className="group flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 text-lg text-gray-500 marker:content-none focus:outline-none dark:text-gray-400">
-          <span className="text-primary-500">$</span>
+    <div className="font-mono">
+      <details className="border-b border-gray-200 dark:border-gray-700">
+        <summary className="group flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 pt-6 pb-8 text-lg text-gray-500 marker:content-none focus:outline-none dark:text-gray-400">
           <span>tail -f ~/.stream/*.log</span>
           <span
             aria-hidden="true"
-            className="bg-primary-500 group-hover:bg-primary-400 inline-block h-5 w-2 animate-pulse transition-all group-hover:animate-none motion-reduce:animate-none"
-          />
+            className="text-primary-500 animate-pulse group-hover:animate-none motion-reduce:animate-none"
+          >
+            _
+          </span>
           <span className="text-xs text-gray-400 opacity-0 transition-all group-hover:opacity-100 group-focus-visible:opacity-100 dark:text-gray-500">
             ~/.stream/roadmap.sh --auth{' '}
             <span className="inline-block w-0 overflow-hidden align-bottom transition-all duration-700 ease-out group-hover:w-[6ch] group-focus-visible:w-[6ch]">
