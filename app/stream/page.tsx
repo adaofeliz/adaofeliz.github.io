@@ -59,8 +59,8 @@ export default function StreamPage() {
 
   return (
     <div className="font-mono">
-      <details className="space-y-2 border-b border-gray-200 pt-6 pb-8 md:space-y-5 dark:border-gray-700">
-        <summary className="group flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 text-lg text-gray-500 marker:content-none focus:outline-none dark:text-gray-400">
+      <details className="border-b border-gray-200 dark:border-gray-700">
+        <summary className="group flex cursor-pointer list-none flex-wrap items-center gap-x-2 gap-y-1 pt-6 pb-8 text-lg text-gray-500 marker:content-none focus:outline-none dark:text-gray-400">
           <span>tail -f ~/.stream/*.log</span>
           <span
             aria-hidden="true"
