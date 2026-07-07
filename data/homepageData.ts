@@ -53,7 +53,7 @@ const homepageData: HomepageData = {
       id: 'networking-with-builders',
       title: 'Networking with Builders',
       description:
-        'Actively meeting, working alongside, and hiring the people who build things that matter. Focused on assembling the best engineering teams in the industry — one conversation, one collaboration, one long-term relationship at a time.',
+        'Meeting, working with, and hiring the people who build things that matter. My focus is building the best engineering teams in the industry, and that starts with real conversations and genuine collaboration.',
     },
   ],
   featuredRepos: [
