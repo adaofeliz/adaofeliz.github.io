@@ -16,7 +16,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {typeof siteMetadata.headerTitle === 'string' ? (
             <>
-              <div className="h-6 text-2xl font-semibold sm:hidden">AMT</div>
+              <div className="h-6 text-2xl font-semibold sm:hidden">~/_</div>
               <div className="hidden h-6 text-2xl font-semibold sm:block">
                 {siteMetadata.headerTitle}
               </div>

@@ -2,7 +2,7 @@
 const siteMetadata = {
   title: 'Adão Feliz',
   author: 'Adão',
-  headerTitle: 'adaofeliz',
+  headerTitle: '~/_adflz',
   description:
     'CTO, builder, and engineering leader. Writing about distributed systems, AI, and the craft of building.',
   language: 'en-us',
