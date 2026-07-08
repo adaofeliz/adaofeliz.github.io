@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from '@/components/Link'
 import { formatLogTimestamp } from '@/lib/latestPost'
 
-const COMMAND_TEXT = 'ls -t ~/blog | head -1'
+const COMMAND_TEXT = 'ls -t ~/blog | head -3'
 const MISSING_BLOG_TEXT = "ls: cannot access '~/blog': No such file or directory"
 const TYPE_INTERVAL_MS = 40
 const SESSION_STORAGE_KEY = 'adflz-home-typed'
@@ -16,7 +16,7 @@ type HomeSubtitleLatest = Readonly<{
 }>
 
 type HomeSubtitleProps = Readonly<{
-  latest: HomeSubtitleLatest | null
+  latest: ReadonlyArray<HomeSubtitleLatest>
 }>
 
 export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
@@ -69,8 +69,11 @@ export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
     <div className="space-y-2 pt-6 pb-8 md:space-y-5">
       <span className="sr-only">{COMMAND_TEXT}</span>
       <span className="sr-only">
-        {latest
-          ? `Latest post: ${formatLogTimestamp(latest.date)} ${latest.title}`
+        {latest.length > 0
+          ? `Latest posts: ${latest
+              .slice(0, 3)
+              .map((post) => `${formatLogTimestamp(post.date)} ${post.title}`)
+              .join(', ')}`
           : MISSING_BLOG_TEXT}
       </span>
       <p
@@ -85,30 +88,34 @@ export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
           _
         </span>
       </p>
-      <p
-        className={`flex items-baseline gap-1.5 font-mono text-xs transition-opacity duration-500 sm:text-sm ${
+      <div
+        className={`font-mono text-xs transition-opacity duration-500 sm:text-sm ${
           hasFinishedTyping ? 'opacity-100' : 'invisible opacity-0'
         }`}
       >
-        {latest ? (
-          <>
-            <span className="shrink-0 whitespace-nowrap text-gray-400 dark:text-gray-500">
-              [{formatLogTimestamp(latest.date)}]
-            </span>
-            <span aria-hidden="true" className="text-primary-500 shrink-0">
-              &gt;
-            </span>
-            <Link
-              href={`/blog/${latest.slug}/`}
-              className="hover:text-primary-600 dark:hover:text-primary-400 min-w-0 truncate text-[#1e1e1e] dark:text-gray-100"
-            >
-              {latest.title}
-            </Link>
-          </>
+        {latest.length > 0 ? (
+          <div className="space-y-1">
+            {latest.slice(0, 3).map((post) => (
+              <div key={post.slug} className="flex items-baseline gap-1.5">
+                <span className="shrink-0 whitespace-nowrap text-gray-400 dark:text-gray-500">
+                  [{formatLogTimestamp(post.date)}]
+                </span>
+                <span aria-hidden="true" className="text-primary-500 shrink-0">
+                  &gt;
+                </span>
+                <Link
+                  href={`/blog/${post.slug}/`}
+                  className="hover:text-primary-600 dark:hover:text-primary-400 min-w-0 truncate text-[#1e1e1e] dark:text-gray-100"
+                >
+                  {post.title}
+                </Link>
+              </div>
+            ))}
+          </div>
         ) : (
           MISSING_BLOG_TEXT
         )}
-      </p>
+      </div>
     </div>
   )
 }

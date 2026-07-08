@@ -12,11 +12,14 @@ export interface LatestPost {
   date: string
 }
 
-export function getLatestPost(posts: readonly LatestPostInput[]): LatestPost | null {
+export function getLatestPost(
+  posts: readonly LatestPostInput[],
+  count = 3
+): ReadonlyArray<LatestPost> {
   const visible = posts.filter((post) => post.listed !== false && post.draft !== true)
 
   if (visible.length === 0) {
-    return null
+    return []
   }
 
   const sorted = [...visible].sort((a, b) => {
@@ -27,9 +30,11 @@ export function getLatestPost(posts: readonly LatestPostInput[]): LatestPost | n
     return a.slug.localeCompare(b.slug)
   })
 
-  const { title, slug, date } = sorted[0]
-
-  return { title, slug, date }
+  return sorted.slice(0, count).map((post) => ({
+    title: post.title,
+    slug: post.slug,
+    date: post.date,
+  }))
 }
 
 /**

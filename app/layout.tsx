@@ -4,7 +4,6 @@ import 'remark-github-blockquote-alert/alert.css'
 import { JetBrains_Mono } from 'next/font/google'
 import EasterEggs from '@/components/EasterEggs'
 import Header from '@/components/Header'
-import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
@@ -101,14 +100,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1e1e1e" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
-      <body className="bg-white pl-[calc(100vw-100%)] text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
+      <body className="flex min-h-screen flex-col bg-white pl-[calc(100vw-100%)] text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
         <ThemeProviders>
-          <SectionContainer>
+          <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 sm:px-6 xl:max-w-5xl xl:px-0">
             <Header />
-            <main className="mb-auto">{children}</main>
+            <main className="flex-1">{children}</main>
             <EasterEggs />
             <Footer />
-          </SectionContainer>
+          </div>
         </ThemeProviders>
         {/* Cloudflare Web Analytics */}
         <script

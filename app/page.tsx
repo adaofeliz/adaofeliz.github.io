@@ -3,6 +3,7 @@ import { allBlogs } from 'contentlayer/generated'
 import siteMetadata from '@/data/siteMetadata'
 import { getLatestPost } from '@/lib/latestPost'
 import type { LatestPostInput } from '@/lib/latestPost'
+import homeQuotes from '@/data/homeQuotes'
 
 const title = '$ ~/_adflz'
 const description =
@@ -44,7 +45,7 @@ export default function Page() {
     draft: post.draft,
   }))
 
-  const latestPost = getLatestPost(posts)
+  const latestPosts = getLatestPost(posts, 3)
 
-  return <HomePage latestPost={latestPost} />
+  return <HomePage latestPost={latestPosts} quotes={homeQuotes} />
 }

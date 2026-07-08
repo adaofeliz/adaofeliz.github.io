@@ -1,8 +1,4 @@
 export interface HomepageData {
-  readonly philosophy: {
-    readonly quote: string
-    readonly attribution: string
-  }
   readonly focusAreas: ReadonlyArray<{
     readonly id: string
     readonly title: string
@@ -17,11 +13,6 @@ export interface HomepageData {
 }
 
 const homepageData: HomepageData = {
-  philosophy: {
-    quote:
-      'Build systems that scale before the business forces you to. Good architecture is a competitive advantage, not a cost centre.',
-    attribution: '— Adão',
-  },
   focusAreas: [
     {
       id: 'ev-charging-infrastructure',

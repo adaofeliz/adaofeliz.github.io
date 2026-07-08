@@ -31,32 +31,22 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-6">
             <div className="space-y-1 text-center">
-              <dl className="space-y-10">
-                <div>
-                  <dt className="sr-only">Published on</dt>
-                  <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-                  </dd>
-                </div>
-              </dl>
               <div>
                 <PageTitle>{title}</PageTitle>
               </div>
             </div>
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
-            <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-              <div>
-                <PostContent audio={audio} audioTimestamps={audioTimestamps}>
-                  {children}
-                </PostContent>
-                <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
-                  <ShareButton title={title} url={path} />
+            <aside>
+              <div className="divide-gray-200 text-sm leading-5 font-medium xl:divide-y dark:divide-gray-700">
+                <div className="py-4">
+                  <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
+                    Published
+                  </h2>
+                  <time dateTime={date} className="text-gray-900 dark:text-gray-100">
+                    {formatDate(date, siteMetadata.locale)}
+                  </time>
                 </div>
-              </div>
-            </div>
-            <footer>
-              <div className="divide-gray-200 text-sm leading-5 font-medium xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
                 <div className="py-4">
                   <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
                     Tag
@@ -93,14 +83,24 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </div>
               <div className="pt-4 xl:pt-8">
                 <Link
-                  href="/"
+                  href="/blog"
                   className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                  aria-label="Back to home"
+                  aria-label="Back to blog"
                 >
-                  &larr; Back to home
+                  &larr; Back to blog
                 </Link>
               </div>
-            </footer>
+            </aside>
+            <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+              <div>
+                <PostContent audio={audio} audioTimestamps={audioTimestamps}>
+                  {children}
+                </PostContent>
+                <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
+                  <ShareButton title={title} url={path} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </article>
