@@ -75,7 +75,7 @@ export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
       </span>
       <p
         aria-hidden="true"
-        className="min-h-[2.5rem] font-mono text-lg text-gray-500 dark:text-gray-400"
+        className="min-h-[2.5rem] font-mono text-xs text-gray-500 sm:text-sm dark:text-gray-400"
       >
         <span className="text-primary-500">$</span> {visibleText}
         <span

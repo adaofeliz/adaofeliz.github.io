@@ -129,7 +129,7 @@ function HomeContent({ posts, basePath = '/' }: HomeProps) {
     <>
       <div className="divide-y-0">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <p className="font-mono text-lg leading-7 text-gray-500 dark:text-gray-400">
+          <p className="font-mono text-xs leading-5 text-gray-500 sm:text-sm sm:leading-6 dark:text-gray-400">
             <span className="text-primary-500">#</span>{' '}
             {ALL_CATEGORIES.map((cat, i) => {
               const isLast = i === ALL_CATEGORIES.length - 1
