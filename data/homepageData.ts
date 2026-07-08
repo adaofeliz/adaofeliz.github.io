@@ -1,10 +1,4 @@
 export interface HomepageData {
-  readonly hero: {
-    readonly tagline: string
-    readonly role: string
-    readonly location: string
-    readonly description: string
-  }
   readonly philosophy: {
     readonly quote: string
     readonly attribution: string
@@ -23,14 +17,6 @@ export interface HomepageData {
 }
 
 const homepageData: HomepageData = {
-  hero: {
-    tagline:
-      '15+ years designing distributed systems, scaling platforms, and leading engineering teams.',
-    role: 'CTO at Powerdot',
-    location: 'Portugal',
-    description:
-      'Currently building the technology foundation for large-scale EV charging infrastructure across Europe.',
-  },
   philosophy: {
     quote:
       'Build systems that scale before the business forces you to. Good architecture is a competitive advantage, not a cost centre.',

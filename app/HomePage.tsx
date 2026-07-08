@@ -2,6 +2,7 @@ import Link from '@/components/Link'
 import HomeSubtitle from '@/components/HomeSubtitle'
 import SectionContainer from '@/components/SectionContainer'
 import homepageData from '@/data/homepageData'
+import siteMetadata from '@/data/siteMetadata'
 
 type HomePageProps = Readonly<{
   latestPost: Readonly<{
@@ -16,17 +17,11 @@ export default function HomePage({ latestPost }: HomePageProps) {
     <SectionContainer>
       <main className="divide-y divide-gray-200 dark:divide-gray-800">
         <HomeSubtitle latest={latestPost} />
-        <section className="py-16 sm:py-20">
+        <div className="py-16 sm:py-20">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-gray-100">
-            {homepageData.hero.tagline}
+            {siteMetadata.author}
           </h1>
-          <p className="mt-4 max-w-3xl text-lg text-gray-500 dark:text-gray-500">
-            {homepageData.hero.description}
-          </p>
-          <p className="mt-2 text-xl text-gray-600 dark:text-gray-400">
-            {homepageData.hero.role} · {homepageData.hero.location}
-          </p>
-        </section>
+        </div>
 
         <section className="py-16">
           <h2 className="text-primary-600 dark:text-primary-400 text-sm font-semibold tracking-widest uppercase">
