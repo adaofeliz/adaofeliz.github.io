@@ -31,3 +31,18 @@ export function getLatestPost(posts: readonly LatestPostInput[]): LatestPost | n
 
   return { title, slug, date }
 }
+
+/**
+ * Formats an ISO date string as a bracketed log-style timestamp, e.g.
+ * "2026-07-07T00:00:00.000Z" -> "2026-07-07 00:00:00".
+ *
+ * Uses plain string slicing (no Date object, no timezone conversion) so the
+ * result is identical on the server and the client - required for a
+ * hydration-safe SSR render.
+ */
+export function formatLogTimestamp(isoDate: string): string {
+  const datePart = isoDate.slice(0, 10)
+  const timePart = isoDate.slice(11, 19)
+
+  return `${datePart} ${timePart}`
+}

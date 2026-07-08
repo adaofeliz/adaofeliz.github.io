@@ -7,6 +7,7 @@ type HomePageProps = Readonly<{
   latestPost: Readonly<{
     title: string
     slug: string
+    date: string
   }> | null
 }>
 

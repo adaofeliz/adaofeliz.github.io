@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from '@/components/Link'
+import { formatLogTimestamp } from '@/lib/latestPost'
 
 const COMMAND_TEXT = 'ls -t ~/blog | head -1'
 const MISSING_BLOG_TEXT = "ls: cannot access '~/blog': No such file or directory"
@@ -11,6 +12,7 @@ const SESSION_STORAGE_KEY = 'adflz-home-typed'
 type HomeSubtitleLatest = Readonly<{
   title: string
   slug: string
+  date: string
 }>
 
 type HomeSubtitleProps = Readonly<{
@@ -66,7 +68,11 @@ export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
   return (
     <div className="space-y-2 pt-6 pb-8 md:space-y-5">
       <span className="sr-only">{COMMAND_TEXT}</span>
-      <span className="sr-only">{latest ? `Latest post: ${latest.title}` : MISSING_BLOG_TEXT}</span>
+      <span className="sr-only">
+        {latest
+          ? `Latest post: ${formatLogTimestamp(latest.date)} ${latest.title}`
+          : MISSING_BLOG_TEXT}
+      </span>
       <p
         aria-hidden="true"
         className="min-h-[2.5rem] font-mono text-lg text-gray-500 dark:text-gray-400"
@@ -85,12 +91,17 @@ export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
         }`}
       >
         {latest ? (
-          <Link
-            href={`/blog/${latest.slug}/`}
-            className="hover:text-primary-600 dark:hover:text-primary-400"
-          >
-            {latest.title}
-          </Link>
+          <>
+            <span className="mr-2 text-gray-400 dark:text-gray-500">
+              [{formatLogTimestamp(latest.date)}]
+            </span>
+            <Link
+              href={`/blog/${latest.slug}/`}
+              className="hover:text-primary-600 dark:hover:text-primary-400"
+            >
+              {latest.title}
+            </Link>
+          </>
         ) : (
           MISSING_BLOG_TEXT
         )}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { getLatestPost } from '@/lib/latestPost'
+import { formatLogTimestamp, getLatestPost } from '@/lib/latestPost'
 
 describe('getLatestPost', () => {
   it('returns the newest post by ISO date', () => {
@@ -58,5 +58,20 @@ describe('getLatestPost', () => {
       slug: 'alpha',
       date: '2025-03-01',
     })
+  })
+})
+
+describe('formatLogTimestamp', () => {
+  it('formats a full ISO datetime as "YYYY-MM-DD HH:MM:SS"', () => {
+    expect(formatLogTimestamp('2026-07-07T13:54:05.000Z')).toBe('2026-07-07 13:54:05')
+  })
+
+  it('formats a midnight ISO datetime', () => {
+    expect(formatLogTimestamp('2026-07-07T00:00:00.000Z')).toBe('2026-07-07 00:00:00')
+  })
+
+  it('is stable regardless of the host timezone (pure string slicing)', () => {
+    const withOffset = formatLogTimestamp('2026-01-01T23:59:59.000Z')
+    expect(withOffset).toBe('2026-01-01 23:59:59')
   })
 })
