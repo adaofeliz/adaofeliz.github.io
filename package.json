@@ -9,6 +9,7 @@
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
+    "test": "vitest run",
     "prepare": "husky"
   },
   "dependencies": {
@@ -67,7 +68,8 @@
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "strip-markdown": "^6.0.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
   },
   "lint-staged": {
     "*.+(js|jsx|ts|tsx)": [

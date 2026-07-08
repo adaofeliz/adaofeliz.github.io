@@ -2,6 +2,7 @@ import 'css/tailwind.css'
 import 'remark-github-blockquote-alert/alert.css'
 
 import { JetBrains_Mono } from 'next/font/google'
+import EasterEggs from '@/components/EasterEggs'
 import Header from '@/components/Header'
 import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SectionContainer>
             <Header />
             <main className="mb-auto">{children}</main>
+            <EasterEggs />
             <Footer />
           </SectionContainer>
         </ThemeProviders>

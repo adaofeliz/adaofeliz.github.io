@@ -14,7 +14,7 @@ export default function AuthorLayout({ children, content }: Props) {
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <p className="font-mono text-lg text-gray-500 dark:text-gray-400">
+          <p className="font-mono text-xs text-gray-500 sm:text-sm dark:text-gray-400">
             hostnamectl status
             <span
               aria-hidden="true"

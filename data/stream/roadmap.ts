@@ -14,6 +14,13 @@ export type RoadmapData = {
 export const roadmapData: RoadmapData = {
   done: [
     {
+      title: 'Homepage Prompt Comes Alive',
+      date: '2026-07-08',
+      why: 'Gave the homepage its own voice in the shell-prompt family and left breadcrumbs for curious visitors.',
+      stack:
+        'Typewriter subtitle + console banner + terminal-styled 404 + a few things tucked under the floorboards',
+    },
+    {
       title: 'Karaoke-Style Audio Highlight',
       date: '2026-03-11',
       why: 'Creates an immersive reading experience by visually tracking spoken words in real-time.',
