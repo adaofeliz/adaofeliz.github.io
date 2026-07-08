@@ -34,7 +34,9 @@ export function getLatestPost(posts: readonly LatestPostInput[]): LatestPost | n
 
 /**
  * Formats an ISO date string as a bracketed log-style timestamp, e.g.
- * "2026-07-07T00:00:00.000Z" -> "2026-07-07 00:00:00".
+ * "2026-07-07T13:54:05.000Z" -> "2026-07-07 13:54:05". Midnight
+ * timestamps ("00:00:00", the default for date-only frontmatter) drop the
+ * time part entirely since it carries no real information: "2026-07-07".
  *
  * Uses plain string slicing (no Date object, no timezone conversion) so the
  * result is identical on the server and the client - required for a
@@ -44,5 +46,5 @@ export function formatLogTimestamp(isoDate: string): string {
   const datePart = isoDate.slice(0, 10)
   const timePart = isoDate.slice(11, 19)
 
-  return `${datePart} ${timePart}`
+  return timePart === '00:00:00' ? datePart : `${datePart} ${timePart}`
 }

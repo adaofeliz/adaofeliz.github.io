@@ -66,8 +66,8 @@ describe('formatLogTimestamp', () => {
     expect(formatLogTimestamp('2026-07-07T13:54:05.000Z')).toBe('2026-07-07 13:54:05')
   })
 
-  it('formats a midnight ISO datetime', () => {
-    expect(formatLogTimestamp('2026-07-07T00:00:00.000Z')).toBe('2026-07-07 00:00:00')
+  it('drops the time part for midnight timestamps (date-only frontmatter)', () => {
+    expect(formatLogTimestamp('2026-07-07T00:00:00.000Z')).toBe('2026-07-07')
   })
 
   it('is stable regardless of the host timezone (pure string slicing)', () => {
