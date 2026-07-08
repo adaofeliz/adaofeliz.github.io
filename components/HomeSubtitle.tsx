@@ -1,0 +1,100 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import Link from '@/components/Link'
+
+const COMMAND_TEXT = 'ls -t ~/blog | head -1'
+const MISSING_BLOG_TEXT = "ls: cannot access '~/blog': No such file or directory"
+const TYPE_INTERVAL_MS = 40
+const SESSION_STORAGE_KEY = 'adflz-home-typed'
+
+type HomeSubtitleLatest = Readonly<{
+  title: string
+  slug: string
+}>
+
+type HomeSubtitleProps = Readonly<{
+  latest: HomeSubtitleLatest | null
+}>
+
+export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
+  const [visibleText, setVisibleText] = useState(COMMAND_TEXT)
+  const [hasFinishedTyping, setHasFinishedTyping] = useState(true)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const hasTypedInSession = sessionStorage.getItem(SESSION_STORAGE_KEY) === '1'
+
+    if (prefersReducedMotion || hasTypedInSession) {
+      return () => {
+        if (timeoutRef.current !== null) {
+          clearTimeout(timeoutRef.current)
+        }
+      }
+    }
+
+    setVisibleText('')
+    setHasFinishedTyping(false)
+
+    let nextIndex = 0
+
+    const typeNextCharacter = () => {
+      timeoutRef.current = setTimeout(() => {
+        nextIndex += 1
+        setVisibleText(COMMAND_TEXT.slice(0, nextIndex))
+
+        if (nextIndex < COMMAND_TEXT.length) {
+          typeNextCharacter()
+          return
+        }
+
+        setHasFinishedTyping(true)
+        sessionStorage.setItem(SESSION_STORAGE_KEY, '1')
+      }, TYPE_INTERVAL_MS)
+    }
+
+    typeNextCharacter()
+
+    return () => {
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
+  return (
+    <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+      <span className="sr-only">{COMMAND_TEXT}</span>
+      <span className="sr-only">{latest ? `Latest post: ${latest.title}` : MISSING_BLOG_TEXT}</span>
+      <p
+        aria-hidden="true"
+        className="min-h-[2.5rem] font-mono text-lg text-gray-500 dark:text-gray-400"
+      >
+        <span className="text-primary-500">$</span> {visibleText}
+        <span
+          aria-hidden="true"
+          className="text-primary-500 ml-1 animate-pulse motion-reduce:animate-none"
+        >
+          _
+        </span>
+      </p>
+      <p
+        className={`font-mono text-base text-[#1e1e1e] transition-opacity duration-500 dark:text-gray-100 ${
+          hasFinishedTyping ? 'opacity-100' : 'invisible opacity-0'
+        }`}
+      >
+        {latest ? (
+          <Link
+            href={`/blog/${latest.slug}/`}
+            className="hover:text-primary-600 dark:hover:text-primary-400"
+          >
+            {latest.title}
+          </Link>
+        ) : (
+          MISSING_BLOG_TEXT
+        )}
+      </p>
+    </div>
+  )
+}

@@ -1,5 +1,8 @@
 import HomePage from './HomePage'
+import { allBlogs } from 'contentlayer/generated'
 import siteMetadata from '@/data/siteMetadata'
+import { getLatestPost } from '@/lib/latestPost'
+import type { LatestPostInput } from '@/lib/latestPost'
 
 const title = '$ ~/_adflz'
 const description =
@@ -33,5 +36,15 @@ export const metadata = {
 }
 
 export default function Page() {
-  return <HomePage />
+  const posts: readonly LatestPostInput[] = allBlogs.map((post) => ({
+    title: post.title,
+    slug: post.slug,
+    date: post.date,
+    listed: post.listed,
+    draft: post.draft,
+  }))
+
+  const latestPost = getLatestPost(posts)
+
+  return <HomePage latestPost={latestPost} />
 }

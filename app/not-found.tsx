@@ -1,25 +1,57 @@
+'use client'
+
+import { useEffect, useState } from 'react'
 import Link from '@/components/Link'
 
+const navLinkClass = 'text-primary-600 dark:text-primary-400 hover:underline'
+
 export default function NotFound() {
+  const [path, setPath] = useState('~')
+
+  useEffect(() => {
+    const requestedPath = window.location.pathname.replace(/\/$/, '')
+
+    setPath(requestedPath === '' || requestedPath === '/' ? '~' : requestedPath)
+  }, [])
+
   return (
-    <div className="flex flex-col items-start justify-start md:mt-24 md:flex-row md:items-center md:justify-center md:space-x-6">
-      <div className="space-x-2 pt-6 pb-8 md:space-y-5">
-        <h1 className="text-6xl leading-9 font-extrabold tracking-tight text-gray-900 md:border-r-2 md:px-6 md:text-8xl md:leading-14 dark:text-gray-100">
-          404
-        </h1>
-      </div>
-      <div className="max-w-md">
-        <p className="mb-4 text-xl leading-normal font-bold md:text-2xl">
-          Sorry we couldn't find this page.
-        </p>
-        <p className="mb-8">But dont worry, you can find plenty of other things on our homepage.</p>
-        <Link
-          href="/"
-          className="focus:shadow-outline-blue inline rounded-lg border border-transparent bg-blue-600 px-4 py-2 text-sm leading-5 font-medium text-white shadow-xs transition-colors duration-150 hover:bg-blue-700 focus:outline-hidden dark:hover:bg-blue-500"
-        >
-          Back to homepage
+    <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+      <p className="font-mono text-lg text-gray-500 dark:text-gray-400">
+        <span className="text-primary-500">$</span> cd {path}
+      </p>
+
+      <p className="font-mono text-base text-gray-500 dark:text-gray-400">
+        bash: cd: {path}: No such file or directory
+      </p>
+
+      <p className="font-mono text-lg text-gray-500 dark:text-gray-400">
+        <span className="text-primary-500">$</span> ls ~
+      </p>
+
+      <p className="font-mono text-base">
+        <Link href="/" className={navLinkClass}>
+          home
+        </Link>{' '}
+        <Link href="/blog/" className={navLinkClass}>
+          blog/
+        </Link>{' '}
+        <Link href="/stream/" className={navLinkClass}>
+          stream/
+        </Link>{' '}
+        <Link href="/about/" className={navLinkClass}>
+          about/
         </Link>
-      </div>
+      </p>
+
+      <p className="font-mono text-lg text-gray-500 dark:text-gray-400">
+        <span className="text-primary-500">$</span>
+        <span
+          aria-hidden="true"
+          className="text-primary-500 ml-1 animate-pulse motion-reduce:animate-none"
+        >
+          _
+        </span>
+      </p>
     </div>
   )
 }

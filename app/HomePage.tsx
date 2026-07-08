@@ -1,11 +1,20 @@
 import Link from '@/components/Link'
+import HomeSubtitle from '@/components/HomeSubtitle'
 import SectionContainer from '@/components/SectionContainer'
 import homepageData from '@/data/homepageData'
 
-export default function HomePage() {
+type HomePageProps = Readonly<{
+  latestPost: Readonly<{
+    title: string
+    slug: string
+  }> | null
+}>
+
+export default function HomePage({ latestPost }: HomePageProps) {
   return (
     <SectionContainer>
       <main className="divide-y divide-gray-200 dark:divide-gray-800">
+        <HomeSubtitle latest={latestPost} />
         <section className="py-16 sm:py-20">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-gray-100">
             {homepageData.hero.tagline}
