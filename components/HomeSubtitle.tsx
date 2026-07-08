@@ -86,18 +86,21 @@ export default function HomeSubtitle({ latest }: HomeSubtitleProps) {
         </span>
       </p>
       <p
-        className={`font-mono text-base text-[#1e1e1e] transition-opacity duration-500 dark:text-gray-100 ${
+        className={`flex items-baseline gap-1.5 font-mono text-xs transition-opacity duration-500 sm:text-sm ${
           hasFinishedTyping ? 'opacity-100' : 'invisible opacity-0'
         }`}
       >
         {latest ? (
           <>
-            <span className="mr-2 text-gray-400 dark:text-gray-500">
+            <span className="shrink-0 whitespace-nowrap text-gray-400 dark:text-gray-500">
               [{formatLogTimestamp(latest.date)}]
+            </span>
+            <span aria-hidden="true" className="text-primary-500 shrink-0">
+              &gt;
             </span>
             <Link
               href={`/blog/${latest.slug}/`}
-              className="hover:text-primary-600 dark:hover:text-primary-400"
+              className="hover:text-primary-600 dark:hover:text-primary-400 min-w-0 truncate text-[#1e1e1e] dark:text-gray-100"
             >
               {latest.title}
             </Link>
