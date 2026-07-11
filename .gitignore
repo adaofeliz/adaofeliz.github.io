@@ -51,6 +51,8 @@ yarn-error.log*
 .contentlayer
 
 # A garden needs a keeper, and a keeper needs a soul.
+AGENTS.md
 SOUL.md
+INSTRUCTIONS.md
 
 .env
