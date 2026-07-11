@@ -13,19 +13,30 @@ function extractFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/)
   if (!match) return null
 
-  const tagsMatch = match[1].match(/^tags:\s*\[(.*?)\]$/m)
-  if (!tagsMatch) return { tags: null }
-
   const tagValues = []
-  const tagMatches = tagsMatch[1].trim().match(/['"]?([^'",\s]+)['"]?/g)
-  if (tagMatches) {
-    tagMatches.forEach((tag) => {
-      const cleaned = tag.replace(/['"\s]/g, '')
-      if (cleaned) tagValues.push(cleaned)
-    })
+
+  const inlineMatch = match[1].match(/^tags:\s*\[(.*?)\]$/m)
+  if (inlineMatch) {
+    const tagMatches = inlineMatch[1].trim().match(/['"]?([^'",\s]+)['"]?/g)
+    if (tagMatches) {
+      tagMatches.forEach((tag) => {
+        const cleaned = tag.replace(/['"\s]/g, '')
+        if (cleaned) tagValues.push(cleaned)
+      })
+    }
+    return { tags: tagValues }
   }
 
-  return { tags: tagValues }
+  const blockMatch = match[1].match(/^tags:\s*\n((?:\s+-\s+.*\n?)+)/m)
+  if (blockMatch) {
+    blockMatch[1].split('\n').forEach((line) => {
+      const itemMatch = line.match(/^\s+-\s+['"]?(.+?)['"]?\s*$/)
+      if (itemMatch) tagValues.push(itemMatch[1])
+    })
+    return { tags: tagValues }
+  }
+
+  return { tags: null }
 }
 
 function validateFile(filePath) {
@@ -34,8 +45,10 @@ function validateFile(filePath) {
   const fileName = path.basename(filePath)
 
   if (!frontmatter) return { valid: false, error: `${fileName}: No frontmatter found` }
-  if (!frontmatter.tags) return { valid: false, error: `${fileName}: Missing 'tags' in frontmatter` }
-  if (frontmatter.tags.length === 0) return { valid: false, error: `${fileName}: 'tags' array is empty` }
+  if (!frontmatter.tags)
+    return { valid: false, error: `${fileName}: Missing 'tags' in frontmatter` }
+  if (frontmatter.tags.length === 0)
+    return { valid: false, error: `${fileName}: 'tags' array is empty` }
   if (frontmatter.tags.length > 1) {
     return {
       valid: false,
