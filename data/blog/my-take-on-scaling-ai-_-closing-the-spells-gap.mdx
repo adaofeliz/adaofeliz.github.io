@@ -1,0 +1,53 @@
+---
+title: 'My Take on Scaling AI: Closing the Spells Gap'
+date: '2026-07-13'
+tags:
+  - ai
+draft: true
+summary: >-
+  Words carry energy. I laid that out in my last post. But stating the problem
+  is only the first step. The question I keep coming back to is what to
+  actually do about it.
+---
+
+Words carry energy. I laid that out in [my last post](https://www.adaofeliz.com/blog/my-take-on-scaling-ai-_-words-are-spells). But stating the problem is only the first step. The question I keep coming back to is what to actually do about it.
+
+The spells problem, in concrete terms, is that the people who build AI systems know which words trigger which tools. They wrote the tool descriptions. They named the skills. They phrased the system prompts. This knowledge makes them vastly more effective with the same tools everyone else has. And there is no reliable way to transmit it.
+
+This is not a documentation problem. I can write a fifty-page guide explaining every tool and skill in our stack. Nobody will read it. The gap is not informational. It is experiential. Knowing that "send a message" is too vague and triggers Slack when you meant another platform entirely is something you learn by failing three times and seeing the pattern. The person who built the stack already failed those three times during development. The person who just joined the company has not.
+
+So the real question is whether we can close this gap without requiring every user to fail their way to competence. Whether the stack itself can learn from those failures and get better for everyone.
+
+## The spellbooks others are writing
+
+The field is converging on an architecture.
+
+At the foundation, there is prompt optimization. [DSPy](https://dspy.ai/) from Stanford treats prompts as programs you compile against a metric, not spells you guess at. Databricks [published results](https://www.databricks.com/blog/building-state-art-enterprise-agents-90x-cheaper-automated-prompt-optimization) showing their GEPA optimizer lifted a small open-source model past Claude Opus 4.1 on agent benchmarks while costing 90x less to serve. Arize has the most production-practical version: run agents on benchmarks, pass failures through an LLM judge, aggregate the explanations into improved system prompt rules. They got a [15% improvement on Cline](https://arize.com/blog/optimizing-coding-agent-rules-claude-md-agents-md-clinerules-cursor-rules-for-improved-accuracy/) with only 150 training examples.
+
+One level up, there is the knowledge packaging layer. Anthropic's [Agent Skills standard](https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills), made open in December 2025, is the most direct analog to what we are building. A skill is a directory with a SKILL.md that agents discover at startup and load on demand. It is positioned as "an onboarding guide for a new hire." A spellbook by another name. Yahoo's [Knowledge Activation Framework](https://arxiv.org/abs/2603.14805), published this year and validated with a survey of 67 engineers, goes further. They propose Atomic Knowledge Units, structured knowledge nodes that encode what to do, which tools to use, constraints, and where to go next. Their results: 2.6 hours saved per engineer per week, an NPS of +35. Their core thesis is worth sitting with: the bottleneck is not model capability but knowledge architecture. The institutional knowledge that distinguishes a five-year engineer from a newcomer is precisely what agents lack.
+
+Then there is the autonomous feedback loop layer. This is where most products stop short. [Langfuse](https://langfuse.com/) handles observability. [Confident AI](https://www.confident-ai.com/) evaluates traces with fifty-plus metrics. But nobody has closed the loop from production observation to automatic skill improvement without a human in the middle. The gap between "we can see that users are failing" and "the system rewrote the ambiguous tool description that caused the failures" is still walked by a human, usually someone like me, on a Friday afternoon when they finally notice the pattern.
+
+## What this looks like in our stack
+
+We already have the first two layers. Our skills system, built into the MCP gateway that connects models to Slack, Confluence, and the rest of our platforms, is the knowledge packaging layer. Every user has their own long-term memory space for the personalization layer. What we do not have, and what nobody has in production, is the third layer.
+
+The architecture I am building now watches every session. Not the content of conversations. The signals. Which tools fired. Which ones were tried and rejected. Where the model hesitated between two options. Where the user had to rephrase three times to get the result they wanted.
+
+These signals are patterns. A tool description that causes the model to pick the wrong Slack channel four times out of ten is not a bad description in theory. It is a bad description in practice, and the practice is what matters. An autonomous layer that reads these patterns can generate improved descriptions, test them against the failure cases, and deploy the ones that work. Not for one user. For everyone.
+
+The inspiration comes from Arize's meta-prompt approach. They use an LLM to read failure explanations and generate better system prompt rules. The difference is that they operate on benchmark data. I want to operate on live user behavior. The same user who just rephrased their question three times is the one who benefits when the system notices the pattern and fixes the underlying ambiguity.
+
+## The hard part
+
+Tool selection accuracy is the highest-leverage variable, and nobody has automated it. Every paper I read on this topic lands on the same conclusion: tool description quality matters more than model size, more than prompt engineering, more than few-shot examples. Giving an agent five well-scoped tools beats giving it twenty mediocre ones. But in a real enterprise, you cannot limit the tool count. You have Slack, Confluence, and a long tail of other platforms and internal APIs. Every team needs a different subset. Progressive disclosure, loading tool descriptions only when relevant, helps architecturally. But it does not fix the quality of the descriptions themselves.
+
+The team at Yahoo frames this as institutional impedance mismatch. The model knows the general case. It knows what a Slack message looks like. It does not know that in our organization, one Slack channel is where rollout status goes and another is where demos go. That distinction lives in the head of the person who set up the channels. Until it lives in the skill description that the model reads at runtime.
+
+This is the problem I am trying to solve. Not with better documentation. Not with more training sessions. With a feedback loop that watches what happens and improves what every user inherits. The spells get sharper on their own.
+
+It is early. The autonomous improvement layer is not in production yet. But the architecture is clear, the research supports it, and the pieces are on the table.
+
+The future of AI enablement depends on closing this gap. I feel it every time I rephrase a prompt that should have worked the first time. The choice is binary. Build the feedback loop that fixes it, or keep expecting every user to become a wizard on their own.
+
+I know which one I am building.
