@@ -37,7 +37,17 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </div>
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
-            <aside>
+            <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+              <div>
+                <PostContent audio={audio} audioTimestamps={audioTimestamps}>
+                  {children}
+                </PostContent>
+                <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
+                  <ShareButton title={title} url={path} />
+                </div>
+              </div>
+            </div>
+            <aside className="xl:order-first">
               <div className="divide-gray-200 text-sm leading-5 font-medium xl:divide-y dark:divide-gray-700">
                 <div className="py-4">
                   <h2 className="text-xs tracking-wide text-gray-500 uppercase dark:text-gray-400">
@@ -91,16 +101,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </Link>
               </div>
             </aside>
-            <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-              <div>
-                <PostContent audio={audio} audioTimestamps={audioTimestamps}>
-                  {children}
-                </PostContent>
-                <div className="flex justify-center border-t border-gray-200 pt-6 pb-6 dark:border-gray-700">
-                  <ShareButton title={title} url={path} />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </article>
