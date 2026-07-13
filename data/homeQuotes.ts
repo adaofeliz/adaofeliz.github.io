@@ -6,6 +6,21 @@ export interface HomeQuote {
 
 const homeQuotes: readonly HomeQuote[] = [
   {
+    text: 'Nobody closes the spells gap by reading documentation. They close it by using the damn thing. Thousands of interactions. Patterns that repeat until they become intuition. You cannot read your way to becoming a wizard. You have to practice.',
+    slug: 'my-take-on-scaling-ai-_-experience-is-the-scaling-layer',
+    title: 'My Take on Scaling AI: Wizards Are Made, Not Born',
+  },
+  {
+    text: 'The spells problem, in concrete terms, is that the people who build AI systems know which words trigger which tools. They wrote the tool descriptions. They named the skills. They phrased the system prompts. This knowledge makes them vastly more effective with the same tools everyone else has. And there is no reliable way to transmit it.',
+    slug: 'my-take-on-scaling-ai-_-closing-the-spells-gap',
+    title: 'My Take on Scaling AI: Closing the Spells Gap',
+  },
+  {
+    text: 'There is a phase of life no one warns you about. Not because it is bad. Because it is quiet. You wake up one morning and realize everything is sorted. Not perfect. Sorted.',
+    slug: 'the-good-part',
+    title: 'The Good Part',
+  },
+  {
     text: 'Words carry energy. I learned this in human relationships. AI and LLMs have only reinforced it. The people who will thrive in this new world are not the ones who type the fastest. They are the ones who understand that the right sequence of words, delivered with the right intent, changes what happens next.',
     slug: 'my-take-on-scaling-ai-_-words-are-spells',
     title: 'My Take on Scaling AI: Words Are Spells',
