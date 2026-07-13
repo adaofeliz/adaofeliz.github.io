@@ -1,0 +1,139 @@
+---
+title: 'My Take on Scaling AI: Wizards Are Made, Not Born'
+date: '2026-07-16'
+tags:
+  - ai
+summary: >-
+  Nobody closes the spells gap by reading documentation. They close it by using
+  the damn thing. Thousands of interactions. Patterns that repeat until they
+  become intuition. You cannot read your way to becoming a wizard. You have to
+  practice.
+---
+
+Nobody closes the spells gap by reading documentation.
+
+In [the first post](https://www.adaofeliz.com/blog/my-take-on-scaling-ai-_-words-are-spells) of this series, I wrote about why words carry energy and why the people who build AI systems have an unfair advantage over everyone else. In [the second](https://www.adaofeliz.com/blog/my-take-on-scaling-ai-_-closing-the-spells-gap), I laid out the architecture for closing that gap: prompt optimization, knowledge packaging, autonomous feedback loops. This is the last post in the series. And it is the one that sits underneath the other two.
+
+The architecture only works if people put in the time. And people only put in the time if using the system does not feel like work. They close the gap by using the damn thing. Thousands of interactions. Patterns that repeat until they become intuition. Failure cases that no manual can teach because no manual writer thought to document the specific way a vague verb triggers the wrong tool at the wrong moment.
+
+Wizards are not made by studying wands. They are made by using them, failing with them, and eventually reaching the point where the wand and the hand stop being two separate things.
+
+## From fear to access
+
+I started using AI from a position of fear.
+
+Not the dramatic kind. Not the existential variety. The practical kind. Privacy. Data leakage. Hallucinations. I had watched enough confident AI demos go sideways to know that the gap between impressive and reliable was not small. So I kept my guard up. I used AI like most people did in the early days. A tab I opened when I had a specific question. Write this function. Summarize this document. Draft this email. Every interaction was controlled. Every piece of information carefully rationed.
+
+The fear was rational. Two things kept me at arm's length at the same time.
+
+The first was privacy. Anything I typed into a chat window was potentially training data. Potentially visible. Potentially stored somewhere I had no control over. I was not paranoid, but I was careful. I gave the systems only what they needed and nothing more.
+
+The second was reliability. Hallucinations were not an edge case in those early days. They were a feature you planned around. The model would confidently produce a wrong answer, and if you did not already know the answer, you would not know it was wrong. That asymmetry is dangerous. It meant I could not delegate anything where being wrong quietly was worse than being wrong loudly.
+
+What changed was not a single moment. It was a compound effect.
+
+I started using AI for small things. Things where being wrong did not matter much. Then slightly bigger things. Each time it worked, I extended the radius of trust by an inch. Those inches accumulated. Over months they became miles. The caution did not disappear. It got absorbed into the system design. Instead of me being careful about every interaction, I built a harness that was careful on my behalf.
+
+That is the turn. Not less fear. Different architecture.
+
+## The harness is the guardrail
+
+The biggest shift happened when I stopped treating guardrails as restrictions I placed on myself and started treating them as infrastructure I could build outside myself.
+
+When most people give an AI system access to their tools, they are using a general-purpose assistant with whatever safety defaults the provider ships. ChatGPT. Claude. Gemini. These are extraordinary tools. But they are not harnesses. The guardrails are in the model's instructions, which means they are soft. Persuadable. Contextually overridable. The model is trying its best, but trying its best is not the same as a deterministic fence.
+
+What changed for me was encountering systems built around the idea that the harness is the product. The systems I use, the open-source agent runtime where I am writing this, operate on the principle that the deterministic layer around the model is where the real safety and reliability live. Not in the model's instruction-following. In actual code filters that define what actions the model can take regardless of what the model is instructed. The harness says you cannot do this in code, not in a prompt.
+
+That distinction made the access decision rational instead of emotional.
+
+The harness I use has deterministic guardrails around what it can read, what it can modify, what it can delete, and how it surfaces bad news. A memory layer that persists context across sessions. A skill layer that tells the model what tools it has access to and what those tools are for.
+
+And one design choice that matters more than almost any other: the honesty setting. There is a difference between a system that tells you the truth and a system that weaponizes the truth. The first is reliable. The second is exhausting. Getting that balance right took iteration.
+
+When you start using a new harness, you cannot try to set it up in one day. I read that from experienced people building similar systems before I understood it. Now it makes complete sense. What it really means is that only through incremental usage, through small steps, through hundreds of controlled experiments with things you do not mind getting wrong, does the harness start to reflect who you actually are. The feedback loop is embedded in the system itself. Use it, find an edge case, fix the edge case, use it more. Both sides learn. The harness improves through observation. Your trust compounds through evidence.
+
+It is not a setup. It is a relationship that matures with exposure. And that maturation is the training of spells.
+
+## Finding the Spells
+
+A spell is not a prompt. A prompt is a sentence. A spell is the intuition for which sentence opens which door.
+
+I know exactly which words in our AI enterprise stack trigger which tools. I wrote the tool descriptions. I named the skills. I phrased the system prompts. When I say send a message the model might go to Slack, might go to email, might go to a Jira comment, depending on exactly which word I add around it. I know which word that is. I know it not because I read documentation but because I failed enough times to see the pattern. The failure is the curriculum. There is no other way.
+
+The experience metaphor from the wizard universe is useful here. A wizard without training holds a wand that might fire anywhere. A wizard with years of practice holds the same wand and hits exactly what they aimed at. The wand is the harness. The spells are the skills and the prompts. And experience, the thousands of hours inside the system, is what transforms a wand-holder into a wizard.
+
+The gap between an AI builder and an AI user is not a knowledge gap. It is an experience gap. The builder has failed the way a user cannot, in development rather than in production, and has absorbed those failures into an intuitive model of how the system thinks. That model is not written down anywhere. It cannot be. It lives in the behavior, in the instinct for when to add a hint and when to let the model figure it out.
+
+This is why I keep coming back to the same idea I laid out at the start of this series. You cannot transmit experience. You can only create the conditions for it to accumulate.
+
+What this means practically is that any strategy for scaling AI to two hundred people lives or dies on a single variable: how much time-in-system each person accumulates, and how fast they accumulate it. Everything else, the knowledge packaging, the personalized memory, the autonomous feedback loop, is infrastructure that only delivers its value if people put in the time. And they will only put in the time if putting in the time does not feel like work.
+
+## The keyboard as a gate
+
+For most of my career, working meant sitting.
+
+It meant a keyboard. A monitor. A specific chair in a specific room. The interface to my own work was physical and located. If I wanted to ship code, I needed to be at a desk. If I needed to check whether a system was healthy, I needed to open a terminal. If I needed to write something, I needed my hands on the keys. The keyboard was not just an input device. It was the gate between me and my output.
+
+What Hermes gave me, before voice, even just through a desktop agent that was always running and reachable with a keystroke, was the first crack in that gate.
+
+The real crack came from the phone.
+
+I want to be specific about this because it was genuinely surprising. The first time I understood how much I could do from a simple chat interface on my phone, not a terminal, not a desktop app, just a messaging conversation on a mobile screen, I was disoriented. I could check the state of my home systems. I could review my calendar and my finances. I could draft meeting agendas, start development workflows, review pull requests, prepare summaries. I could do things from my couch, from my car, from a walk, that I would have previously needed to go sit at a desk to do.
+
+That was the first unlock. Mobile chat. Eyes and hands required, but no longer location-dependent.
+
+The second unlock was different in kind.
+
+The problem with mobile chat, even though it removed the desk, was that it kept the keyboard. And the keyboard, whether physical or on glass, imposes a cost. Typing requires your eyes. It requires you to stop what you are doing and focus on the interface. It requires you to formulate your thought into a shape that fits a chat input. You edit yourself. You refine. You treat each message like a small document.
+
+That cost compounds across a day. If reaching for the system requires stopping what you are doing, you reach for it less. You batch your questions. You save them for when you are sitting down. And in a compound game, reduced interaction volume is the enemy of the experience accumulation that actually closes the spells gap.
+
+Voice removes that cost. Not by being faster than typing, it is not. Typing is higher bandwidth for complex structured thought. But by removing the activation energy entirely.
+
+When I can talk to the system while walking, while driving, while making coffee, the volume of interaction is no longer gated by my ability to stop and type. I just talk. While I am doing something else. While I am thinking about something else. The barrier goes from sit down and type a prompt to say what you are thinking. That difference is enormous when you compound it across days and weeks.
+
+A hundred rough voice interactions teach you more about how the system thinks than ten polished typed prompts.
+
+## The closed-system problem
+
+The voice experiences that were available before I built my own were extraordinary and useless at the same time.
+
+xAI's Grok powers the in-car assistant in Tesla vehicles, so you can speak to the car and have the model handle the reasoning. Tesla's voice stack as the interface, Grok as the reasoning layer underneath.
+
+OpenAI's GPT-Live, the current ChatGPT voice experience, is genuinely impressive. Full-duplex architecture, which means it listens and speaks simultaneously rather than taking strict turns, and under the surface it can route heavier reasoning to more capable models while keeping the conversation flowing. On the developer side, they have exposed this through the Realtime API with models specifically tuned for low-latency speech-to-speech interactions. The latency figures on recent releases are numbers that would have been considered impossible five years ago.
+
+I used these. I was baffled by them. The quality of the conversation, the naturalness of the turn-taking, the speed, was unlike anything I had experienced before.
+
+And they were useless to me.
+
+Because they were closed systems. The best voice experience I had with GPT-Live was a polished, natural, impressive conversation with a model that had no access to my tools, my context, my skills, or my memory. It knew nothing about my calendar. It could not check the state of my systems. It could not push a commit or trigger a workflow or find the specific Slack message I was trying to remember. The conversational experience was world-class. The harness integration was zero.
+
+On the other side, Hermes had all the power. Full tool access. Memory that persisted across sessions. Skill layers that gave the model the right context for every task. Deterministic guardrails that made it trustworthy. But no voice interface. To reach it, I needed to type.
+
+The tension was obvious. The two things that needed to converge had not converged yet.
+
+The trigger for building the bridge myself was an open-source project from Hugging Face called `speech-to-speech`, which lives at `huggingface/speech-to-speech` on GitHub. The tagline is blunt: build local voice agents with open-source models. The stack combines speech-to-text, a language model backend, and text-to-speech into a real-time pipeline. What made it different from the closed commercial experiences was the backend flexibility. You can point the LLM component at a local model running on your own hardware using Hugging Face's `transformers` library or Apple Silicon-optimized `mlx-lm`, or at a self-hosted vLLM or llama.cpp server. The entire pipeline runs on your infrastructure. No API minutes. No external dependency if you do not want one.
+
+That is what unblocked me. Not the theoretical possibility of local voice, but a working, open-source implementation that removed the proprietary lock. I took that stack and started building the voice layer for Hermes. Plugging the speech-to-speech pipeline into the harness as the new interface layer, so that the same tools, skills, memory, and guardrails that I had access to through typed chat were now accessible through natural speech.
+
+The first real test was writing this post. Not at a desk. Not at a keyboard. Walking through my morning, thinking out loud, the system capturing and structuring as I spoke.
+
+Not a demo. Not a proof of concept. A working artifact, produced through the stack I built, published the same morning the previous post in this series went live.
+
+## What we are leaving behind
+
+A year into this, I still do not have a clean answer for someone who is where I was at the start. Afraid of access. Skeptical of voice. Still tied to their keyboard.
+
+What I keep coming back to is what we are actually leaving behind.
+
+The idea that AI is something you sit down to use.
+
+That is the gate. Not a technical gate. A conceptual one. The mental model that places AI in the category of tool rather than infrastructure. Tools are things you pick up and put down. Infrastructure is always on, always there, the thing you build your workflow around rather than the thing you insert into your workflow. The desk was not a physical constraint on how I worked. It was a conceptual constraint. I had placed my access to my own work inside a piece of furniture.
+
+Voice is not just a new interface. It is the thing that makes the mental model shift possible at scale. Because you cannot maintain the tool I pick up and put down frame when the tool is always listening, always ready, accessible through the same mechanism you use to talk to a colleague in the next room. The frame dissolves on its own when the friction is low enough.
+
+The spells gap closes one interaction at a time. There is no shortcut. But there is a faster path. Remove everything that makes each interaction harder. Build the infrastructure that makes each interaction useful. And trust that the experience will compound.
+
+The series opened with words carrying energy. It ends with words carrying everything. Not just the spells. The experience that teaches them.
+
+Onwards, wizards.
