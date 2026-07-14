@@ -22,6 +22,8 @@ export default function HomePage({ latestPost, quotes }: HomePageProps) {
       <main className="divide-y divide-gray-200 dark:divide-gray-800">
         <HomeSubtitle latest={latestPost} />
 
+        <HomeQuotes quotes={quotes} />
+
         <section className="py-16">
           <h2 className="text-primary-600 dark:text-primary-400 text-sm font-semibold tracking-widest uppercase">
             Focus Areas
@@ -37,8 +39,6 @@ export default function HomePage({ latestPost, quotes }: HomePageProps) {
             ))}
           </div>
         </section>
-
-        <HomeQuotes quotes={quotes} />
       </main>
     </SectionContainer>
   )
