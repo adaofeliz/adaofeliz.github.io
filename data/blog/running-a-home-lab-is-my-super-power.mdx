@@ -1,0 +1,89 @@
+---
+title: Running a Home Lab Is My Super Power
+date: '2026-07-20'
+tags:
+  - technology
+summary: >-
+  It started with a single Raspberry Pi behind the TV. Fifteen years later it
+  is a Proxmox cluster, a NAS, and a museum of my own decisions. This is what
+  self-hosting teaches you that the cloud never will, and why it is the reason
+  I can see every layer other engineers only click a button on.
+---
+
+It started with a single Raspberry Pi.
+
+Not because I had a grand plan. Because I needed a gateway proxy from my mobile router into a more robust home wifi router, and a VPN that did not route through someone else's server. One service. One device. A small box behind the living room TV, with an ethernet cable run across the floor to reach it.
+
+That was more than fifteen years ago. The small box looks different now.
+
+## The stack that grew
+
+A Proxmox cluster. A Synology NAS, with a disaster recovery mirror somewhere else. Docker Compose files that have spawned children I no longer recognize by name. A reverse proxy that routes to twenty services. A monitoring dashboard that monitors itself.
+
+This is not a flex. Every homelabber has the same story. It starts with one problem, you solve it, and solving it reveals three problems you did not know you had. The stack grows because the stack is never finished. There is always one more service. One more migration. One more certificate about to expire.
+
+## Where the edge came from
+
+The biggest part of my career was spent at startups that were near a scale-up but never quite there. A particular thing about those companies is the budget. Monitoring tools alone could cost almost as much as running the production servers for the users. Other companies were paying thousands a month to Datadog or Splunk for basic visibility. Knowing this going in, having already deployed my own version of that stack at home, cheaply, was always an edge.
+
+I know Grafana, Prometheus, Loki, and a CI pipeline the way most people know their own kitchen. Not because a company paid for me to learn it. Because I already ran all of it at home, for the price of electricity and a used server, years before any startup asked me to.
+
+That edge showed up again and again, not only at companies I worked for, but at startups I advised. Teams skip CI discipline and real monitoring because they cannot afford the tools, not because they do not know better. I had already tried dozens of self-hosted alternatives at home, so I knew the license limits and the scale ceilings of each one before a client ever asked which one to run in production. Time-series databases are the clearest example. Monitoring moved from push-based metrics to pull-based metrics over the years, and Prometheus won. I had already run StatsD, InfluxDB, and TimescaleDB at home, found where each one broke, and knew the answer before a company ever had the question.
+
+I never had to wait for a VM to be assigned to me, or a DNS record to be added to a service. I could test open-source projects, run my own benchmarks, and build my own intuition on infrastructure without asking anyone for a budget or a policy exception. That intuition did not come from documentation. It came from breaking the same things at home first.
+
+## The layer most engineers never reach
+
+Backend specialization has three layers. The software running on the server. The infrastructure underneath it, containers, orchestrators, databases, how you deploy. And networking: reverse proxying, rate limiting, load balancing, how traffic gets shaped before it ever reaches the code you wrote. Most engineers stop at the first layer. Fewer reach the second. The third is the one that separates people, and it is the one the home lab teaches for free.
+
+On a cloud platform, you point an elastic load balancer at your cluster and never think about it again. It just works. Underneath that button sits a gateway: a piece of software doing load balancing, rate limiting, reverse proxying, and firewalling, all at once, and the cloud hides every part of it. It is one of the pieces of software everyone depends on and almost no one has ever seen run.
+
+At home, you build that gateway yourself. Nginx, Caddy, Traefik, whatever you land on. You learn upstreams, health checks, TLS termination, connection pooling, IP forwarding, how a single misconfigured header can take down a service that was otherwise healthy. You see the whole stack, because there is no one else to hide it from you. That is the thing I would tell any engineer sitting at layer one or two to go home and lab tonight. Everything downstream of that changes once you have seen a gateway run naked.
+
+## What the cloud does not teach you
+
+I spent years building in the cloud. The cloud is forgiving. You can throw money at a problem and it goes away. Storage is cheap. Bandwidth is cheap. Managed services absorb complexity so you do not have to think about it.
+
+The home lab does not forgive.
+
+When the disk fills at 2am, there is no auto-scaling group. No support ticket. No one to call. It is you and a terminal and a cold room. You learn more about storage in one night of manual cleanup than you did in five years of managed databases. The same is true for DNS. A managed provider resolves everything for you silently, and you never learn what a TTL actually costs you until your own record is stale and half the internet is still pointing at the old IP.
+
+That is the value. Not the infra. The friction.
+
+## The things that break
+
+It is not DNS. There is no way it is DNS. It was DNS. Every homelabber knows the joke because every homelabber has lived it. Ansible workflows you wrote eighteen months ago and have not touched since, which now fail for reasons you cannot remember. A container image that was pulled once and never updated, running a service you forgot existed until the backup log showed it.
+
+A cron job that silently stopped firing eight months ago, and the only reason you noticed was a disk quota alert on a volume you thought was still being pruned. A migration you ran once, by hand, that you now have to reconstruct from memory because you never wrote it down. Every homelabber has a version of this story, and every version ends the same way: you fix it, you promise yourself you will document it properly this time, and you mostly do not.
+
+The home lab is a museum of your own decisions. Some good. Most adequate. A few that make you sit and stare at the screen wondering what you were thinking.
+
+## Why it matters
+
+Not because I need to self-host. Most of these services work perfectly well as SaaS. The convenience argument is weak. The privacy argument is real but not the whole story.
+
+The real reason is that the home lab is the last place where you touch everything. The hardware. The network. The OS. The container. The application. The DNS. The certificate. The backup. Every layer is visible and every layer is your responsibility.
+
+That kind of full-stack visibility is disappearing from professional life. The cloud abstracts it. Managed services hide it. AI generates it. The home lab refuses to let you forget that there is a physical world underneath the virtual one. Racks consume power. Disks fail. Fans make noise. The heat has to go somewhere.
+
+I think that matters more than most people realize. Not the skills. The humility of being close to the hardware.
+
+## The next black box
+
+Building software is getting easier every year. Idea to prototype to MVP to a working product in a browser, most of the friction in that path is disappearing. That is a good thing.
+
+What is disappearing with it is the understanding of what runs underneath. People ship software without knowing what infrastructure serves it. And the same thing is happening one layer up, inside the AI stack itself. The chat box you type into hides models, routers, memory, tool access, all of it, behind a single friendly interface. Most people using it will never look past that interface, the same way most engineers never look past a managed database.
+
+I spent fifteen years learning to decouple infrastructure at home, one layer at a time, because I needed to and no one was going to do it for me. That habit transfers directly. When AI arrived with its own stack of models, vector databases, inference engines, and orchestrators, I already had the instinct to pull it apart and ask what each piece actually does, instead of paying an AI lab a premium for components I could own and run myself.
+
+## Where it is going
+
+I do not know exactly where the stack ends up. It has never stayed in one place for long, and it will not start now. What I do know is which direction I am pointing it.
+
+The same instinct that built the cluster and stress-tested three generations of time-series databases is now pointed at the AI stack. Inference is one layer. It is not the whole system, even though it is the only layer most people ever see. Underneath it: memory that has to persist across sessions instead of resetting every time. Retrieval that decides which handful of documents a model actually gets to read. Gateways that expose tools and skills, MCP servers among them, and decide which ones a given user is even allowed to reach. Evaluation pipelines that catch a bad answer before a user does. Guardrails for a system that cannot promise a deterministic output no matter how you configure it. Most people talking to a chatbot every day have never heard of any of these layers, the same way most engineers never hear of a connection pool until they have had to run one themselves.
+
+That is the lab now. Not new racks. New layers, tested the same way the old ones were: by running them myself before I trust anyone else's version of them.
+
+The real output is not the uptime. It is knowing how things work because you have seen them break. That knowledge compounds. It makes you better at your job. It makes you harder to bullshit. It makes you appreciate the managed services more and trust them less.
+
+A room full of blinking lights and docker logs. An ongoing conversation with the machine layer, and there are more machine layers to talk to now than there used to be. The home lab is not a hobby. It is a discipline.
