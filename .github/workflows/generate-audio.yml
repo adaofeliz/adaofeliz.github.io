@@ -33,13 +33,19 @@ jobs:
           node-version: '20'
           cache: 'yarn'
 
-      # Load-bearing: the loudness repair chain shells out to ffmpeg.
+      # Load-bearing: the repair chain shells out to ffmpeg. Bounded waits
+      # because the runner's unattended-upgrades once held the apt lock >10 min.
       - name: Ensure ffmpeg is available
+        timeout-minutes: 6
+        env:
+          DEBIAN_FRONTEND: noninteractive
         run: |
-          if ! command -v ffmpeg >/dev/null 2>&1; then
-            sudo apt-get update
-            sudo apt-get install -y ffmpeg
+          if command -v ffmpeg >/dev/null 2>&1; then
+            ffmpeg -version | head -1
+            exit 0
           fi
+          sudo apt-get -o DPkg::Lock::Timeout=120 update
+          sudo apt-get -o DPkg::Lock::Timeout=120 install -y --no-install-recommends ffmpeg
           ffmpeg -version | head -1
 
       - name: Install dependencies
