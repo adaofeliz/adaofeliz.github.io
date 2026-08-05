@@ -1,45 +1,16 @@
-import fs from 'node:fs/promises'
-import path from 'node:path'
-import matter from 'gray-matter'
-import { remark } from 'remark'
-import strip from 'strip-markdown'
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 import { assertFfmpegAvailable, formatLoudness } from './lib/audio-loudness.mjs'
 import { synthesizeLongText, DEFAULT_VOICE_SETTINGS } from './lib/elevenlabs.mjs'
 import { chunkText } from './lib/text-chunker.mjs'
+import { extractPlainText, listPostFiles, readPost, slugFor, writePost } from './lib/blog-posts.mjs'
+import { publicUrlFor, putAudio, putTimestamps } from './lib/r2.mjs'
 
-// ElevenLabs Configuration
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY
-
-// Cloudflare R2 Configuration
-const R2_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID
-const R2_ACCESS_KEY_ID = process.env.CLOUDFLARE_ACCESS_KEY_ID
-const R2_SECRET_ACCESS_KEY = process.env.CLOUDFLARE_SECRET_ACCESS_KEY
-const BUCKET_NAME = 'adaofeliz-blog-audio'
-const PUBLIC_AUDIO_URL_BASE = 'https://audio.adaofeliz.com'
-const BLOG_DIR = 'data/blog'
 
 /**
  * Cached chunk responses. A run that dies partway through resumes from here
  * rather than re-buying audio that was already generated.
  */
 const CACHE_DIR = '.cache/audio-tts'
-
-const s3Client = new S3Client({
-  region: 'auto',
-  endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: R2_ACCESS_KEY_ID,
-    secretAccessKey: R2_SECRET_ACCESS_KEY,
-  },
-})
-
-async function extractPlainText(markdown) {
-  // Strip JSX tags before processing with strip-markdown since strip-markdown doesn't fully remove complex JSX
-  const noJsx = markdown.replace(/<[^>]+>/g, '')
-  const file = await remark().use(strip).process(noJsx)
-  return String(file).trim()
-}
 
 function parseArgs(argv) {
   const only = argv.find((a) => a.startsWith('--only='))
@@ -52,24 +23,10 @@ function parseArgs(argv) {
   }
 }
 
-async function uploadObject(key, body, contentType) {
-  await s3Client.send(
-    new PutObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: key,
-      Body: body,
-      ContentType: contentType,
-      // Rewritable key, so the CDN has to be able to pick up a corrected file.
-      CacheControl: 'public, max-age=86400',
-      Metadata: { normalized: 'v1' },
-    })
-  )
-}
-
 async function processFile(filePath, options) {
   console.log(`Processing file: ${filePath}`)
 
-  const parsed = matter(await fs.readFile(filePath, 'utf-8'))
+  const parsed = await readPost(filePath)
 
   if (parsed.data.audio && !options.force) {
     console.log(`Skipping ${filePath} - audio already exists.`)
@@ -115,20 +72,20 @@ async function processFile(filePath, options) {
       `(gain ${stats.loudness.gainDb} dB)`
   )
 
-  const slug = path.basename(filePath, path.extname(filePath))
+  const slug = slugFor(filePath)
   const mp3Key = `${slug}.mp3`
   const timestampsKey = `${slug}-timestamps.json`
 
   console.log(`  Uploading MP3 to R2 as ${mp3Key}...`)
-  await uploadObject(mp3Key, audioBuffer, 'audio/mpeg')
+  await putAudio(mp3Key, audioBuffer)
 
   console.log(`  Uploading timestamps to R2 as ${timestampsKey}...`)
-  await uploadObject(timestampsKey, JSON.stringify(timestamps, null, 2), 'application/json')
+  await putTimestamps(timestampsKey, timestamps)
 
-  parsed.data.audio = `${PUBLIC_AUDIO_URL_BASE}/${mp3Key}`
-  parsed.data.audioTimestamps = `${PUBLIC_AUDIO_URL_BASE}/${timestampsKey}`
+  parsed.data.audio = publicUrlFor(mp3Key)
+  parsed.data.audioTimestamps = publicUrlFor(timestampsKey)
 
-  await fs.writeFile(filePath, matter.stringify(parsed.content, parsed.data), 'utf-8')
+  await writePost(filePath, parsed)
 
   console.log(`Successfully processed ${filePath} and updated frontmatter.`)
   console.log(`  - Audio: ${parsed.data.audio}`)
@@ -145,14 +102,11 @@ async function main() {
 
   if (files.length === 0) {
     console.log('No files passed, scanning data/blog directory...')
-    const allFiles = await fs.readdir(BLOG_DIR)
-    files = allFiles
-      .filter((f) => f.endsWith('.md') || f.endsWith('.mdx'))
-      .map((f) => path.join(BLOG_DIR, f))
+    files = await listPostFiles()
   }
 
   if (options.only) {
-    files = files.filter((f) => path.basename(f, path.extname(f)) === options.only)
+    files = files.filter((f) => slugFor(f) === options.only)
     if (files.length === 0) {
       throw new Error(`No blog post matched --only=${options.only}`)
     }

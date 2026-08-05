@@ -29,14 +29,6 @@
 import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
-import matter from 'gray-matter'
-import {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-  HeadObjectCommand,
-  CopyObjectCommand,
-} from '@aws-sdk/client-s3'
 import {
   analyzeDrift,
   assertFfmpegAvailable,
@@ -45,24 +37,16 @@ import {
   normalizeFile,
   DEFAULT_TARGET_LUFS,
 } from './lib/audio-loudness.mjs'
-
-const R2_ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID
-const R2_ACCESS_KEY_ID = process.env.CLOUDFLARE_ACCESS_KEY_ID
-const R2_SECRET_ACCESS_KEY = process.env.CLOUDFLARE_SECRET_ACCESS_KEY
-const BUCKET_NAME = 'adaofeliz-blog-audio'
-const BLOG_DIR = 'data/blog'
-
-/** Bumping this value makes every object eligible for reprocessing. */
-const NORMALIZATION_VERSION = 'v1'
-
-const s3Client = new S3Client({
-  region: 'auto',
-  endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
-  credentials: {
-    accessKeyId: R2_ACCESS_KEY_ID,
-    secretAccessKey: R2_SECRET_ACCESS_KEY,
-  },
-})
+import { listPostFiles, readPost } from './lib/blog-posts.mjs'
+import {
+  copyObject,
+  downloadToFile,
+  hasR2Credentials,
+  objectExists,
+  putAudio,
+  readNormalizationMarker,
+  NORMALIZATION_VERSION,
+} from './lib/r2.mjs'
 
 function parseArgs(argv) {
   const only = argv.find((a) => a.startsWith('--only='))
@@ -83,14 +67,10 @@ function parseArgs(argv) {
  * filename, so a renamed post still resolves to the right object.
  */
 async function collectPosts(only) {
-  const entries = await fs.readdir(BLOG_DIR)
   const posts = []
 
-  for (const entry of entries) {
-    if (!entry.endsWith('.md') && !entry.endsWith('.mdx')) continue
-
-    const filePath = path.join(BLOG_DIR, entry)
-    const parsed = matter(await fs.readFile(filePath, 'utf-8'))
+  for (const filePath of await listPostFiles()) {
+    const parsed = await readPost(filePath)
 
     if (!parsed.data.audio || parsed.data.draft) continue
 
@@ -107,41 +87,6 @@ async function collectPosts(only) {
 }
 
 /**
- * True when R2 write credentials are present. Read-only modes work without
- * them by fetching over the public CDN URL, so anyone can audit the current
- * state of published audio with no secrets configured.
- */
-const hasR2Credentials = Boolean(R2_ACCOUNT_ID && R2_ACCESS_KEY_ID && R2_SECRET_ACCESS_KEY)
-
-/**
- * Read the normalization marker from object metadata.
- * Returns null when the object exists but was never processed.
- */
-async function readNormalizationMarker(key) {
-  if (!hasR2Credentials) return null
-  const head = await s3Client.send(new HeadObjectCommand({ Bucket: BUCKET_NAME, Key: key }))
-  return head.Metadata?.['normalized'] ?? null
-}
-
-async function downloadToFile(post, destination) {
-  if (hasR2Credentials) {
-    const response = await s3Client.send(
-      new GetObjectCommand({ Bucket: BUCKET_NAME, Key: post.key })
-    )
-    const bytes = await response.Body.transformToByteArray()
-    await fs.writeFile(destination, Buffer.from(bytes))
-    return
-  }
-
-  // Public CDN fallback, used by --analyze and --dry-run without credentials.
-  const response = await fetch(post.url)
-  if (!response.ok) {
-    throw new Error(`Failed to download ${post.url}: ${response.status}`)
-  }
-  await fs.writeFile(destination, Buffer.from(await response.arrayBuffer()))
-}
-
-/**
  * Copy the pristine original aside exactly once. If a backup already exists it
  * is left alone, so repeated runs can never overwrite a good original with an
  * already-normalized file.
@@ -149,40 +94,16 @@ async function downloadToFile(post, destination) {
 async function backupOriginal(key, slug) {
   const backupKey = `originals/${slug}.mp3`
 
-  try {
-    await s3Client.send(new HeadObjectCommand({ Bucket: BUCKET_NAME, Key: backupKey }))
+  if (await objectExists(backupKey)) {
     return { backupKey, created: false }
-  } catch (error) {
-    if (error.name !== 'NotFound' && error.$metadata?.httpStatusCode !== 404) throw error
   }
 
-  await s3Client.send(
-    new CopyObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: backupKey,
-      CopySource: `${BUCKET_NAME}/${key}`,
-    })
-  )
-
+  await copyObject(key, backupKey)
   return { backupKey, created: true }
 }
 
 async function uploadNormalized(key, filePath, targetLufs) {
-  await s3Client.send(
-    new PutObjectCommand({
-      Bucket: BUCKET_NAME,
-      Key: key,
-      Body: await fs.readFile(filePath),
-      ContentType: 'audio/mpeg',
-      // Shorter than immutable on purpose: this key is rewritten in place, so
-      // the CDN must be able to pick up a corrected file.
-      CacheControl: 'public, max-age=86400',
-      Metadata: {
-        normalized: NORMALIZATION_VERSION,
-        'target-lufs': String(targetLufs),
-      },
-    })
-  )
+  await putAudio(key, await fs.readFile(filePath), { 'target-lufs': String(targetLufs) })
 }
 
 function describeDrift(label, drift) {
@@ -199,7 +120,7 @@ async function processPost(post, options, workDir) {
     return { status: 'skipped', reason: `already normalized (${marker})` }
   }
 
-  await downloadToFile(post, sourcePath)
+  await downloadToFile(post.key, sourcePath, { publicUrl: post.url })
 
   // Analyze mode is read-only: measure and report, change nothing.
   if (options.analyze) {
