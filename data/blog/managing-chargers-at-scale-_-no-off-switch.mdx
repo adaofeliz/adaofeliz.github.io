@@ -1,0 +1,106 @@
+---
+title: 'Managing Chargers at Scale: No Off Switch'
+date: '2026-08-03'
+tags:
+  - technology
+summary: >-
+  Building a web app is easy. A browser, a backend in the cloud, both under your
+  control. Building a backend for machines that live outside your network, in the
+  physical world, is not. The first of three posts about managing chargers at
+  scale. What the edges actually do to a platform, and why my team builds the
+  foundation by hand.
+---
+
+Building a web app is easy. A browser, a backend in the cloud, both under your control. Building a backend for machines that live outside your network, in the physical world, is not.
+
+I spent most of my career on the forgiving side of that sentence. Cloud providers, browsers, clusters I deployed and owned end to end. Then I went looking for work [where code connects to the physical world](https://www.adaofeliz.com/blog/connecting-the-dots), and today I sit as CTO of one of the largest fast charging networks in Europe, running across six countries.
+
+My engineering strategy is one sentence, simple to say and expensive to hold. We build the foundation in-house. Every component. Not because buying it would have been slower, and not because we enjoy the work for its own sake. Because the machines on the other end do not behave, and a platform that has to absorb thousands of them cannot be a black box somebody else operates.
+
+This is the first of three posts about managing chargers at scale. It starts where the work starts. At the edges.
+
+## Full computers with no idea they are not alone
+
+Chargers are full computers. Not sensors. Not simple embedded devices. Full computers, standing outside in the weather, each one behind its own router and its own SIM, reaching our backend over a private network.
+
+None of them knows how many other chargers exist on that network. Each one carries its own individual idea of how it should behave. No awareness of its siblings. No awareness of the network around it.
+
+Here is what that looks like in practice. One hardware family, across several firmware versions, kept opening new connections instead of reusing the one it already had. Thirteen sockets, five seconds apart, each new one announcing itself with a BootNotification as if the machine had just woken up. Three of them carried messages. The rest sat there, silent and open. One unit held 137 connections at the same time. The worst we ever measured on a single charger was 267. Point it at a different address and it politely closes all of them, behaves for a few minutes, then starts again.
+
+The specification is explicit about this. On reconnect, a charge point should not announce itself again unless something about it actually changed. The firmware had its own opinion.
+
+Thousands of machines, every one of them convinced it is the only one.
+
+That is where it starts. The industry standard, OCPP, is where it gets hard.
+
+## What OCPP does not forgive
+
+OCPP has two problems. It requires an established WebSocket TCP connection, held open, all the time. And every message sent upstream or downstream has to be acknowledged.
+
+Held open, all the time. That is the part that reads as harmless on a slide.
+
+A message that fails to send does not disappear. It queues. And when the connection is healthy again, the queue does not trickle back in. It empties all at once, pushed upstream in a burst.
+
+So the protocol remembers. Every minute a charger cannot reach us, it is writing down what it will say the second it can.
+
+Which is why we stopped trusting the connection. A charger sends a heartbeat every sixty seconds. If nothing has arrived for ten minutes, we call it offline, whatever the socket object says. Liveness is the last message that actually reached us, not the state of a TCP connection we do not control. It looks like a small decision on a diagram. It is the difference between a dashboard that tells the truth and one that lies politely.
+
+The messages themselves are only half a language. A charger reports its state, and next to the state it hands you a vendor error code, a number whose meaning lives in a manufacturer's PDF and nowhere in the standard. The same fault has a different code on every brand. Some models report faults while sitting idle, with no car, no session, nothing to fault on. Interpreting the edges is its own layer of software, and every brand we add pushes on it.
+
+Nobody controls the behavior of the edges. The edges here are chargers. They do not run in a cloud provider, or inside a Kubernetes cluster we deploy and own. No console. No rolling restart. No feature flag that reaches them.
+
+We are bridging the physical world into the digital one, and the physical world does not read your architecture diagram.
+
+## When they come back, they come back at once
+
+There are many vectors of outage in this industry. Most can be planned for. One cannot: the network provider itself going down. Most chargers reach us over a mobile connection, roaming onto whichever operator has the best signal where they stand. When that provider stumbles, every charger on it goes dark for however long it lasts. Minutes. Hours. Nobody's call.
+
+One evening a few weeks ago, I watched it happen. Chargers started going quiet inside the same minute. Different countries. Different manufacturers. Machines that share nothing except the SIM cards in their routers.
+
+The first question on a night like that is always the same one: is it us? That is what the shape of the drop is for. Scattered drops through the day are local signal, a tired antenna, a router rebooting itself. Dozens of machines falling silent in the same sixty seconds, across brands that share no firmware and no hardware, cannot be dozens of separate faults. That pattern has exactly one explanation, and it is not your servers. We could rule ourselves out before anyone finished asking.
+
+Then comes the strange part. Nothing to fix. Nothing to deploy. Nothing to roll back. The machines are out there, the network between us is gone, and the only thing left to do is wait for someone else's infrastructure to come back.
+
+The outage is not the problem. What happens after is.
+
+When the network comes back, every charger hits the backend at once. Full throttle. No coordination. No backoff. Thousands of machines, unaware of each other, reconnecting in the same second, each one carrying a full queue to flush and every message in it waiting to be acknowledged. They do to our own infrastructure what a bad actor would need a botnet to do.
+
+Nobody can tell them to slow down. There is no connection to them yet.
+
+And that night taught me the part I did not expect. When the network came back, some of the machines did not. Connectivity restored, chargers still dark, because the firmware never tried again. The team brought them back by rebooting routers remotely, one machine at a time, from the other side of a continent. Which is why the routers watchdog themselves now. Ping a public address once a minute, three failures in a row, reboot the system. The only recovery you get in the physical world is the one you configured months earlier, on a device you will probably never stand in front of again.
+
+So the stampede is real, and so is its opposite. The edges cannot be asked to behave. They can only be expected.
+
+There is no off switch for the physical world. Some days there is no on switch either.
+
+Standing in front of that, fifteen years of instinct counted for half. This is nothing like building a full-stack web app that lives inside a browser and a backend I own end to end. The half that did transfer came from [the home lab](https://www.adaofeliz.com/blog/running-a-home-lab-is-my-super-power), where I had already broken every layer myself.
+
+## The first of August
+
+This year, the first of August was expected to be the single busiest day for electric vehicle charging in history. Every charge point operator, every mobility service provider, every hub in Europe stress-tested in the same hours, by the same holiday traffic, with no way to stagger it. A reconnection storm is a bad minute. This was a whole day of sustained load, announced in advance, with no way to opt out.
+
+I believe the network that handles a day like that best is not the one with the flashiest chargers. It is the one with the most boring infrastructure that just works.
+
+Every charger we run, in six countries, under load at the same time.
+
+And on the day, there was nothing to do.
+
+That is the whole point, and it is the part of this job I find hardest to explain outside engineering. Nobody will ever know what did not happen. No war room. No escalation. No dashboard anyone had to sit in front of. Boring, on purpose, built by my team long before the day that needed it.
+
+## The weight on the other end
+
+A web app that breaks shows a spinner. A charger that breaks leaves someone in a parking lot at night with a car that will not charge and somewhere else to be.
+
+That is also why the obvious metric is the wrong one. We ran a phase of work that cut disconnections almost to nothing, and availability barely moved. The drop was never the enemy. The length of the dark was.
+
+So the happy path stops being the default assumption. The design starts from the return, not from the interruption. Every decision in the platform bends around the same fact: the edges do not listen, the protocol does not forget, and there is no off switch.
+
+## What the foundation is for
+
+Every component of that platform is ours. The gateway. The routing. The load balancing. The failover paths nobody notices. The monitoring that acts on its own instead of paging a human at three in the morning. It costs more than buying would have, and I would make the same call again tomorrow.
+
+Because the layer above this one is not another dashboard for a human to stare at. It is software that watches the edges continuously and adjusts the system while nobody is looking, and nobody points that at infrastructure they cannot explain. Every operator in this industry is walking toward that fork, and most have not noticed it yet. I will get into it later in this series.
+
+The technology is new. The discipline required to use it well is not.
+
+There is still no off switch for the physical world. What comes next watches the edges without blinking, and it will only ever be as good as the foundation we hand it.
