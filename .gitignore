@@ -56,3 +56,6 @@ SOUL.md
 INSTRUCTIONS.md
 
 .env
+
+# Cached ElevenLabs chunk responses (rebuildable, but costs credits)
+.cache/
