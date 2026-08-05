@@ -2,6 +2,19 @@ name: Generate GitOps Audio
 
 on:
   workflow_dispatch:
+    inputs:
+      post_slug:
+        description: 'Only generate this post slug (blank = every post still missing audio)'
+        type: string
+        required: false
+      normalize_existing:
+        description: 'Repair loudness of already published audio (uses no ElevenLabs credits)'
+        type: boolean
+        default: false
+      normalize_force:
+        description: 'Re-normalize even files already tagged as normalized'
+        type: boolean
+        default: false
 
 jobs:
   generate-audio:
@@ -20,6 +33,21 @@ jobs:
           node-version: '20'
           cache: 'yarn'
 
+      # Load-bearing: the repair chain shells out to ffmpeg. Bounded waits
+      # because the runner's unattended-upgrades once held the apt lock >10 min.
+      - name: Ensure ffmpeg is available
+        timeout-minutes: 6
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          if command -v ffmpeg >/dev/null 2>&1; then
+            ffmpeg -version | head -1
+            exit 0
+          fi
+          sudo apt-get -o DPkg::Lock::Timeout=120 update
+          sudo apt-get -o DPkg::Lock::Timeout=120 install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -1
+
       - name: Install dependencies
         run: yarn install
 
@@ -30,8 +58,16 @@ jobs:
           CLOUDFLARE_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_ACCESS_KEY_ID }}
           CLOUDFLARE_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }}
         run: |
-          node scripts/generate-audio.mjs
+          node scripts/generate-audio.mjs ${{ inputs.post_slug && format('--only={0}', inputs.post_slug) || '' }}
           node scripts/backfill-timestamps.mjs
+
+      - name: Repair loudness of existing audio
+        if: ${{ inputs.normalize_existing }}
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_ACCESS_KEY_ID }}
+          CLOUDFLARE_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_SECRET_ACCESS_KEY }}
+        run: node scripts/normalize-existing-audio.mjs ${{ inputs.normalize_force && '--force' || '' }}
 
       - name: Commit and push changes
         run: |
