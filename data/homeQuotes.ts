@@ -11,6 +11,16 @@ const homeQuotes: readonly HomeQuote[] = [
     title: 'The Stories I Never Thought About',
   },
   {
+    text: 'Building a web app is easy. A browser, a backend in the cloud, both under your control. Building a backend for machines that live outside your network, in the physical world, is not.',
+    slug: 'managing-chargers-at-scale-_-no-off-switch',
+    title: 'Managing Chargers at Scale: No Off Switch',
+  },
+  {
+    text: "It started with a single Raspberry Pi. Not because I had a grand plan. Because I needed a gateway proxy and a VPN that did not route through someone else's server. One service. One device. A small box behind the living room TV.",
+    slug: 'running-a-home-lab-is-my-super-power',
+    title: 'Running a Home Lab Is My Super Power',
+  },
+  {
     text: 'Nobody closes the spells gap by reading documentation. They close it by using the damn thing. Thousands of interactions. Patterns that repeat until they become intuition. You cannot read your way to becoming a wizard. You have to practice.',
     slug: 'my-take-on-scaling-ai-_-experience-is-the-scaling-layer',
     title: 'My Take on Scaling AI: Wizards Are Made, Not Born',
