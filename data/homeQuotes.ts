@@ -6,6 +6,11 @@ export interface HomeQuote {
 
 const homeQuotes: readonly HomeQuote[] = [
   {
+    text: 'I love diversity. Not the acceptance kind. The kind I go looking for. Reading about it is not the same as sitting in it. A screen gives me the facts. A table gives me the person.',
+    slug: 'the-stories-i-never-thought-about',
+    title: 'The Stories I Never Thought About',
+  },
+  {
     text: 'Nobody closes the spells gap by reading documentation. They close it by using the damn thing. Thousands of interactions. Patterns that repeat until they become intuition. You cannot read your way to becoming a wizard. You have to practice.',
     slug: 'my-take-on-scaling-ai-_-experience-is-the-scaling-layer',
     title: 'My Take on Scaling AI: Wizards Are Made, Not Born',
