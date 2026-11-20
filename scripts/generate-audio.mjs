@@ -1,14 +1,17 @@
 import { assertFfmpegAvailable, formatLoudness } from './lib/audio-loudness.mjs'
-import { synthesizeLongText, DEFAULT_VOICE_SETTINGS } from './lib/elevenlabs.mjs'
+import {
+  CHUNK_OPTIONS,
+  DEFAULT_MODEL,
+  resolveVoiceReference,
+  synthesizeLongText,
+} from './lib/local-tts.mjs'
 import { chunkText } from './lib/text-chunker.mjs'
 import { extractPlainText, listPostFiles, readPost, slugFor, writePost } from './lib/blog-posts.mjs'
 import { publicUrlFor, putAudio, putTimestamps } from './lib/r2.mjs'
 
-const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY
-
 /**
- * Cached chunk responses. A run that dies partway through resumes from here
- * rather than re-buying audio that was already generated.
+ * Cached generated chunks. A run that dies partway through resumes from here
+ * rather than regenerating audio that already exists.
  */
 const CACHE_DIR = '.cache/audio-tts'
 
@@ -39,18 +42,14 @@ async function processFile(filePath, options) {
   }
 
   const textToRead = await extractPlainText(parsed.content)
-  const plannedChunks = chunkText(textToRead)
+  const plannedChunks = chunkText(textToRead, CHUNK_OPTIONS)
 
   if (options.dryRun) {
     console.log(
-      `  DRY RUN: ${textToRead.length} chars -> ${plannedChunks.length} request(s). No API calls, no credits.`
+      `  DRY RUN: ${textToRead.length} chars -> ${plannedChunks.length} chunk(s). Nothing generated.`
     )
     plannedChunks.forEach((c, i) => console.log(`    chunk ${i + 1}: ${c.length} chars`))
     return false
-  }
-
-  if (!ELEVENLABS_API_KEY) {
-    throw new Error('ELEVENLABS_API_KEY is not defined in environment variables.')
   }
 
   console.log(
@@ -58,10 +57,10 @@ async function processFile(filePath, options) {
   )
 
   const { audioBuffer, timestamps, stats } = await synthesizeLongText(textToRead, {
-    apiKey: ELEVENLABS_API_KEY,
+    ...options.voice,
     cacheDir: CACHE_DIR,
     onProgress: ({ index, total, chars, seconds, fromCache }) => {
-      const origin = fromCache ? 'cached, no credits' : 'generated'
+      const origin = fromCache ? 'cached' : 'generated'
       console.log(`    [${index}/${total}] ${chars} chars -> ${seconds.toFixed(1)}s (${origin})`)
     },
   })
@@ -118,7 +117,9 @@ async function main() {
   }
 
   if (!options.dryRun) {
-    console.log(`Voice settings: ${JSON.stringify(DEFAULT_VOICE_SETTINGS)}`)
+    // Fail before any generation rather than after the first post.
+    options.voice = await resolveVoiceReference()
+    console.log(`Model: ${DEFAULT_MODEL}, voice: ${options.voice.referenceAudio}`)
   }
 
   let updatedCount = 0
@@ -136,8 +137,7 @@ async function main() {
     }
   }
 
-  // To let GitHub actions know if it needs to commit
-  console.log(`::set-output name=updated::${updatedCount > 0}`)
+  console.log(`${updatedCount} post(s) updated.`)
 }
 
 main().catch((error) => {

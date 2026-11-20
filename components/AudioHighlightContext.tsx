@@ -11,7 +11,7 @@ import {
 } from 'react'
 
 /**
- * Word-level timestamp data from ElevenLabs API.
+ * Word-level timestamp data from the local narration pipeline (scripts/lib/local-tts.mjs).
  * Each word has start and end times in seconds.
  */
 export interface TimestampWord {

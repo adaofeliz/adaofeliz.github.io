@@ -57,5 +57,9 @@ INSTRUCTIONS.md
 
 .env
 
-# Cached ElevenLabs chunk responses (rebuildable, but costs credits)
+# Cached locally generated TTS chunks (rebuildable, but slow to regenerate)
 .cache/
+
+# Local TTS: Python env and the personal voice sample, which must never be published
+.venv/
+.voice/

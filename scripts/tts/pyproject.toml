@@ -1,0 +1,16 @@
+[project]
+name = "blog-tts"
+version = "0.1.0"
+description = "Local voice-cloned narration for blog posts (Fish S2 Pro on Apple Silicon)"
+# mlx-speech requires 3.13; torch/MLX wheels for 3.14 lag behind.
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "mlx-speech>=0.5.6",
+  "num2words>=0.5.14",
+  "soundfile>=0.13",
+  "torch>=2.9",
+  "torchaudio>=2.9",
+]
+
+[tool.uv]
+package = false

@@ -1,8 +1,8 @@
 /**
- * Repair the loudness of blog audio that is already published, without calling
- * ElevenLabs and without spending a single credit.
+ * Repair the loudness of blog audio that is already published, without
+ * regenerating it.
  *
- * The generation pipeline used to send an entire post as one ElevenLabs request.
+ * The original pipeline sent an entire post as one ElevenLabs request.
  * Those generations drift quieter as they go. Measured on
  * my-journey-with-vibe-coding-_-agentic-development-at-scale.mp3 the file opened
  * at -23.8 LUFS and fell to -41.5 LUFS, a 17.7 dB collapse. Every post produced
@@ -171,7 +171,7 @@ async function main() {
       : `REPAIR (target ${options.targetLufs} LUFS)`
 
   console.log(`=== ${mode} ===`)
-  console.log(`${posts.length} post(s) with audio. No ElevenLabs credits will be used.\n`)
+  console.log(`${posts.length} post(s) with audio. Nothing will be regenerated.\n`)
 
   const workDir = await fs.mkdtemp(path.join(os.tmpdir(), 'blog-audio-batch-'))
   const failures = []

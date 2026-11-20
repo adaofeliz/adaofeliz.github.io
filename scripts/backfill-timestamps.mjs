@@ -1,25 +1,17 @@
 /**
  * Backfill word timestamps for posts that have audio but no timestamp payload.
  *
- * Generating alignment data requires a fresh synthesis, so this script spends
- * credits. It therefore goes through the same chunked, normalized, cached
- * pipeline as generate-audio.mjs.
- *
- * That matters. This script used to carry its own copy of the old
- * single-request synthesis at stability 0.5, which meant that any post reaching
- * it would silently get audio with the 14 to 21 dB volume decay reintroduced,
- * overwriting a good file. Routing it through the shared library removes both
- * the duplication and that hazard.
+ * Alignment comes from a fresh synthesis, so this regenerates the post's audio
+ * in the local cloned voice. It goes through the same chunked, normalized,
+ * cached pipeline as generate-audio.mjs rather than carrying its own copy.
  */
 
 import { assertFfmpegAvailable, formatLoudness } from './lib/audio-loudness.mjs'
-import { synthesizeLongText, DEFAULT_VOICE_SETTINGS } from './lib/elevenlabs.mjs'
+import { DEFAULT_MODEL, resolveVoiceReference, synthesizeLongText } from './lib/local-tts.mjs'
 import { extractPlainText, listPostFiles, readPost, slugFor, writePost } from './lib/blog-posts.mjs'
 import { hasR2Credentials, publicUrlFor, putAudio, putTimestamps } from './lib/r2.mjs'
 
-const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY
-
-/** Shared with generate-audio.mjs so a resumed run never pays twice. */
+/** Shared with generate-audio.mjs so a resumed run never regenerates twice. */
 const CACHE_DIR = '.cache/audio-tts'
 
 /**
@@ -32,7 +24,7 @@ function needsBackfill(frontmatter, force = false) {
   return true
 }
 
-async function processFile(filePath, dryRun = false, force = false) {
+async function processFile(filePath, voice, dryRun = false, force = false) {
   const parsed = await readPost(filePath)
 
   if (!needsBackfill(parsed.data, force)) {
@@ -51,17 +43,13 @@ async function processFile(filePath, dryRun = false, force = false) {
     }
   }
 
-  if (!ELEVENLABS_API_KEY) {
-    throw new Error('ELEVENLABS_API_KEY is not defined in environment variables.')
-  }
-
   console.log(`  Synthesizing in chunks (keeps volume consistent)...`)
 
   const { audioBuffer, timestamps, stats } = await synthesizeLongText(textToRead, {
-    apiKey: ELEVENLABS_API_KEY,
+    ...voice,
     cacheDir: CACHE_DIR,
     onProgress: ({ index, total, chars, seconds, fromCache }) => {
-      const origin = fromCache ? 'cached, no credits spent' : 'generated'
+      const origin = fromCache ? 'cached' : 'generated'
       console.log(`    [${index}/${total}] ${chars} chars -> ${seconds.toFixed(1)}s (${origin})`)
     },
   })
@@ -162,20 +150,22 @@ async function main() {
   }
 
   // Only reached when real work is pending, so the guards stay out of the way
-  // of the common no-op run in CI.
+  // of the common no-op run.
   await assertFfmpegAvailable()
   if (!hasR2Credentials) {
     throw new Error('R2 credentials are required to upload regenerated audio.')
   }
 
+  const voice = await resolveVoiceReference()
+
   console.log('\n=== PROCESSING ===')
-  console.log(`Voice settings: ${JSON.stringify(DEFAULT_VOICE_SETTINGS)}`)
+  console.log(`Model: ${DEFAULT_MODEL}, voice: ${voice.referenceAudio}`)
   let successCount = 0
 
   for (const item of results.toBackfill) {
     console.log(`\nProcessing: ${item.file}`)
     try {
-      const result = await processFile(item.file, false, force)
+      const result = await processFile(item.file, voice, false, force)
       if (result.status === 'success') {
         successCount++
         console.log(`  Success: ${result.wordCount} words timestamped`)
